@@ -14,10 +14,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.securenaut.securenet.pages.AppsStaticList
 import com.securenaut.securenet.ui.theme.SecureNetTheme
+import com.securenaut.securenet.ui.theme.Typography
 
 class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,12 +28,13 @@ class HomeActivity : ComponentActivity() {
         setContent {
             SecureNetTheme {
                 Surface(modifier = Modifier.fillMaxSize()){
-                    Column(verticalArrangement = Arrangement.SpaceBetween, horizontalAlignment = Alignment.CenterHorizontally){
+                    Column(verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally){
                         Button(onClick = {
                             val intent = Intent(this@HomeActivity,AppsStaticList::class.java)
                             startActivity(intent)
                         }) {
-                            Text(text = "Apps Static List")
+                            Text(text = "Apps Static List", style = Typography.headlineLarge)
                         }
                     }
                 }
@@ -52,10 +55,13 @@ fun Greeting2(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview2() {
     SecureNetTheme {
-        Column(verticalArrangement = Arrangement.SpaceAround, horizontalAlignment = Alignment.CenterHorizontally){
-            Button(onClick = {
-            }) {
-                Text(text = "Apps Static List")
+        Surface(modifier = Modifier.fillMaxSize()){
+            Column(verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally){
+                Button(onClick = {
+                }) {
+                    Text(text = "Apps Static List")
+                }
             }
         }
     }
