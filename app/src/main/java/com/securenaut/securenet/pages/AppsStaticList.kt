@@ -1,6 +1,5 @@
-package com.securenaut.securenet
+package com.securenaut.securenet.pages
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,10 +12,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.securenaut.securenet.ui.theme.SecureNetTheme
 
-class MainActivity : ComponentActivity() {
+class AppsStaticList : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val intent = Intent(this, HomeActivity::class.java)
-        startActivity(intent)
+        setContent {
+            SecureNetTheme {
+                // A surface container using the 'background' color from the theme
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    Text(text = "Apps List For Static Analysis")
+                }
+            }
+        }
     }
 }
