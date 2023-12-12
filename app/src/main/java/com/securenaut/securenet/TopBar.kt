@@ -1,6 +1,7 @@
 import android.annotation.SuppressLint
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -28,7 +29,8 @@ fun CenterAlignedTopAppBarExample(name: String) {
                     Text(
                         text = name,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
+                        style = MaterialTheme.typography.titleLarge
                     )
                 },
                 navigationIcon = {

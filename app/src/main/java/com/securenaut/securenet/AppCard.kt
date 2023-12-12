@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -40,13 +41,17 @@ fun ElevatedCardExample(name: String, lastScan: String, imageUrl: String) {
                     modifier = Modifier
                         .padding(start = 16.dp),
                     textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.titleMedium
+
                 )
                 Text(
                     text = "Last scanned on $lastScan",
                     modifier = Modifier
                         .padding(start = 14.dp),
                     textAlign = TextAlign.Center,
-                    color = Color.DarkGray
+                    color = Color.DarkGray ,
+                    style = MaterialTheme.typography.titleSmall
+
                 )
             }
             Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End){
