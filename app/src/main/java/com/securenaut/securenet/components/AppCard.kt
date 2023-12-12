@@ -1,3 +1,5 @@
+package com.securenaut.securenet.components
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,7 +21,7 @@ import com.securenaut.securenet.R
 
 
 @Composable
-fun ElevatedCardExample(name: String, lastScan: String, imageUrl: String) {
+fun AppCard(name: String, lastScan: String, imageUrl: String) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -62,8 +64,6 @@ fun ElevatedCardExample(name: String, lastScan: String, imageUrl: String) {
                     contentDescription = "The delasign logo",
                 )
             }
-
-
         }
 
     }
