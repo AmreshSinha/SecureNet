@@ -13,16 +13,6 @@
         android:theme="@style/Theme.SecureNet"
         tools:targetApi="31">
         <activity
-            android:name=".pages.AppsStaticList"
-            android:exported="false"
-            android:label="@string/title_activity_apps_static_list"
-            android:theme="@style/Theme.SecureNet" />
-        <activity
-            android:name=".HomeActivity"
-            android:exported="false"
-            android:label="@string/home_activity"
-            android:theme="@style/Theme.SecureNet" />
-        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
