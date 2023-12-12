@@ -19,10 +19,14 @@ class MainActivity() : ComponentActivity() {
                 val navController = rememberNavController()
                 NavHost(navController = navController, startDestination = "home"){
                     composable("home"){
-                          SettingsScreen()
-//                        HomeActivity(navController)
+                        HomeActivity(navController)
                     }
-                    composable("staticAnalysisAppList"){StaticAnalysisAppList()}
+                    composable("staticAnalysisAppList"){
+                        StaticAnalysisAppList()
+                    }
+                    composable("settings"){
+                        SettingsScreen(navController)
+                    }
                 }
             }
         }

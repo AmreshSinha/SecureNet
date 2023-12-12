@@ -29,7 +29,7 @@ import com.securenaut.securenet.ui.theme.SecureNetTheme
 fun HomeActivity(navController: NavHostController) {
     Scaffold(
         topBar = {
-            HomeAppBar()
+            HomeAppBar(navController)
         }
     ) { contentPadding ->
         // Screen content

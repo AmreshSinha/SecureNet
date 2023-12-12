@@ -25,6 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.securenaut.securenet.R
 import com.securenaut.securenet.components.HomeAppBar
 import com.securenaut.securenet.ui.theme.Typography
@@ -34,10 +35,10 @@ import com.securenaut.securenet.ui.theme.textGray
 
 
 @Composable
-fun SettingsScreen() {
+fun SettingsScreen(navController: NavHostController) {
     Scaffold(
         topBar = {
-            HomeAppBar()
+            HomeAppBar(navController)
         }
     ) { contentPadding ->
         Column(
