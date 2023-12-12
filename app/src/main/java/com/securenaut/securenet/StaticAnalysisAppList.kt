@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,11 +19,12 @@ fun StaticAnalysisAppList()
 {
     CenterAlignedTopAppBarExample(name = "Static Analysis")
     Column (modifier = Modifier
-        .padding(top = 64.dp, start=16.dp, end=16.dp)
+        .padding(top = 64.dp, start = 16.dp, end = 16.dp)
         .verticalScroll(rememberScrollState())){
         Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom= 6.dp)) {
             Text(
                 text = "Threat detected in  ",
+                style = MaterialTheme.typography.bodyMedium
             )
             AsyncImage(
                 model = "",
@@ -40,6 +42,8 @@ fun StaticAnalysisAppList()
         Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top= 16.dp, bottom= 6.dp)) {
             Text(
                 text = "Safe Apps  ",
+                style = MaterialTheme.typography.bodyMedium
+
             )
             AsyncImage(
                 model = "",

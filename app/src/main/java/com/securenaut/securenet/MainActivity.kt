@@ -1,7 +1,6 @@
 package com.securenaut.securenet
 
 import StaticAnalysisAppList
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,7 +10,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.securenaut.securenet.ui.theme.SecureNetTheme
 
 class MainActivity : ComponentActivity() {
@@ -37,14 +35,4 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         text = "Hello $name!",
         modifier = modifier
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    SecureNetTheme {
-        Greeting("Android")
-        val intent = Intent(this, HomeActivity::class.java)
-        startActivity(intent)
-    }
 }
