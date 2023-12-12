@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.securenaut.securenet.pages.HomeActivity
+import com.securenaut.securenet.pages.SettingsScreen
 import com.securenaut.securenet.ui.theme.SecureNetTheme
 
 class MainActivity() : ComponentActivity() {
@@ -20,7 +21,12 @@ class MainActivity() : ComponentActivity() {
                     composable("home"){
                         HomeActivity(navController)
                     }
-                    composable("staticAnalysisAppList"){StaticAnalysisAppList()}
+                    composable("staticAnalysisAppList"){
+                        StaticAnalysisAppList()
+                    }
+                    composable("settings"){
+                        SettingsScreen(navController)
+                    }
                 }
             }
         }
