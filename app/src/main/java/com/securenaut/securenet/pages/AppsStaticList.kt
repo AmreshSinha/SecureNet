@@ -1,7 +1,5 @@
-package com.securenaut.securenet
+package com.securenaut.securenet.pages
 
-import StaticAnalysisAppList
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.securenaut.securenet.ui.theme.SecureNetTheme
 
-class MainActivity : ComponentActivity() {
+class AppsStaticList : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -24,27 +22,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    StaticAnalysisAppList()
+                    Text(text = "Apps List For Static Analysis")
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    SecureNetTheme {
-        Greeting("Android")
-        val intent = Intent(this, HomeActivity::class.java)
-        startActivity(intent)
     }
 }
