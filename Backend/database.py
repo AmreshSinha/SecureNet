@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
-URL_DATABASE = 'mysql+pymysql://root:<password>@localhost:3306/SecureNet'
+URL_DATABASE = 'mysql+pymysql://root:<PASSWORD>@localhost:3306/SecureNet'
 
 engine = create_engine(URL_DATABASE)
 
