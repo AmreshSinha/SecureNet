@@ -18,8 +18,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
+import androidx.navigation.navArgument
 import com.securenaut.securenet.pages.HomeActivity
 import com.securenaut.securenet.pages.SettingsScreen
+import com.securenaut.securenet.pages.StaticAnalysisScreen
 import com.securenaut.securenet.ui.theme.SecureNetTheme
 
 class MainActivity() : ComponentActivity() {
@@ -86,11 +88,16 @@ class MainActivity() : ComponentActivity() {
                         HomeActivity(navController)
                     }
                     composable("staticAnalysisAppList"){
-                        StaticAnalysisAppList()
+                        StaticAnalysisAppList(navController)
                     }
                     composable("settings"){
                         SettingsScreen(navController)
                     }
+                    composable("staticAnalysis/{app}") { backStackEntry ->
+                        backStackEntry.arguments?.getString("app")
+                            ?.let { StaticAnalysisScreen(navController, it) }
+                    }
+
                 }
             }
         }
