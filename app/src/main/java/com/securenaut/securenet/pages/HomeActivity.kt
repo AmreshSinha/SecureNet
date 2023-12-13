@@ -22,7 +22,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.findNavController
 import com.securenaut.securenet.components.HomeAppBar
+import com.securenaut.securenet.components.HomeAppCountCard
 import com.securenaut.securenet.components.HomeScanCard
+import com.securenaut.securenet.components.HomeStaticAnalysisCard
 import com.securenaut.securenet.ui.theme.SecureNetTheme
 
 @Composable
@@ -39,10 +41,8 @@ fun HomeActivity(navController: NavHostController) {
                 .padding(contentPadding)
         ) {
             HomeScanCard(navController = navController)
-            HomeScanCard(navController = navController)
-            HomeScanCard(navController = navController)
-            HomeScanCard(navController = navController)
-            HomeScanCard(navController = navController)
+            HomeAppCountCard()
+            HomeStaticAnalysisCard()
         }
     }
 }
