@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "637625978346",
+    "project_id": "net-a49d0",
+    "storage_bucket": "net-a49d0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:637625978346:android:62df89dbbaf3dca63f3693",
+        "android_client_info": {
+          "package_name": "com.securenaut.securenet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzUVSXskqukjUSnzkpOeWwIn4GZ_qBczE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
