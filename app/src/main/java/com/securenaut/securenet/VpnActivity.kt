@@ -2,6 +2,7 @@ package com.securenaut.securenet
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.VpnService
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -20,6 +21,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import kotlinx.coroutines.*
 import com.securenaut.securenet.protocol.Packet
@@ -65,6 +68,8 @@ class VpnActivity : ComponentActivity(), CoroutineScope {
                         Text(text = "Device->Network Bytes:${ToNetworkQueueWorker.totalInputCount}")
                         Text(text = "Network->Device Bytes:${ToDeviceQueueWorker.totalOutputCount}")
                         Button(onClick = {
+                            // Make sure we have the permission
+
                             if (isMyVpnServiceRunning) {
                                 stopVpn()
                                 dataUpdater.cancel()

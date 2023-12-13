@@ -178,7 +178,6 @@ object UdpSendWorker : Runnable {
             val sourcePort = udpHeader?.sourcePort
             val ipAndPort = (destinationAddress?.hostAddress?.plus(":") ?: "unknownHostAddress") + destinationPort + ":" + sourcePort
 
-            //创建新的socket
             val managedChannel = if (!udpSocketMap.containsKey(ipAndPort)) {
                 val channel = DatagramChannel.open()
                 var channelConnectSuccess = false
