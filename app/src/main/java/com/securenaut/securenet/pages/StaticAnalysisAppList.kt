@@ -14,13 +14,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.securenaut.securenet.R
 import com.securenaut.securenet.components.AppCard
 import com.securenaut.securenet.components.HomeAppBar
 
 @Composable
-fun StaticAnalysisAppList()
+fun StaticAnalysisAppList(navController: NavController)
 {
     AppBar(name = "Static Analysis")
     Column (modifier = Modifier
@@ -39,9 +40,9 @@ fun StaticAnalysisAppList()
             )
         }
 
-        AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
-        AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "1st Feb 2023")
-        AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "3rd Feb 2023")
+        AppCard(navController = navController, name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
+        AppCard(navController = navController, name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "1st Feb 2023")
+        AppCard(navController = navController, name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "3rd Feb 2023")
 
 
         Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top= 16.dp, bottom= 6.dp)) {
@@ -57,82 +58,82 @@ fun StaticAnalysisAppList()
                 contentDescription = "The delasign logo",
             )
         }
-        AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
-        AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
-        AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
-        AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
-        AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
-        AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
-        AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
-        AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
-        AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
-        AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
-        AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
+        AppCard(navController = navController,name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
+        AppCard(navController = navController,name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
+        AppCard(navController = navController,name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
+        AppCard(navController = navController,name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
+        AppCard(navController = navController,name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
+        AppCard(navController = navController,name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
+        AppCard(navController = navController,name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
+        AppCard(navController = navController,name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
+        AppCard(navController = navController,name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
+        AppCard(navController = navController,name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
+        AppCard(navController = navController,name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
 
     }
 }
 
-@Preview
-@Composable
-fun StaticAnalysisAppList1()
-{
-    Scaffold(
-        topBar = {
-            AppBar(name = "Static Analysis")
-        }
-    ){
-        contentPadding -> Surface(
-            modifier = Modifier.padding(contentPadding)
-        ){
-        Column (
-            modifier = Modifier
-                .verticalScroll(rememberScrollState())
-                .padding(start = 16.dp, end = 16.dp)
-        ){
-            Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom= 6.dp)) {
-                Text(
-                    text = "Threat detected in  ",
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                AsyncImage(
-                    model = "",
-                    placeholder = painterResource(id = R.drawable.arrowdown),
-                    error = painterResource(id = R.drawable.arrowdown),
-                    contentDescription = "The delasign logo",
-                )
-            }
-
-            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
-            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "1st Feb 2023")
-            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "3rd Feb 2023")
-
-
-            Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top= 16.dp, bottom= 6.dp)) {
-                Text(
-                    text = "Safe Apps  ",
-                    style = MaterialTheme.typography.bodyMedium
-
-                )
-                AsyncImage(
-                    model = "",
-                    placeholder = painterResource(id = R.drawable.arrowdown),
-                    error = painterResource(id = R.drawable.arrowdown),
-                    contentDescription = "The delasign logo",
-                )
-            }
-            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
-            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
-            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
-            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
-            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
-            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
-            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
-            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
-            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
-            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
-            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
-
-        }
-    }
-    }
-}
+//@Preview
+//@Composable
+//fun StaticAnalysisAppList1()
+//{
+//    Scaffold(
+//        topBar = {
+//            AppBar(name = "Static Analysis")
+//        }
+//    ){
+//        contentPadding -> Surface(
+//            modifier = Modifier.padding(contentPadding)
+//        ){
+//        Column (
+//            modifier = Modifier
+//                .verticalScroll(rememberScrollState())
+//                .padding(start = 16.dp, end = 16.dp)
+//        ){
+//            Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom= 6.dp)) {
+//                Text(
+//                    text = "Threat detected in  ",
+//                    style = MaterialTheme.typography.bodyMedium
+//                )
+//                AsyncImage(
+//                    model = "",
+//                    placeholder = painterResource(id = R.drawable.arrowdown),
+//                    error = painterResource(id = R.drawable.arrowdown),
+//                    contentDescription = "The delasign logo",
+//                )
+//            }
+//
+//            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
+//            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "1st Feb 2023")
+//            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "3rd Feb 2023")
+//
+//
+//            Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top= 16.dp, bottom= 6.dp)) {
+//                Text(
+//                    text = "Safe Apps  ",
+//                    style = MaterialTheme.typography.bodyMedium
+//
+//                )
+//                AsyncImage(
+//                    model = "",
+//                    placeholder = painterResource(id = R.drawable.arrowdown),
+//                    error = painterResource(id = R.drawable.arrowdown),
+//                    contentDescription = "The delasign logo",
+//                )
+//            }
+//            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
+//            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
+//            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
+//            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
+//            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
+//            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
+//            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
+//            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
+//            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
+//            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
+//            AppCard(name = "Instagram", imageUrl = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4", lastScan = "7th May 2023")
+//
+//        }
+//    }
+//    }
+//}
