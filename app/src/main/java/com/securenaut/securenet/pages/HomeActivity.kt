@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -25,13 +26,14 @@ import com.securenaut.securenet.components.HomeAppBar
 import com.securenaut.securenet.components.HomeAppCountCard
 import com.securenaut.securenet.components.HomeScanCard
 import com.securenaut.securenet.components.HomeStaticAnalysisCard
+import com.securenaut.securenet.components.PrivacyDashboard
 import com.securenaut.securenet.ui.theme.SecureNetTheme
 
 @Composable
 fun HomeActivity(navController: NavHostController) {
     Scaffold(
         topBar = {
-            HomeAppBar()
+            HomeAppBar(navController)
         }
     ) { contentPadding ->
         // Screen content
@@ -43,6 +45,23 @@ fun HomeActivity(navController: NavHostController) {
             HomeScanCard(navController = navController)
             HomeAppCountCard()
             HomeStaticAnalysisCard()
+            PrivacyDashboard(privacyDashboardData = listOf(
+                mapOf(
+                    "color" to Color.Blue,
+                    "label" to "Camera",
+                    "count" to 36f
+                ),
+                mapOf(
+                    "color" to Color.Yellow,
+                    "label" to "Location",
+                    "count" to 36f
+                ),
+                mapOf(
+                    "color" to Color.Red,
+                    "label" to "Microphone",
+                    "count" to 36f
+                )
+            ))
         }
     }
 }

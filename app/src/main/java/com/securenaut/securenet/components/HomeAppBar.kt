@@ -17,11 +17,12 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.navigation.NavHostController
 import com.securenaut.securenet.ui.theme.Typography
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeAppBar(){
+fun HomeAppBar(navController: NavHostController){
     TopAppBar(
         navigationIcon = {
             IconButton(onClick = { /* do something */ }) {
@@ -44,7 +45,7 @@ fun HomeAppBar(){
         },
         colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color.White),
         actions = {
-            IconButton(onClick = { /* do something */ }) {
+            IconButton(onClick = {navController.navigate("settings")}) {
                 Icon(
                     imageVector = Icons.Filled.Settings,
                     contentDescription = "Open Settings"
