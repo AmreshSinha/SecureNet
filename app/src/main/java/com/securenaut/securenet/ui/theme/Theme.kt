@@ -2,6 +2,7 @@ package com.securenaut.securenet.ui.theme
 
 import android.app.Activity
 import android.os.Build
+import androidx.annotation.ColorRes
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
