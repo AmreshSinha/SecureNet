@@ -42,7 +42,7 @@ import com.securenaut.securenet.components.SmallElevatedCard
 fun StaticAnalysisScreen(navController: NavController, app: String) {
     Scaffold(
         topBar = {
-            AppBar(name = "Static Analysis")
+            AppBar(navController, name = "Static Analysis")
         },
         bottomBar = {
             BottomAppBar()
