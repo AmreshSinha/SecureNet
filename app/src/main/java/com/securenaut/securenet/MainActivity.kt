@@ -109,7 +109,6 @@ class MainActivity() : ComponentActivity() {
                         backStackEntry.arguments?.getString("app")
                             ?.let { StaticAnalysisScreen(navController, it) }
                     }
-
                 }
             }
         }

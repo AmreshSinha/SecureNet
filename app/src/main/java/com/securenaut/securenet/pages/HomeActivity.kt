@@ -155,7 +155,7 @@ fun HomeActivity(navController: NavHostController) {
         ) {
             HomeScanCard(navController = navController)
             HomeAppCountCard()
-            HomeStaticAnalysisCard()
+            HomeStaticAnalysisCard(navController = navController)
             PrivacyDashboard(privacyDashboardData = listOf(
                 mapOf(
                     "color" to Color.Blue,

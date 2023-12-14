@@ -20,12 +20,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.securenaut.securenet.ui.theme.CardBorder
 import com.securenaut.securenet.ui.theme.Purple
 import com.securenaut.securenet.ui.theme.Typography
 
 @Composable
-fun HomeStaticAnalysisCard() {
+fun HomeStaticAnalysisCard(navController: NavController) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -47,7 +48,7 @@ fun HomeStaticAnalysisCard() {
                 Row(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.End) {
                     ElevatedButton(
                         onClick = {
-
+                                  navController.navigate("staticAnalysisAppList")
                         },
                         border = BorderStroke(width = 1.dp, color = Purple)
                     ) {
