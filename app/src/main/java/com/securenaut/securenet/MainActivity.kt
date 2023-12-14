@@ -18,6 +18,7 @@ import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.compose.NavHost
@@ -30,12 +31,15 @@ import com.securenaut.securenet.pages.HomeActivity
 import com.securenaut.securenet.pages.SettingsScreen
 import com.securenaut.securenet.pages.StaticAnalysisScreen
 import com.securenaut.securenet.ui.theme.SecureNetTheme
+
+import com.securenaut.securenet.viewmodel.ScannedAppsViewModel
 import java.util.Calendar
 
 
 class MainActivity() : ComponentActivity() {
 
     private lateinit var firebaseMessaging: FirebaseMessaging
+    private val viewModel: ScannedAppsViewModel by viewModels()
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -95,12 +99,14 @@ class MainActivity() : ComponentActivity() {
         setContent{
             SecureNetTheme {
                 val navController = rememberNavController()
+                // Observe the data from the view model
+
                 NavHost(navController = navController, startDestination = "home"){
                     composable("home"){
                         HomeActivity(navController)
                     }
                     composable("staticAnalysisAppList"){
-                        StaticAnalysisAppList(navController)
+                        StaticAnalysisAppList(navController,viewModel = viewModel)
                     }
                     composable("settings"){
                         SettingsScreen(navController)
