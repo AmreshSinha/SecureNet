@@ -1,6 +1,7 @@
 package com.securenaut.securenet.pages
 
 import AppBar
+import Dropdown
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -41,7 +42,7 @@ import com.securenaut.securenet.components.SmallElevatedCard
 fun StaticAnalysisScreen(navController: NavController, app: String) {
     Scaffold(
         topBar = {
-            AppBar(name = "Static Analysis")
+            AppBar(navController, name = "Static Analysis")
         },
         bottomBar = {
             BottomAppBar()
@@ -137,6 +138,13 @@ fun StaticAnalysisScreen(navController: NavController, app: String) {
         Row {
             SmallElevatedCard(iconImage = R.drawable.mobile, heading = "Privacy Risk", value = "0", width = 0.5f)
             SmallElevatedCard(iconImage = R.drawable.dollar ,heading = "Risk Rating", value = "A", width = 1.0f)
+        }
+
+        Column {
+            Dropdown(type = "medium", title = "Certificate")
+            Dropdown(type = "secure", title = "Trackers")
+            Dropdown(type = "info", title = "Manifest")
+            Dropdown(type = "high", title = "Secrets")
         }
 
 
