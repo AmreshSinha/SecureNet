@@ -1,10 +1,13 @@
 package com.securenaut.securenet.components
 
+import android.graphics.drawable.Drawable
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,12 +22,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import coil.compose.rememberImagePainter
 import com.securenaut.securenet.R
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppCard(navController: NavController, name: String, lastScan: String, imageUrl: String) {
+fun AppCard(navController: NavController, name: String, lastScan: String, appIconDrawable: Drawable) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -33,16 +37,17 @@ fun AppCard(navController: NavController, name: String, lastScan: String, imageU
             navController.navigate("staticAnalysis/${name}")
         },
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxWidth().padding(horizontal = 0.dp, vertical = 16.dp)
 
     )
     {
-        Row (modifier = Modifier.fillMaxWidth().padding(10.dp), verticalAlignment = Alignment.CenterVertically){
-            AsyncImage(
-                model = imageUrl,
-                placeholder = painterResource(id = R.drawable.icon),
-                error = painterResource(id = R.drawable.icon),
-                contentDescription = "The delasign logo",
+        Row (modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp), verticalAlignment = Alignment.CenterVertically){
+            Image(
+                painter = rememberImagePainter(data = appIconDrawable),
+                contentDescription = "App Icon",
+                modifier = Modifier.size(48.dp)
             )
             Column {
                 Text(
@@ -51,7 +56,6 @@ fun AppCard(navController: NavController, name: String, lastScan: String, imageU
                         .padding(start = 16.dp),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.titleMedium
-
                 )
                 Text(
                     text = "Last scanned on $lastScan",
@@ -72,6 +76,5 @@ fun AppCard(navController: NavController, name: String, lastScan: String, imageU
                 )
             }
         }
-
     }
 }

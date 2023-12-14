@@ -1,13 +1,20 @@
 package com.securenaut.securenet
 
-import android.Manifest
 import StaticAnalysisAppList
+import android.Manifest
+import android.app.AppOpsManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.usage.UsageStatsManager
+import android.content.Intent
+import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Process
+import android.provider.Settings
 import android.util.Log
+import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
@@ -17,14 +24,17 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
-import androidx.navigation.navArgument
 import com.securenaut.securenet.pages.HomeActivity
 import com.securenaut.securenet.pages.SettingsScreen
 import com.securenaut.securenet.pages.StaticAnalysisScreen
 import com.securenaut.securenet.ui.theme.SecureNetTheme
+
 import com.securenaut.securenet.viewmodel.ScannedAppsViewModel
+import java.util.Calendar
+
 
 class MainActivity() : ComponentActivity() {
 
@@ -42,6 +52,7 @@ class MainActivity() : ComponentActivity() {
             // TODO: Inform user that that your app will not show notifications.
         }
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.wtf("rand", "Inside main activity")
@@ -82,7 +93,9 @@ class MainActivity() : ComponentActivity() {
                     Manifest.permission.POST_NOTIFICATIONS)
             }
         }
-        Log.d("kuch", "onCreate: "+viewModel.getRecentScannedAppsDetails())
+
+//        startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
+
         setContent{
             SecureNetTheme {
                 val navController = rememberNavController()
@@ -102,7 +115,6 @@ class MainActivity() : ComponentActivity() {
                         backStackEntry.arguments?.getString("app")
                             ?.let { StaticAnalysisScreen(navController, it) }
                     }
-
                 }
             }
         }
