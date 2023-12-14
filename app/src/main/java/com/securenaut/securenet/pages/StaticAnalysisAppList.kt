@@ -1,3 +1,4 @@
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,6 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -19,10 +21,14 @@ import coil.compose.AsyncImage
 import com.securenaut.securenet.R
 import com.securenaut.securenet.components.AppCard
 import com.securenaut.securenet.components.HomeAppBar
+import com.securenaut.securenet.viewmodel.ScannedAppsViewModel
 
 @Composable
-fun StaticAnalysisAppList(navController: NavController)
+fun StaticAnalysisAppList(navController: NavController,viewModel: ScannedAppsViewModel)
 {
+    // Observe the data from the view model
+    val scannedAppsDetails by viewModel.recentScannedAppsDetails
+    Log.d("lostofapp", "StaticAnalysisAppList: ${viewModel.recentScannedAppsDetails?.toString()}")
     AppBar(navController= navController, name = "Static Analysis")
     Column (modifier = Modifier
         .padding(top = 64.dp, start = 16.dp, end = 16.dp)
