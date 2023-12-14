@@ -23,7 +23,7 @@ import com.securenaut.securenet.components.HomeAppBar
 @Composable
 fun StaticAnalysisAppList(navController: NavController)
 {
-    AppBar(name = "Static Analysis")
+    AppBar(navController= navController, name = "Static Analysis")
     Column (modifier = Modifier
         .padding(top = 64.dp, start = 16.dp, end = 16.dp)
         .verticalScroll(rememberScrollState())){
