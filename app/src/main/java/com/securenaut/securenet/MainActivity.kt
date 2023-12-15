@@ -21,9 +21,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
@@ -31,14 +33,12 @@ import com.securenaut.securenet.pages.HomeActivity
 import com.securenaut.securenet.pages.SettingsScreen
 import com.securenaut.securenet.pages.StaticAnalysisScreen
 import com.securenaut.securenet.ui.theme.SecureNetTheme
-import com.securenaut.securenet.viewmodel.ApplicationViewModel
-import java.util.Calendar
+import org.json.JSONObject
 
 
 class MainActivity() : ComponentActivity() {
 
     private lateinit var firebaseMessaging: FirebaseMessaging
-    private val viewModel: ApplicationViewModel by viewModels()
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -100,24 +100,27 @@ class MainActivity() : ComponentActivity() {
                 val navController = rememberNavController()
                 // Observe the data from the view model
 
-                NavHost(navController = navController, startDestination = "home"){
+                NavHost(navController = navController, startDestination = "staticAnalysisAppList"){
                     composable("home"){
                         HomeActivity(navController)
                     }
                     composable("staticAnalysisAppList"){
-                        StaticAnalysisAppList(navController,viewModel = viewModel)
+                        StaticAnalysisAppList(navController)
                     }
                     composable("settings"){
                         SettingsScreen(navController)
                     }
                     composable("staticAnalysis/{app}") { backStackEntry ->
-                        backStackEntry.arguments?.getString("app")
-                            ?.let { StaticAnalysisScreen(navController, it) }
+                        val app = backStackEntry.arguments?.getString("app")
+
+                        app?.let { appName ->
+                            StaticAnalysisScreen(navController, appName)
+                        }
                     }
                 }
             }
         }
-        viewModel.getRecentScannedAppsDetails()
+
         Log.wtf("rand", "Inside main activity")
 
         firebaseMessaging = FirebaseMessaging.getInstance()

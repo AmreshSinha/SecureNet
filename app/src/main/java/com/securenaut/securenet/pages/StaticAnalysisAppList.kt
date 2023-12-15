@@ -28,15 +28,19 @@ import com.securenaut.securenet.R
 import com.securenaut.securenet.components.AppCard
 import com.securenaut.securenet.components.HomeAppBar
 import com.securenaut.securenet.pages.getGrantedPermissions
-import com.securenaut.securenet.viewmodel.ApplicationViewModel
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
 
 @Composable
-fun StaticAnalysisAppList(navController: NavController, viewModel: ApplicationViewModel) {
+fun StaticAnalysisAppList(navController: NavController) {
     // Observe the data from the view model
-    val scannedAppsState by viewModel.scannedAppsState.collectAsState()
-    Log.d("lostofapp", "StaticAnalysisAppList: ${scannedAppsState?.toString()}")
     AppBar(navController = navController, name = "Static Analysis")
     Column(
         modifier = Modifier
@@ -99,12 +103,13 @@ fun StaticAnalysisAppList(navController: NavController, viewModel: ApplicationVi
 //        }
 
         for (appData in appDataList) {
+
             AppCard(
                 navController = navController,
-                name = appData["appName"] as String,
+                appName = appData["appName"] as String,
                 lastScan = "7th May 2023",
                 appIconDrawable = appData["appIconDrawable"] as Drawable,
-                viewModel= viewModel
+                apkFile = appData["apkFile"] as File
             )
         }
 

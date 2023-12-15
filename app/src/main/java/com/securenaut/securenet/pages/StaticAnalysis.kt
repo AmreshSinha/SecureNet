@@ -2,6 +2,7 @@ package com.securenaut.securenet.pages
 
 import AppBar
 import Dropdown
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -37,9 +38,16 @@ import com.securenaut.securenet.components.PieChartEntry
 import com.securenaut.securenet.components.PieChartLabel
 import com.securenaut.securenet.components.SecurityScore
 import com.securenaut.securenet.components.SmallElevatedCard
+import com.securenaut.securenet.data.GlobalStaticClass
+import org.json.JSONObject
 
 @Composable
-fun StaticAnalysisScreen(navController: NavController, app: String) {
+fun StaticAnalysisScreen(navController: NavController, appName: String) {
+
+    Log.i("INSIDE STATIC ANALYSIS SCREEN","INSIDE THIS SCREEN")
+
+    Log.i("INSIDE STATIC ANALYSIS SCREEN",GlobalStaticClass.staticAnalysisReport.toString())
+
     Scaffold(
         topBar = {
             AppBar(navController, name = "Static Analysis")
@@ -64,7 +72,7 @@ fun StaticAnalysisScreen(navController: NavController, app: String) {
                 contentDescription = "The delasign logo",
             )
             Text(
-                text = app,
+                text = appName,
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.titleLarge
 

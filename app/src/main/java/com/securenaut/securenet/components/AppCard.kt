@@ -1,6 +1,7 @@
 package com.securenaut.securenet.components
 
 import android.graphics.drawable.Drawable
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,26 +24,42 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.compose.rememberImagePainter
+import com.google.gson.JsonParser
+import com.securenaut.securenet.HttpWorker
 import com.securenaut.securenet.R
-import com.securenaut.securenet.viewmodel.ApplicationViewModel
+import com.securenaut.securenet.data.GlobalStaticClass
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.asRequestBody
+import org.json.JSONObject
+import java.io.File
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppCard(
-    navController: NavController,
-    name: String,
-    lastScan: String,
-    appIconDrawable: Drawable,
-    viewModel: ApplicationViewModel
-) {
+fun AppCard(navController: NavController, appName: String, lastScan: String, appIconDrawable: Drawable, apkFile: File) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         ),
         onClick = {
-            viewModel.getScorecard("821a5f1e160470c0023a45216dc73feb")
-            navController.navigate("staticAnalysis/${name}")
+            GlobalScope.launch(Dispatchers.Main) {
+                Log.i("card_button_clicked: ","$appName")
+                val staticAnalysisDataString = HttpWorker().postApk(apkFile)
+
+                Log.i("btn_press_resp",staticAnalysisDataString)
+
+                GlobalStaticClass.staticAnalysisReport = JSONObject(staticAnalysisDataString)
+
+                navController.navigate("staticAnalysis/$appName")
+            }
         },
         modifier = Modifier
             .fillMaxWidth()
@@ -62,7 +79,7 @@ fun AppCard(
             )
             Column {
                 Text(
-                    text = name,
+                    text = appName,
                     modifier = Modifier
                         .padding(start = 16.dp),
                     textAlign = TextAlign.Center,
