@@ -27,13 +27,13 @@ import coil.compose.AsyncImage
 import com.securenaut.securenet.R
 import com.securenaut.securenet.components.AppCard
 import com.securenaut.securenet.components.HomeAppBar
-import com.securenaut.securenet.viewmodel.ScannedAppsViewModel
 import com.securenaut.securenet.pages.getGrantedPermissions
+import com.securenaut.securenet.viewmodel.ApplicationViewModel
 import java.io.File
 
 
 @Composable
-fun StaticAnalysisAppList(navController: NavController, viewModel: ScannedAppsViewModel) {
+fun StaticAnalysisAppList(navController: NavController, viewModel: ApplicationViewModel) {
     // Observe the data from the view model
     val scannedAppsState by viewModel.scannedAppsState.collectAsState()
     Log.d("lostofapp", "StaticAnalysisAppList: ${scannedAppsState?.toString()}")
@@ -103,7 +103,8 @@ fun StaticAnalysisAppList(navController: NavController, viewModel: ScannedAppsVi
                 navController = navController,
                 name = appData["appName"] as String,
                 lastScan = "7th May 2023",
-                appIconDrawable = appData["appIconDrawable"] as Drawable
+                appIconDrawable = appData["appIconDrawable"] as Drawable,
+                viewModel= viewModel
             )
         }
 
