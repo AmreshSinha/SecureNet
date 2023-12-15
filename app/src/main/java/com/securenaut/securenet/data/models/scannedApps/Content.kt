@@ -1,4 +1,4 @@
-package com.securenaut.securenet.data
+package com.securenaut.securenet.data.models.scannedApps
 
 
 import com.squareup.moshi.Json

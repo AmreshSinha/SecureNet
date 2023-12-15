@@ -13,6 +13,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,7 +27,6 @@ import coil.compose.AsyncImage
 import com.securenaut.securenet.R
 import com.securenaut.securenet.components.AppCard
 import com.securenaut.securenet.components.HomeAppBar
-import com.securenaut.securenet.viewmodel.ScannedAppsViewModel
 import com.securenaut.securenet.pages.getGrantedPermissions
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -38,10 +39,8 @@ import java.io.File
 
 
 @Composable
-fun StaticAnalysisAppList(navController: NavController, viewModel: ScannedAppsViewModel) {
+fun StaticAnalysisAppList(navController: NavController) {
     // Observe the data from the view model
-    val scannedAppsDetails by viewModel.recentScannedAppsDetails
-    Log.d("lostofapp", "StaticAnalysisAppList: ${viewModel.recentScannedAppsDetails?.toString()}")
     AppBar(navController = navController, name = "Static Analysis")
     Column(
         modifier = Modifier
@@ -107,7 +106,7 @@ fun StaticAnalysisAppList(navController: NavController, viewModel: ScannedAppsVi
 
             AppCard(
                 navController = navController,
-                name = appData["appName"] as String,
+                appName = appData["appName"] as String,
                 lastScan = "7th May 2023",
                 appIconDrawable = appData["appIconDrawable"] as Drawable,
                 apkFile = appData["apkFile"] as File
@@ -126,6 +125,12 @@ fun StaticAnalysisAppList(navController: NavController, viewModel: ScannedAppsVi
 //                error = painterResource(id = R.drawable.arrowdown),
 //                contentDescription = "The delasign logo",
 //            )
+//        }
+
+//        DisposableEffect(Unit) {
+//            viewModel.getRecentScannedAppsDetails()
+//            Log.d("lostofapp", "disposible: called")
+//            onDispose { }
 //        }
 
     }
