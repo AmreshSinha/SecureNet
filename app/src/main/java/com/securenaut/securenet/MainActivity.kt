@@ -95,7 +95,7 @@ class MainActivity() : ComponentActivity() {
         }
 
 //        startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
-
+        Log.d("lostofapp", "onCreate: "+viewModel.getRecentScannedAppsDetails())
         setContent{
             SecureNetTheme {
                 val navController = rememberNavController()
@@ -118,7 +118,7 @@ class MainActivity() : ComponentActivity() {
                 }
             }
         }
-
+        viewModel.getRecentScannedAppsDetails()
         Log.wtf("rand", "Inside main activity")
 
         firebaseMessaging = FirebaseMessaging.getInstance()
