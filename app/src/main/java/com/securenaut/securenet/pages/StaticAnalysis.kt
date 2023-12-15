@@ -141,10 +141,10 @@ fun StaticAnalysisScreen(navController: NavController, app: String) {
         }
 
         Column {
-            Dropdown(type = "medium", title = "Certificate")
-            Dropdown(type = "secure", title = "Trackers")
-            Dropdown(type = "info", title = "Manifest")
-            Dropdown(type = "high", title = "Secrets")
+            Dropdown(type = "medium", title = "Certificate", subtitle = "This application has no privacy trackers", description = "Application vulnerable to Janus VulnerabilityApplication vulnerable to Janus VulnerabilityApplication vulnerable to Janus Vulnerability")
+            Dropdown(type = "secure", title = "Trackers", subtitle = "This application has no privacy trackers", description = "Application vulnerable to Janus VulnerabilityApplication vulnerable to Janus VulnerabilityApplication vulnerable to Janus Vulnerability")
+            Dropdown(type = "info", title = "Manifest", subtitle = "This application has no privacy trackers", description = "Application vulnerable to Janus VulnerabilityApplication vulnerable to Janus VulnerabilityApplication vulnerable to Janus Vulnerability")
+            Dropdown(type = "high", title = "Secrets", subtitle = "This application has no privacy trackers", description = "Application vulnerable to Janus VulnerabilityApplication vulnerable to Janus VulnerabilityApplication vulnerable to Janus Vulnerability")
         }
 
 

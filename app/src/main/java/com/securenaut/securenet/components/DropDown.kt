@@ -1,5 +1,8 @@
+import android.annotation.SuppressLint
 import android.content.pm.ModuleInfo
 import android.graphics.drawable.Icon
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,17 +13,24 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -46,8 +56,11 @@ fun Component(color : Color, content: Color, image: ImageVector, text: String ) 
             }
       }
 }
+@SuppressLint("UnrememberedMutableState")
 @Composable
-fun Dropdown(type: String, title: String) {
+fun Dropdown(type: String, title: String, subtitle: String, description: String) {
+    var isClicked by remember { mutableStateOf(false) }
+
     val map: Map<String, @Composable (String) -> Unit> = mapOf(
         "medium" to {Component(color = Color(0xFFFFC008), image = Icons.Filled.Warning, text = "Medium" , content = Color.Black) },
         "secure" to {Component(color = Color(0xFF28A745), image = Icons.Filled.Check, text = "Secure", content = Color.White) },
@@ -64,7 +77,11 @@ fun Dropdown(type: String, title: String) {
             .padding(vertical = 2.dp)
 
     ){
-        Column (modifier = Modifier.fillMaxWidth().padding(8.dp)){
+        Column (modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+            .clickable{isClicked = !isClicked}
+        ){
             Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Row(verticalAlignment = Alignment.CenterVertically, modifier= Modifier.fillMaxWidth(fraction = 0.9f)) {
                     Text(text = title,
@@ -73,10 +90,31 @@ fun Dropdown(type: String, title: String) {
                     )
                     map[type]?.invoke(type)
                 }
-                Icon(Icons.Filled.ArrowDropDown, "")
+
+                if(isClicked) {
+                    Icon(Icons.Filled.KeyboardArrowUp, "")
+                }
+                else{
+                    Icon(Icons.Filled.ArrowDropDown, "")
+                }
+
             }
-            Text(text = "This application has no privacy trackers", color = MaterialTheme.colorScheme.onSurfaceVariant);
+            Text(text = subtitle, color = MaterialTheme.colorScheme.onSurfaceVariant);
         }
+        if(isClicked) {
+            Column(modifier = Modifier.padding(horizontal = 8.dp)) {
+                Divider(color = Color.Gray, thickness = 1.dp)
+
+                Text(
+                    text = description,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = MaterialTheme.typography.labelMedium,
+                    modifier = Modifier.padding(vertical = 8.dp)
+
+                )
+            }
+        }
+
     }
 
 }
