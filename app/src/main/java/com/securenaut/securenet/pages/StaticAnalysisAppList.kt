@@ -27,6 +27,13 @@ import com.securenaut.securenet.components.AppCard
 import com.securenaut.securenet.components.HomeAppBar
 import com.securenaut.securenet.viewmodel.ScannedAppsViewModel
 import com.securenaut.securenet.pages.getGrantedPermissions
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
 
@@ -97,11 +104,13 @@ fun StaticAnalysisAppList(navController: NavController, viewModel: ScannedAppsVi
 //        }
 
         for (appData in appDataList) {
+
             AppCard(
                 navController = navController,
                 name = appData["appName"] as String,
                 lastScan = "7th May 2023",
-                appIconDrawable = appData["appIconDrawable"] as Drawable
+                appIconDrawable = appData["appIconDrawable"] as Drawable,
+                apkFile = appData["apkFile"] as File
             )
         }
 
