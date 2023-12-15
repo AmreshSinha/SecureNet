@@ -31,15 +31,14 @@ import com.securenaut.securenet.pages.HomeActivity
 import com.securenaut.securenet.pages.SettingsScreen
 import com.securenaut.securenet.pages.StaticAnalysisScreen
 import com.securenaut.securenet.ui.theme.SecureNetTheme
-
-import com.securenaut.securenet.viewmodel.ScannedAppsViewModel
+import com.securenaut.securenet.viewmodel.ApplicationViewModel
 import java.util.Calendar
 
 
 class MainActivity() : ComponentActivity() {
 
     private lateinit var firebaseMessaging: FirebaseMessaging
-    private val viewModel: ScannedAppsViewModel by viewModels()
+    private val viewModel: ApplicationViewModel by viewModels()
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -118,7 +117,7 @@ class MainActivity() : ComponentActivity() {
                 }
             }
         }
-
+        viewModel.getRecentScannedAppsDetails()
         Log.wtf("rand", "Inside main activity")
 
         firebaseMessaging = FirebaseMessaging.getInstance()

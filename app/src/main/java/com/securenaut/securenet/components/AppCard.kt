@@ -24,26 +24,37 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.compose.rememberImagePainter
 import com.securenaut.securenet.R
+import com.securenaut.securenet.viewmodel.ApplicationViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppCard(navController: NavController, name: String, lastScan: String, appIconDrawable: Drawable) {
+fun AppCard(
+    navController: NavController,
+    name: String,
+    lastScan: String,
+    appIconDrawable: Drawable,
+    viewModel: ApplicationViewModel
+) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         ),
         onClick = {
+            viewModel.getScorecard("821a5f1e160470c0023a45216dc73feb")
             navController.navigate("staticAnalysis/${name}")
         },
         modifier = Modifier
-            .fillMaxWidth().padding(horizontal = 0.dp, vertical = 16.dp)
+            .fillMaxWidth()
+            .padding(horizontal = 0.dp, vertical = 16.dp)
 
     )
     {
-        Row (modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp), verticalAlignment = Alignment.CenterVertically){
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp), verticalAlignment = Alignment.CenterVertically
+        ) {
             Image(
                 painter = rememberImagePainter(data = appIconDrawable),
                 contentDescription = "App Icon",
@@ -62,12 +73,12 @@ fun AppCard(navController: NavController, name: String, lastScan: String, appIco
                     modifier = Modifier
                         .padding(start = 14.dp),
                     textAlign = TextAlign.Center,
-                    color = Color.DarkGray ,
+                    color = Color.DarkGray,
                     style = MaterialTheme.typography.titleSmall
 
                 )
             }
-            Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End){
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 AsyncImage(
                     model = "",
                     placeholder = painterResource(id = R.drawable.icon),
