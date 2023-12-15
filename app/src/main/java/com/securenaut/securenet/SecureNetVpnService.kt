@@ -99,6 +99,7 @@ class SecureNetVpnService : VpnService() {
             .setSession("VPN-Demo")
             .setBlocking(true)
             .setConfigureIntent(mConfigureIntent)
+            .addDisallowedApplication("com.securenaut.securenet")
             .also {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     it.setMetered(false)
