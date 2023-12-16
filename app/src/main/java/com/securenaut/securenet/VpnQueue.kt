@@ -2,8 +2,6 @@ package com.securenaut.securenet
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.pm.PackageManager
-import android.net.ConnectivityManager
 import android.net.VpnService
 import android.os.Build
 import android.util.Base64
@@ -25,7 +23,6 @@ import java.util.concurrent.atomic.AtomicInteger
 import kotlin.experimental.and
 import kotlin.experimental.or
 import kotlinx.coroutines.*
-import java.net.InetAddress
 
 val deviceToNetworkUDPQueue = ArrayBlockingQueue<Packet>(1024)
 val deviceToNetworkTCPQueue = ArrayBlockingQueue<Packet>(1024)
@@ -161,7 +158,7 @@ object UdpSendWorker : Runnable {
     fun start(vpnService: VpnService, globalContext: Context) {
         this.vpnService = vpnService
         this.globalContext = globalContext
-        this.packetSender = PacketSender(vpnService, globalContext);
+        this.packetSender = PacketSender(vpnService, globalContext)
         udpTunnelQueue.clear()
         thread = Thread(this).apply {
             name = TAG
@@ -179,6 +176,7 @@ object UdpSendWorker : Runnable {
     override fun run() {
         while (!thread.isInterrupted) {
             val packet = deviceToNetworkUDPQueue.take()
+            packetSender?.sendPacket(packet)
             val destinationAddress = packet.ip4Header?.destinationAddress
             val udpHeader = packet.udpHeader
             val destinationPort = udpHeader?.destinationPort
@@ -234,7 +232,6 @@ object UdpSendWorker : Runnable {
                     udpSocketMap.remove(ipAndPort)
                 }
             }
-            packetSender?.sendPacket(packet)
         }
     }
 }
@@ -446,6 +443,7 @@ object TcpWorker : Runnable {
         while (!thread.isInterrupted) {
             val vpnService = this.vpnService ?: return
             val packet = deviceToNetworkTCPQueue.poll() ?: return
+            packetSender?.sendPacket(packet)
             val destinationAddress = packet.ip4Header?.destinationAddress
             val tcpHeader = packet.tcpHeader
             val destinationPort = tcpHeader?.destinationPort
@@ -462,7 +460,6 @@ object TcpWorker : Runnable {
                 pipeMap[ipAndPort] ?: throw IllegalStateException("There should be no null key in pipeMap:$ipAndPort")
             }
             handlePacket(packet, tcpPipe)
-            packetSender?.sendPacket(packet)
         }
     }
 
@@ -623,9 +620,6 @@ object TcpWorker : Runnable {
 
     }
 
-    /**
-     * 对外写数据
-     */
     private fun tryFlushWrite(tcpPipe: TcpPipe): Boolean {
         val channel: SocketChannel = tcpPipe.remoteSocketChannel
         val buffer = tcpPipe.remoteOutBuffer
@@ -663,8 +657,8 @@ object TcpWorker : Runnable {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 tcpPipe.remoteSocketChannel.shutdownOutput()
             } else {
-                //todo 下面这句会导致无法正确处理socket，但这里不处理没问题么？
-//                tcpPipe.remoteSocketChannel.close()
+                //todo: The following sentence will cause the socket to be unable to be processed correctly, but is it okay if it is not processed here?
+                //tcpPipe.remoteSocketChannel.close()
             }
         }
         return true

@@ -1,5 +1,6 @@
 package com.securenaut.securenet
 
+import org.xbill.DNS.Message
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.VpnService
@@ -20,6 +21,21 @@ class PacketSender {
         this.globalContext = globalContext
     }
 
+    fun isValidDnsPacket(payload: ByteBuffer): String {
+        return try {
+            // Convert ByteBuffer to ByteArray
+            val bytes = ByteArray(payload.remaining())
+            payload.get(bytes)
+
+            // Try to parse the DNS message
+            val msg = Message(bytes)
+            return msg.question.name.toString()
+            // If no exception is thrown, it is a valid DNS packet
+        } catch (e: Exception) {
+            // If any exception is thrown, it is not a valid DNS packet
+            return "-"
+        }
+    }
 
     fun sendPacket(packet: Packet?){
         if(packet != null){
@@ -29,11 +45,13 @@ class PacketSender {
             val connectivityManager = this.vpnService?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             var sourcePort: Int? = null
             var destinationPort: Int? = null
+            var vd = "-"
             var protocol: Int? = null
             if(packet.isUDP){
                 sourcePort = packet.udpHeader?.sourcePort
                 destinationPort = packet.udpHeader?.destinationPort
                 protocol = 17
+                vd = isValidDnsPacket(packet.backingBuffer!!.duplicate())
             }
             else if(packet.isTCP){
                 sourcePort = packet.tcpHeader?.sourcePort
@@ -52,10 +70,11 @@ class PacketSender {
             val packageManager = globalContext?.packageManager
             val packageName = packageManager?.getPackagesForUid(uid)?.firstOrNull()
             Log.w("UID","${packet.ip4Header?.destinationAddress?.hostAddress} -> ${uid} -> ${packageName}")
-            Log.d("Packet","${packet.backingBuffer!!.toHex()}" )
-
             if(packageName != this.vpnService?.packageName && packageName != "com.google.android.gsm"){
-                val body = "ip=${packet.ip4Header?.destinationAddress?.hostAddress}&port=${destinationPort}&package=$packageName"
+                var body = "ip=${packet.ip4Header?.destinationAddress?.hostAddress}&port=${destinationPort}&package=$packageName"
+                if(vd != "-"){
+                    body = "domain=$vd&package=$packageName"
+                }
                 if (reqCache.get(body) == null){
                     reqCache.put(body, true)
                     httpWorker.post("$apiURL/ip", body)
