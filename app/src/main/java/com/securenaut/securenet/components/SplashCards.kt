@@ -1,6 +1,8 @@
 package com.securenaut.securenet.components
 import AppBar
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -18,7 +20,8 @@ import com.securenaut.securenet.R
 @Composable
 fun HorizontalScrollScreen(navController: NavController) {
     val items = (1..9).map { "Item $it" }
-    Box(modifier = Modifier.fillMaxSize()) {
+        AppBar(navController = navController, name = "SecureNet")
+        Box(modifier = Modifier.fillMaxSize()) {
         BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
             LazyRow(
                 modifier = Modifier.fillMaxWidth(),
@@ -32,6 +35,7 @@ fun HorizontalScrollScreen(navController: NavController) {
     }
 }
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun SplashCard(index: Int, navController: NavController) {
 

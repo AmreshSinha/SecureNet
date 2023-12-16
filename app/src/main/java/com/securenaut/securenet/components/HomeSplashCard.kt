@@ -27,7 +27,7 @@ import com.securenaut.securenet.R
 fun HomeSplashCard(navController: NavController){
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
+            defaultElevation = 2.dp
         ),
         onClick = {navController.navigate("splashScreen")},
         modifier = Modifier
