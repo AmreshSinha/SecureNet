@@ -33,6 +33,7 @@ import androidx.navigation.navArgument
 import com.securenaut.securenet.components.HorizontalScrollScreen
 import com.securenaut.securenet.pages.HomeActivity
 import com.securenaut.securenet.pages.SettingsScreen
+import com.securenaut.securenet.pages.SplashScreen
 import com.securenaut.securenet.pages.StaticAnalysisScreen
 import com.securenaut.securenet.ui.theme.SecureNetTheme
 import org.json.JSONObject
@@ -60,7 +61,6 @@ class MainActivity() : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         FirebaseApp.initializeApp(this)
-
         // Create the NotificationChannel.
         val name = getString(R.string.channel_name)
         val descriptionText = getString(R.string.channel_description)
@@ -102,7 +102,10 @@ class MainActivity() : ComponentActivity() {
                 val navController = rememberNavController()
                 // Observe the data from the view model
 
-                NavHost(navController = navController, startDestination = "staticAnalysisAppList"){
+                NavHost(navController = navController, startDestination = "splash_screen"){
+                    composable("splash_screen") {
+                        SplashScreen(navController = navController)
+                    }
                     composable("home"){
                         HomeActivity(navController)
                     }
