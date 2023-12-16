@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -31,11 +33,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -85,4 +87,28 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging:23.4.0")
     implementation("com.google.firebase:firebase-analytics")
     implementation("androidx.activity:activity-ktx:1.9.0-alpha01")
+
+    implementation("com.google.dagger:hilt-android:2.44")
+    kapt("com.google.dagger:hilt-android-compiler:2.44")
+
+    val lifecycleVersion = "2.7.0-rc01"
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
+
+    val retrofitVersion = "2.9.0"
+    implementation ("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation ("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+    implementation ("com.squareup.okhttp3:okhttp:4.12.0")
+
+    val coroutinesVersion = "1.7.3"
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
+
+    implementation ("com.squareup.moshi:moshi:1.12.0")
+    implementation ("com.squareup.moshi:moshi-kotlin:1.12.0")
+
+    implementation ("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.google.code.gson:gson:2.8.8")
+    implementation("com.google.android.material:material:1.10.0")
+    implementation("io.coil-kt:coil:2.5.0")
 }

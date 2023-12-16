@@ -1,10 +1,14 @@
 package com.securenaut.securenet.components
 
+import android.graphics.drawable.Drawable
+import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,51 +23,79 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import coil.compose.rememberImagePainter
+import com.google.gson.JsonParser
+import com.securenaut.securenet.HttpWorker
 import com.securenaut.securenet.R
+import com.securenaut.securenet.data.GlobalStaticClass
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.asRequestBody
+import org.json.JSONObject
+import java.io.File
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppCard(navController: NavController, name: String, lastScan: String, imageUrl: String) {
+fun AppCard(navController: NavController, appName: String, lastScan: String, appIconDrawable: Drawable, apkFile: File) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         ),
         onClick = {
-            navController.navigate("staticAnalysis/${name}")
+            GlobalScope.launch(Dispatchers.Main) {
+                Log.i("card_button_clicked: ","$appName")
+                val staticAnalysisDataString = HttpWorker().postApk(apkFile)
+
+                Log.i("btn_press_resp",staticAnalysisDataString)
+
+                GlobalStaticClass.staticAnalysisReport = JSONObject(staticAnalysisDataString)
+
+                navController.navigate("staticAnalysis/$appName")
+            }
         },
         modifier = Modifier
             .fillMaxWidth()
+            .padding(horizontal = 0.dp, vertical = 16.dp)
 
     )
     {
-        Row (modifier = Modifier.fillMaxWidth().padding(10.dp), verticalAlignment = Alignment.CenterVertically){
-            AsyncImage(
-                model = imageUrl,
-                placeholder = painterResource(id = R.drawable.icon),
-                error = painterResource(id = R.drawable.icon),
-                contentDescription = "The delasign logo",
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp), verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                painter = rememberImagePainter(data = appIconDrawable),
+                contentDescription = "App Icon",
+                modifier = Modifier.size(48.dp)
             )
             Column {
                 Text(
-                    text = name,
+                    text = appName,
                     modifier = Modifier
                         .padding(start = 16.dp),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.titleMedium
-
                 )
                 Text(
                     text = "Last scanned on $lastScan",
                     modifier = Modifier
                         .padding(start = 14.dp),
                     textAlign = TextAlign.Center,
-                    color = Color.DarkGray ,
+                    color = Color.DarkGray,
                     style = MaterialTheme.typography.titleSmall
 
                 )
             }
-            Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End){
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 AsyncImage(
                     model = "",
                     placeholder = painterResource(id = R.drawable.icon),
@@ -72,6 +104,5 @@ fun AppCard(navController: NavController, name: String, lastScan: String, imageU
                 )
             }
         }
-
     }
 }
