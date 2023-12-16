@@ -19,6 +19,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import androidx.navigation.navArgument
+import com.securenaut.securenet.components.HorizontalScrollScreen
 import com.securenaut.securenet.pages.HomeActivity
 import com.securenaut.securenet.pages.SettingsScreen
 import com.securenaut.securenet.pages.StaticAnalysisScreen
@@ -96,6 +97,9 @@ class MainActivity() : ComponentActivity() {
                     composable("staticAnalysis/{app}") { backStackEntry ->
                         backStackEntry.arguments?.getString("app")
                             ?.let { StaticAnalysisScreen(navController, it) }
+                    }
+                    composable("splashScreen"){
+                        HorizontalScrollScreen(navController)
                     }
 
                 }

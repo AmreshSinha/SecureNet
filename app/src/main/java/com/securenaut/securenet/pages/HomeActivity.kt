@@ -25,6 +25,7 @@ import androidx.navigation.findNavController
 import com.securenaut.securenet.components.HomeAppBar
 import com.securenaut.securenet.components.HomeAppCountCard
 import com.securenaut.securenet.components.HomeScanCard
+import com.securenaut.securenet.components.HomeSplashCard
 import com.securenaut.securenet.components.HomeStaticAnalysisCard
 import com.securenaut.securenet.components.PrivacyDashboard
 import com.securenaut.securenet.ui.theme.SecureNetTheme
@@ -61,7 +62,9 @@ fun HomeActivity(navController: NavHostController) {
                     "label" to "Microphone",
                     "count" to 36f
                 )
-            ))
+            )
+            )
+            HomeSplashCard(navController)
         }
     }
 }
