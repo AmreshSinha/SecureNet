@@ -91,7 +91,7 @@ class HttpWorker {
 
             // Create a request with the API endpoint and the form body
             val scanRequest: Request = Request.Builder()
-                .url("http://129.154.45.152:8001/api/v1/scan")
+                .url("http://129.154.45.152:8001/api/v1/scorecard")
                 .header("Authorization", "c52cd00b9850b05fbc906ef9205afae6dcec6f4cca5b4c8ec7fced5c9d46864f") // Add your headers here
                 .post(scanFormBody)
                 .build()

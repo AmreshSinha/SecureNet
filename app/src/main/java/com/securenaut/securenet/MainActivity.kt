@@ -110,12 +110,8 @@ class MainActivity() : ComponentActivity() {
                     composable("settings"){
                         SettingsScreen(navController)
                     }
-                    composable("staticAnalysis/{app}") { backStackEntry ->
-                        val app = backStackEntry.arguments?.getString("app")
-
-                        app?.let { appName ->
-                            StaticAnalysisScreen(navController, appName)
-                        }
+                    composable("staticAnalysis") {
+                        StaticAnalysisScreen(navController)
                     }
                 }
             }

@@ -4,6 +4,7 @@ import AppBar
 import Dropdown
 import android.util.Log
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,6 +31,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import coil.compose.rememberImagePainter
 import com.securenaut.securenet.R
 import com.securenaut.securenet.components.BottomAppBar
 import com.securenaut.securenet.components.HomeAppBar
@@ -42,7 +44,7 @@ import com.securenaut.securenet.data.GlobalStaticClass
 import org.json.JSONObject
 
 @Composable
-fun StaticAnalysisScreen(navController: NavController, appName: String) {
+fun StaticAnalysisScreen(navController: NavController) {
 
     Log.i("INSIDE STATIC ANALYSIS SCREEN","INSIDE THIS SCREEN")
 
@@ -65,17 +67,15 @@ fun StaticAnalysisScreen(navController: NavController, appName: String) {
         Column(modifier = Modifier
             .fillMaxWidth()
             .padding(top = 16.dp),verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
-            AsyncImage(
-                model = "https://www.figma.com/file/XkWwY3inOCWMVKhNdE6L6E/SIH-'23?type=design&node-id=256-3490&mode=design&t=IAxsfSYe8rFD6amG-4",
-                placeholder = painterResource(id = R.drawable.icon),
-                error = painterResource(id = R.drawable.icon),
-                contentDescription = "The delasign logo",
+            Image(
+                painter = rememberImagePainter(data = GlobalStaticClass.appIconDrawable),
+                contentDescription = "App Icon",
+                modifier = Modifier.size(48.dp)
             )
             Text(
-                text = appName,
+                text = GlobalStaticClass.appName,
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.titleLarge
-
             )
             Text(
                 text = "Last scanned on 20 Feb 2023",
@@ -108,7 +108,7 @@ fun StaticAnalysisScreen(navController: NavController, appName: String) {
                         style = MaterialTheme.typography.titleSmall
                     )
                 }
-                SecurityScore(34)
+                SecurityScore(GlobalStaticClass.staticAnalysisReport["security_score"] as Int)
             }
         }
 

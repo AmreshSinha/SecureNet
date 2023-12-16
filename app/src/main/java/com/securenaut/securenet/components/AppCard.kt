@@ -57,8 +57,10 @@ fun AppCard(navController: NavController, appName: String, lastScan: String, app
                 Log.i("btn_press_resp",staticAnalysisDataString)
 
                 GlobalStaticClass.staticAnalysisReport = JSONObject(staticAnalysisDataString)
+                GlobalStaticClass.appIconDrawable = appIconDrawable
+                GlobalStaticClass.appName=appName
 
-                navController.navigate("staticAnalysis/$appName")
+                navController.navigate("staticAnalysis")
             }
         },
         modifier = Modifier
