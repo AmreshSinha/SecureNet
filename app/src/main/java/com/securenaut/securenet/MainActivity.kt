@@ -113,7 +113,7 @@ class MainActivity() : ComponentActivity() {
                         StaticAnalysisAppList(navController)
                     }
                     composable("settings"){
-                        SettingsScreen(navController)
+                        SettingsScreen(navController,activity = this@MainActivity)
                     }
                       
                     composable("splashScreen"){
