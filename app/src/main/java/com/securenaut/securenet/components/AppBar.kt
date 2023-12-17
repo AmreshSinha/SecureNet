@@ -1,4 +1,5 @@
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,9 +29,10 @@ fun AppBar(navController: NavController, name: String) {
             IconButton(onClick = {navController.navigate("home")}){Icon(Icons.Filled.ArrowBack, "Floating action button.", tint = MaterialTheme.colorScheme.primary)}
         },
         title = {
-            Surface(modifier = Modifier.fillMaxWidth()) {
+            Surface(modifier = Modifier.fillMaxWidth().background(color = Color.White)) {
                 Row(horizontalArrangement = Arrangement.Center) {
                     Text(
+                        modifier = Modifier.background(color = Color.White),
                         text = name,
                         maxLines = 1,
                         style = Typography.headlineSmall,

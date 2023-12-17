@@ -1,5 +1,6 @@
 package com.securenaut.securenet.pages
 
+import AppBar
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -64,7 +65,7 @@ fun SettingsScreen(navController: NavHostController,activity: ComponentActivity)
 
     Scaffold(
         topBar = {
-            HomeAppBar(navController)
+            AppBar(navController = navController, name = "Settings")
         }
     ) { contentPadding ->
         Column(
