@@ -38,6 +38,7 @@ import androidx.navigation.navArgument
 import com.securenaut.securenet.components.HorizontalScrollScreen
 import com.securenaut.securenet.pages.HomeActivity
 import com.securenaut.securenet.pages.SettingsScreen
+import com.securenaut.securenet.pages.SplashScreen
 import com.securenaut.securenet.pages.StaticAnalysisScreen
 import com.securenaut.securenet.ui.theme.SecureNetTheme
 import kotlinx.coroutines.CoroutineScope
@@ -131,7 +132,10 @@ class MainActivity() : ComponentActivity() {
                 val navController = rememberNavController()
                 // Observe the data from the view model
 
-                NavHost(navController = navController, startDestination = "home"){
+                NavHost(navController = navController, startDestination = "splash_screen"){
+                    composable("splash_screen") {
+                        SplashScreen(navController = navController)
+                    }
                     composable("home"){
                         HomeActivity(navController)
                     }
@@ -139,7 +143,7 @@ class MainActivity() : ComponentActivity() {
                         StaticAnalysisAppList(navController)
                     }
                     composable("settings"){
-                        SettingsScreen(navController)
+                        SettingsScreen(navController,activity = this@MainActivity)
                     }
                     composable("staticAnalysis") {
                         StaticAnalysisScreen(navController)

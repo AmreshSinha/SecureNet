@@ -101,7 +101,7 @@ fun StaticAnalysisScreen(navController: NavController) {
 
     Scaffold(
         topBar = {
-            AppBar(navController, name = "Static Analysis")
+            AppBar(navController, name = "Static Analysis", onBackScreen = "staticAnalysisAppList")
         },
         bottomBar = {
             BottomAppBar(context = LocalContext.current)
