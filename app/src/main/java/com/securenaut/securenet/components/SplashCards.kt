@@ -20,7 +20,7 @@ import com.securenaut.securenet.R
 @Composable
 fun HorizontalScrollScreen(navController: NavController) {
     val items = (1..9).map { "Item $it" }
-        AppBar(navController = navController, name = "SecureNet")
+        AppBar(navController = navController, name = "SecureNet", onBackScreen = "home")
         Box(modifier = Modifier.fillMaxSize()) {
         BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
             LazyRow(

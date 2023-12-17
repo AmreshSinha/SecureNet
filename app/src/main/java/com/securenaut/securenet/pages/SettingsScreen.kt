@@ -65,7 +65,7 @@ fun SettingsScreen(navController: NavHostController,activity: ComponentActivity)
 
     Scaffold(
         topBar = {
-            AppBar(navController = navController, name = "Settings")
+            AppBar(navController = navController, name = "Settings",onBackScreen="home")
         }
     ) { contentPadding ->
         Column(

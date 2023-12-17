@@ -33,7 +33,7 @@ fun SplashScreen (navController: NavController) {
                     OvershootInterpolator(6f).getInterpolation(it)
                 }))
         // Customize the delay time
-        delay(1500L)
+        delay(250L)
         navController.navigate("home")
     }
 

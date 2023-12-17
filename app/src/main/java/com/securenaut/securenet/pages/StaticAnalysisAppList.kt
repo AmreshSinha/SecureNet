@@ -41,7 +41,7 @@ import java.io.File
 @Composable
 fun StaticAnalysisAppList(navController: NavController) {
     // Observe the data from the view model
-    AppBar(navController = navController, name = "Static Analysis")
+    AppBar(navController = navController, name = "Static Analysis", onBackScreen = "home")
     Column(
         modifier = Modifier
             .padding(top = 64.dp, start = 16.dp, end = 16.dp)
