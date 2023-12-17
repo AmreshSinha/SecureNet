@@ -1,4 +1,5 @@
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,15 +23,16 @@ import com.securenaut.securenet.ui.theme.Typography
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppBar(navController: NavController, name: String) {
+fun AppBar(navController: NavController, name: String,onBackScreen:String) {
     CenterAlignedTopAppBar(
         navigationIcon = {
-            IconButton(onClick = {navController.navigate("home")}){Icon(Icons.Filled.ArrowBack, "Floating action button.", tint = MaterialTheme.colorScheme.primary)}
+            IconButton(onClick = {navController.navigate(onBackScreen)}){Icon(Icons.Filled.ArrowBack, "Floating action button.", tint = MaterialTheme.colorScheme.primary)}
         },
         title = {
-            Surface(modifier = Modifier.fillMaxWidth()) {
-                Row(horizontalArrangement = Arrangement.Center) {
+                Row(modifier = Modifier.background(color = Color.White),
+                    horizontalArrangement = Arrangement.Center) {
                     Text(
+                        modifier = Modifier.background(color = Color.White),
                         text = name,
                         maxLines = 1,
                         style = Typography.headlineSmall,
@@ -38,7 +40,6 @@ fun AppBar(navController: NavController, name: String) {
                         overflow = TextOverflow.Ellipsis
                     )
                 }
-            }
         },
         colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color.White)
     )

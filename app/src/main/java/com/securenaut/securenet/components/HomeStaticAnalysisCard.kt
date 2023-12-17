@@ -52,7 +52,7 @@ fun HomeStaticAnalysisCard(navController: NavController) {
                         },
                         border = BorderStroke(width = 1.dp, color = Purple)
                     ) {
-                        Text(text = "Scan", style = Typography.labelSmall, color = Purple)
+                        Text(text = "Scan", style = Typography.bodyMedium, color = Purple)
                     }
                 }
             }
