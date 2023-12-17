@@ -19,6 +19,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavType
@@ -29,10 +34,16 @@ import androidx.navigation.navArgument
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
+import androidx.navigation.navArgument
+import com.securenaut.securenet.components.HorizontalScrollScreen
 import com.securenaut.securenet.pages.HomeActivity
 import com.securenaut.securenet.pages.SettingsScreen
 import com.securenaut.securenet.pages.StaticAnalysisScreen
 import com.securenaut.securenet.ui.theme.SecureNetTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
 
@@ -56,8 +67,6 @@ class MainActivity() : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.wtf("rand", "Inside main activity")
         super.onCreate(savedInstanceState)
-
-        FirebaseApp.initializeApp(this)
 
         // Create the NotificationChannel.
         val name = getString(R.string.channel_name)
@@ -96,11 +105,33 @@ class MainActivity() : ComponentActivity() {
 //        startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
 
         setContent{
+
+            Log.wtf("rand", "Inside main activity")
+            FirebaseApp.initializeApp(this)
+            firebaseMessaging = FirebaseMessaging.getInstance()
+
+
+            // SETTING DEVICE FCM TOKEN ON SERVER ON EACH LAUNCH
+            firebaseMessaging.token.addOnCompleteListener { task ->
+                Log.wtf("rand", "Inside token listener")
+                if (task.isSuccessful) {
+                    val token = task.result
+                    Log.i("rand_token", "$token abc")
+                    CoroutineScope(Dispatchers.IO).launch {
+                        HttpWorker().setFCMToken(token = token)
+                    }
+                    Log.i("rand_token","Updated Token")
+                } else {
+                    Log.i("rand", "Failed to get token")
+                }
+            }
+
+
             SecureNetTheme {
                 val navController = rememberNavController()
                 // Observe the data from the view model
 
-                NavHost(navController = navController, startDestination = "staticAnalysisAppList"){
+                NavHost(navController = navController, startDestination = "home"){
                     composable("home"){
                         HomeActivity(navController)
                     }
@@ -114,21 +145,6 @@ class MainActivity() : ComponentActivity() {
                         StaticAnalysisScreen(navController)
                     }
                 }
-            }
-        }
-
-        Log.wtf("rand", "Inside main activity")
-
-        firebaseMessaging = FirebaseMessaging.getInstance()
-
-        firebaseMessaging.token.addOnCompleteListener { task ->
-            Log.wtf("rand", "Inside token listener")
-            if (task.isSuccessful) {
-                val token = task.result
-                Log.i("rand", "Token: $token")
-                // Send token to server
-            } else {
-                Log.i("rand", "Failed to get token")
             }
         }
 

@@ -5,6 +5,7 @@ import org.json.JSONObject
 
 object GlobalStaticClass {
 
+    lateinit var apkHash : String
     lateinit var staticAnalysisReport : JSONObject
     lateinit var appIconDrawable: Drawable
     lateinit var appName: String

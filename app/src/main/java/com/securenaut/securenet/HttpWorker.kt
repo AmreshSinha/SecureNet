@@ -1,6 +1,7 @@
 package com.securenaut.securenet
 
 import android.util.Log
+import com.securenaut.securenet.data.GlobalStaticClass
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -82,6 +83,8 @@ class HttpWorker {
                 jsonObj = JSONObject(response.body?.string())
             }
 
+            GlobalStaticClass.apkHash = jsonObj["hash"] as String
+
 
             val scanFormBody: RequestBody = FormBody.Builder()
                 .add("hash",jsonObj["hash"] as String)
@@ -91,7 +94,7 @@ class HttpWorker {
 
             // Create a request with the API endpoint and the form body
             val scanRequest: Request = Request.Builder()
-                .url("http://129.154.45.152:8001/api/v1/scorecard")
+                .url("http://129.154.45.152:8001/api/v1/scan")
                 .header("Authorization", "c52cd00b9850b05fbc906ef9205afae6dcec6f4cca5b4c8ec7fced5c9d46864f") // Add your headers here
                 .post(scanFormBody)
                 .build()
@@ -109,6 +112,39 @@ class HttpWorker {
 //            Log.i("json_resp","$jsonObj")
 //            jsonObjString
         }
+    }
+
+    suspend fun downloadReportPdf(hash: String): Response {
+        val client = OkHttpClient()
+
+        // Build the request body with the hash parameter
+        val requestBody = "{\"hash\": \"$hash\"}".toRequestBody("application/json".toMediaTypeOrNull())
+
+        // Build the request
+        val request = Request.Builder()
+            .url("http://129.154.45.152:8001/api/v1/download_pdf")
+            .post(requestBody)
+            .build()
+
+        // Make the API call
+        return client.newCall(request).execute()
+    }
+
+    suspend fun setFCMToken(token: String){
+        val client = OkHttpClient()
+
+        // Build the request body with the hash parameter
+        val requestBody = "{\"token\": \"$token\"}".toRequestBody("application/json".toMediaTypeOrNull())
+
+        // Build the request
+        val request = Request.Builder()
+            .url("https://securenet.photoai.pro/fcm")
+            .post(requestBody)
+            .build()
+
+        // Make the API call
+        val resp = client.newCall(request).execute()
+        resp.body?.let { Log.i("set_fcm", it.string()) }
     }
 
 }

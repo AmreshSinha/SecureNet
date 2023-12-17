@@ -62,7 +62,7 @@ fun Dropdown(type: String, title: String, subtitle: String, description: String)
     var isClicked by remember { mutableStateOf(false) }
 
     val map: Map<String, @Composable (String) -> Unit> = mapOf(
-        "medium" to {Component(color = Color(0xFFFFC008), image = Icons.Filled.Warning, text = "Medium" , content = Color.Black) },
+        "warning" to {Component(color = Color(0xFFFFC008), image = Icons.Filled.Warning, text = "Warning" , content = Color.Black) },
         "secure" to {Component(color = Color(0xFF28A745), image = Icons.Filled.Check, text = "Secure", content = Color.White) },
         "info" to {Component(color = Color(0xFF14A2B8), image = Icons.Filled.Info, text = "Info", content = Color.White ) },
         "high" to {Component(color = Color(0xFFDC3545), image = Icons.Filled.Lock, text = "High", content = Color.White )}
