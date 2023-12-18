@@ -31,6 +31,7 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import androidx.navigation.navArgument
 import com.securenaut.securenet.components.HorizontalScrollScreen
+import com.securenaut.securenet.pages.DAReportScreen
 import com.securenaut.securenet.pages.HomeActivity
 import com.securenaut.securenet.pages.SettingsScreen
 import com.securenaut.securenet.pages.SplashScreen
@@ -108,6 +109,7 @@ class MainActivity() : ComponentActivity() {
                     }
                     composable("home"){
                         HomeActivity(navController)
+//                        DAReportScreen()
                     }
                     composable("staticAnalysisAppList"){
                         StaticAnalysisAppList(navController)
@@ -126,6 +128,9 @@ class MainActivity() : ComponentActivity() {
                         app?.let { appName ->
                             StaticAnalysisScreen(navController, appName)
                         }
+                    }
+                    composable("DAReport") {
+                        DAReportScreen()
                     }
                 }
             }
