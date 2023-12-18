@@ -1,8 +1,6 @@
 package com.securenaut.securenet.components
 
-import android.graphics.drawable.Drawable
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,59 +20,30 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.compose.rememberImagePainter
-import com.google.gson.JsonParser
 import com.securenaut.securenet.HttpWorker
 import com.securenaut.securenet.R
 import com.securenaut.securenet.data.GlobalStaticClass
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody.Companion.asRequestBody
 import org.json.JSONObject
-import java.io.File
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
 
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppCard(
-    navController: NavController,
-    appName: String?,
-    lastScan: String?,
-    appIconDrawable: Drawable?,
-    apkFile: File?
-) {
+@OptIn(ExperimentalMaterial3Api::class)
+fun DAAppCard(appName:String,lastScan:String) {
+
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         ),
         onClick = {
-            if (!appName.isNullOrBlank() && lastScan != null && appIconDrawable != null && apkFile != null) {
-                GlobalScope.launch(Dispatchers.Main) {
-                    Log.i("card_button_clicked: ", "$appName")
-                    val staticAnalysisDataString = HttpWorker().postApk(apkFile)
 
-                    Log.i("btn_press_resp", staticAnalysisDataString)
-
-                    GlobalStaticClass.staticAnalysisReport = JSONObject(staticAnalysisDataString)
-
-                    navController.navigate("staticAnalysis/$appName")
-                }
-            }else{
-                Log.e("AppCard", "One or more parameters are null or empty")
-            }
         },
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 0.dp, vertical = 16.dp)
+            .padding(horizontal = 0.dp, vertical = 4.dp)
 
     )
     {
@@ -83,16 +52,15 @@ fun AppCard(
                 .fillMaxWidth()
                 .padding(10.dp), verticalAlignment = Alignment.CenterVertically
         ) {
-            appIconDrawable?.let {
                 Image(
-                    painter = rememberImagePainter(data = it),
+                    painter = painterResource(id = R.drawable.icon),
                     contentDescription = "App Icon",
                     modifier = Modifier.size(48.dp)
                 )
                 Column {
                     appName?.let {
                         Text(
-                            text = it,
+                            text = appName,
                             modifier = Modifier
                                 .padding(start = 16.dp),
                             textAlign = TextAlign.Center,
@@ -101,7 +69,7 @@ fun AppCard(
                     }
                     lastScan?.let {
                         Text(
-                            text = "Last scanned on $it",
+                            text = "Last scanned on $lastScan",
                             modifier = Modifier
                                 .padding(start = 14.dp),
                             textAlign = TextAlign.Center,
@@ -121,4 +89,3 @@ fun AppCard(
             }
         }
     }
-}
