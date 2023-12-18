@@ -112,5 +112,6 @@ dependencies {
     implementation("com.google.android.material:material:1.10.0")
     implementation("io.coil-kt:coil:2.5.0")
 
-
+    implementation("com.google.maps.android:maps-compose:2.7.2")
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
 }
