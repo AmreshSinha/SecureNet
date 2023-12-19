@@ -35,6 +35,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -52,6 +53,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.compose.rememberImagePainter
+import com.google.ai.client.generativeai.GenerativeModel
 import com.securenaut.securenet.R
 import com.securenaut.securenet.components.BottomAppBar
 import com.securenaut.securenet.components.HomeAppBar
@@ -61,6 +63,9 @@ import com.securenaut.securenet.components.PieChartLabel
 import com.securenaut.securenet.components.SecurityScore
 import com.securenaut.securenet.components.SmallElevatedCard
 import com.securenaut.securenet.data.GlobalStaticClass
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -101,7 +106,7 @@ fun StaticAnalysisScreen(navController: NavController) {
 
     Scaffold(
         topBar = {
-            AppBar(navController, name = "Static Analysis", onBackScreen = "staticAnalysisAppList")
+            AppBar(navController, name = "Static Analysis", onBackScreen = "prelimnaryCheck")
         },
         bottomBar = {
             BottomAppBar(context = LocalContext.current)

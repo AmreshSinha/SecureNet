@@ -1,5 +1,6 @@
 package com.securenaut.securenet.components
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -22,10 +23,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.google.ai.client.generativeai.GenerativeModel
 import com.securenaut.securenet.R
 import com.securenaut.securenet.ui.theme.CardBorder
 import com.securenaut.securenet.ui.theme.Typography
 import com.securenaut.securenet.ui.theme.White
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.io.IOException
+
+
+
 
 @Composable
 fun HomeScanCard(navController: NavHostController){
@@ -69,7 +78,7 @@ fun HomeScanCard(navController: NavHostController){
                     horizontalArrangement = Arrangement.End
                 ) {
                     Button(onClick = {
-                        navController.navigate("staticAnalysisAppList")
+
                     }) {
                         Text(
                             text = "Scan",

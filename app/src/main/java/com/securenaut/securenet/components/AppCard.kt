@@ -44,23 +44,21 @@ import java.nio.charset.StandardCharsets
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppCard(navController: NavController, appName: String, lastScan: String, appIconDrawable: Drawable, apkFile: File) {
+fun AppCard(navController: NavController, appName: String, packageName: String, lastScan: String, appIconDrawable: Drawable, apkFile: File) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         ),
         onClick = {
+
+            GlobalStaticClass.apkFile=apkFile
+            GlobalStaticClass.appIconDrawable = appIconDrawable
+            GlobalStaticClass.appName=appName
+            GlobalStaticClass.packageName=packageName
+
             GlobalScope.launch(Dispatchers.Main) {
                 Log.i("card_button_clicked: ","$appName")
-                val staticAnalysisDataString = HttpWorker().postApk(apkFile)
-
-                Log.i("btn_press_resp",staticAnalysisDataString)
-
-                GlobalStaticClass.staticAnalysisReport = JSONObject(staticAnalysisDataString)
-                GlobalStaticClass.appIconDrawable = appIconDrawable
-                GlobalStaticClass.appName=appName
-
-                navController.navigate("staticAnalysis")
+                navController.navigate("prelimnaryCheck")
             }
         },
         modifier = Modifier

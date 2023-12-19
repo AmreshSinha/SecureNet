@@ -24,6 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavType
@@ -35,8 +36,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import androidx.navigation.navArgument
+import com.google.ai.client.generativeai.GenerativeModel
 import com.securenaut.securenet.components.HorizontalScrollScreen
 import com.securenaut.securenet.pages.HomeActivity
+import com.securenaut.securenet.pages.PrelimnaryCheck
 import com.securenaut.securenet.pages.SettingsScreen
 import com.securenaut.securenet.pages.SplashScreen
 import com.securenaut.securenet.pages.StaticAnalysisScreen
@@ -44,6 +47,8 @@ import com.securenaut.securenet.ui.theme.SecureNetTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import android.content.Context
+import com.securenaut.securenet.data.GlobalStaticClass
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
@@ -107,6 +112,8 @@ class MainActivity() : ComponentActivity() {
 
         setContent{
 
+//            GlobalStaticClass.sharedPrefInstance = getSharedPreferences("securenet_pref", Context.MODE_PRIVATE)
+
             Log.wtf("rand", "Inside main activity")
             FirebaseApp.initializeApp(this)
             firebaseMessaging = FirebaseMessaging.getInstance()
@@ -132,7 +139,7 @@ class MainActivity() : ComponentActivity() {
                 val navController = rememberNavController()
                 // Observe the data from the view model
 
-                NavHost(navController = navController, startDestination = "splash_screen"){
+                NavHost(navController = navController, startDestination = "home"){
                     composable("splash_screen") {
                         SplashScreen(navController = navController)
                     }
@@ -147,6 +154,9 @@ class MainActivity() : ComponentActivity() {
                     }
                     composable("staticAnalysis") {
                         StaticAnalysisScreen(navController)
+                    }
+                    composable("prelimnaryCheck") {
+                        PrelimnaryCheck(navController)
                     }
                 }
             }

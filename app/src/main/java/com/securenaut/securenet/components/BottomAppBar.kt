@@ -49,6 +49,7 @@ fun BottomAppBar(context: Context) {
                                 onClick = {
                                     CoroutineScope(Dispatchers.IO).launch {
                                         try {
+
                                             val response = HttpWorker().downloadReportPdf(hash = GlobalStaticClass.apkHash)
                                             // Handle the PDF download response here (e.g., save the file)
 

@@ -14,6 +14,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -24,10 +25,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.google.ai.client.generativeai.GenerativeModel
 import com.securenaut.securenet.R
 import com.securenaut.securenet.components.AppCard
 import com.securenaut.securenet.components.HomeAppBar
+import com.securenaut.securenet.data.GlobalStaticClass
 import com.securenaut.securenet.pages.getGrantedPermissions
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -40,6 +46,7 @@ import java.io.File
 
 @Composable
 fun StaticAnalysisAppList(navController: NavController) {
+
     // Observe the data from the view model
     AppBar(navController = navController, name = "Static Analysis", onBackScreen = "home")
     Column(
@@ -52,8 +59,6 @@ fun StaticAnalysisAppList(navController: NavController) {
         val installedApplications =
             packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
         var appDataList: MutableList<MutableMap<String, Any>> = mutableListOf()
-
-        // Filter out system apps
         val installedApps = installedApplications.filter { appInfo ->
             appInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0
         }
@@ -68,8 +73,10 @@ fun StaticAnalysisAppList(navController: NavController) {
                 Log.i("package_name", "$packageName")
                 val packageInfo = packageManager.getPackageInfo(packageName, 0)
                 val sourceDir = packageInfo.applicationInfo.sourceDir
+                GlobalStaticClass.srcDir=sourceDir
                 val apkFile = File(sourceDir)
                 val grantedPermissions = getGrantedPermissions(packageName, packageManager)
+                GlobalStaticClass.appPermissions=grantedPermissions
                 val appIconDrawable = appInfo.loadIcon(packageManager)
                 Log.i("app_name", "$appName")
                 Log.i(
@@ -80,7 +87,8 @@ fun StaticAnalysisAppList(navController: NavController) {
                     mapOf(
                         "appName" to appName,
                         "appIconDrawable" to appIconDrawable,
-                        "apkFile" to apkFile
+                        "apkFile" to apkFile,
+                        "packageName" to packageName
                     ) as MutableMap<String, Any>
                 )
             } catch (e: PackageManager.NameNotFoundException) {
@@ -103,10 +111,10 @@ fun StaticAnalysisAppList(navController: NavController) {
 //        }
 
         for (appData in appDataList) {
-
             AppCard(
                 navController = navController,
                 appName = appData["appName"] as String,
+                packageName = appData["packageName"] as String,
                 lastScan = "7th May 2023",
                 appIconDrawable = appData["appIconDrawable"] as Drawable,
                 apkFile = appData["apkFile"] as File
