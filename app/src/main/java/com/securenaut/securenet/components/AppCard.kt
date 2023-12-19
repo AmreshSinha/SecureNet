@@ -45,31 +45,21 @@ import java.nio.charset.StandardCharsets
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppCard(
-    navController: NavController,
-    appName: String?,
-    lastScan: String?,
-    appIconDrawable: Drawable?,
-    apkFile: File?
-) {
+fun AppCard(navController: NavController, appName: String, packageName: String, lastScan: String, appIconDrawable: Drawable, apkFile: File) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         ),
         onClick = {
-            if (!appName.isNullOrBlank() && lastScan != null && appIconDrawable != null && apkFile != null) {
-                GlobalScope.launch(Dispatchers.Main) {
-                    Log.i("card_button_clicked: ", "$appName")
-                    val staticAnalysisDataString = HttpWorker().postApk(apkFile)
 
-                    Log.i("btn_press_resp", staticAnalysisDataString)
+            GlobalStaticClass.apkFile=apkFile
+            GlobalStaticClass.appIconDrawable = appIconDrawable
+            GlobalStaticClass.appName=appName
+            GlobalStaticClass.packageName=packageName
 
-                    GlobalStaticClass.staticAnalysisReport = JSONObject(staticAnalysisDataString)
-
-                    navController.navigate("staticAnalysis/$appName")
-                }
-            }else{
-                Log.e("AppCard", "One or more parameters are null or empty")
+            GlobalScope.launch(Dispatchers.Main) {
+                Log.i("card_button_clicked: ","$appName")
+                navController.navigate("prelimnaryCheck")
             }
         },
         modifier = Modifier

@@ -29,7 +29,7 @@ fun HomeSplashCard(navController: NavController){
         elevation = CardDefaults.cardElevation(
             defaultElevation = 2.dp
         ),
-        onClick = {navController.navigate("splashScreen")},
+        onClick = {navController.navigate("splash_screen")},
         modifier = Modifier
             .fillMaxWidth().padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
     )

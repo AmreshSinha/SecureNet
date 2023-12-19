@@ -61,7 +61,7 @@ fun PieChartLabel(){
                 drawCircle(color = Color(0xFFFFC107))
             })
             Text(
-                text = "  Medium",
+                text = "  Warning",
                 style = MaterialTheme.typography.titleSmall,
             )
         }
