@@ -140,14 +140,14 @@ class MainActivity() : ComponentActivity() {
                 val navController = rememberNavController()
                 // Observe the data from the view model
 
-                NavHost(navController = navController, startDestination = "home"){
+                NavHost(navController = navController, startDestination = "splash_screen"){
                     composable("splash_screen") {
                         SplashScreen(navController = navController)
                     }
                     composable("home"){
 
-                        HomeActivity(navController)
-//                        DAReportScreen(navController)
+//                        HomeActivity(navController)
+                        DAReportScreen(navController)
 
                     }
                     composable("dynamic"){
