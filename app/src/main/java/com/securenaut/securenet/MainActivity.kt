@@ -168,6 +168,10 @@ class MainActivity() : ComponentActivity() {
                     composable("DAReport") {
                         DAReportScreen(navController)
                     }
+
+                    composable("splashScreen") {
+                        HorizontalScrollScreen(navController = navController)
+                    }
                 }
             }
         }
