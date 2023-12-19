@@ -109,8 +109,8 @@ class MainActivity() : ComponentActivity() {
                         SplashScreen(navController = navController)
                     }
                     composable("home"){
-                        HomeActivity(navController)
-//                        DAListScreen(navController)
+//                        HomeActivity(navController)
+                        DAListScreen(navController)
                     }
                     composable("staticAnalysisAppList"){
                         StaticAnalysisAppList(navController)
