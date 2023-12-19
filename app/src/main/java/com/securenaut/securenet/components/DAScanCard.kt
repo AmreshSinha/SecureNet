@@ -1,5 +1,6 @@
 package com.securenaut.securenet.components
 
+import android.content.Intent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -19,17 +20,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.securenaut.securenet.R
+import com.securenaut.securenet.VpnActivity
 import com.securenaut.securenet.ui.theme.CardBorder
 import com.securenaut.securenet.ui.theme.Typography
 import com.securenaut.securenet.ui.theme.White
 import com.securenaut.securenet.ui.theme.textGray
 
 @Composable
-fun DAScanCard(navController: NavHostController) {
+fun DAScanCard(navController: NavHostController, vpnButton: @Composable () -> Unit) {
+    val context = LocalContext.current
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -74,15 +78,7 @@ fun DAScanCard(navController: NavHostController) {
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
                 ) {
-                    Button(onClick = {
-                        navController.navigate("staticAnalysisAppList")
-                    }) {
-                        Text(
-                            text = "Turn on VPN",
-                            style = Typography.bodyMedium,
-                            color = White
-                        )
-                    }
+                    vpnButton()
                 }
             }
         }

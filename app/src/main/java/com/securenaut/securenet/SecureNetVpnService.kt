@@ -28,10 +28,10 @@ class SecureNetVpnService : VpnService() {
     private lateinit var vpnInterface: ParcelFileDescriptor
 
     override fun onCreate() {
-        UdpSendWorker.start(this)
+        UdpSendWorker.start(this, applicationContext)
         UdpReceiveWorker.start(this)
         UdpSocketCleanWorker.start()
-        TcpWorker.start(this)
+        TcpWorker.start(this, applicationContext)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -99,6 +99,7 @@ class SecureNetVpnService : VpnService() {
             .setSession("VPN-Demo")
             .setBlocking(true)
             .setConfigureIntent(mConfigureIntent)
+            .addDisallowedApplication("com.securenaut.securenet")
             .also {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     it.setMetered(false)

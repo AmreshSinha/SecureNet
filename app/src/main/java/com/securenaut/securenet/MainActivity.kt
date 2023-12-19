@@ -19,6 +19,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavType
@@ -109,8 +110,13 @@ class MainActivity() : ComponentActivity() {
                         SplashScreen(navController = navController)
                     }
                     composable("home"){
-//                        HomeActivity(navController)
-                        DAReportScreen(navController)
+
+                        HomeActivity(navController)
+//                        DAReportScreen(navController)
+
+                    }
+                    composable("dynamic"){
+
                     }
                     composable("staticAnalysisAppList"){
                         StaticAnalysisAppList(navController)

@@ -38,7 +38,7 @@ import kotlinx.coroutines.delay
 
 
 @Composable
-fun DAListScreen(navController: NavHostController) {
+fun DAListScreen(navController: NavHostController, vpnButton: @Composable () -> Unit) {
     val dynamicPosition = LatLng(40.7128, -74.0060)
 
     // Dummy array of app names
@@ -72,7 +72,7 @@ fun DAListScreen(navController: NavHostController) {
                 .padding(horizontal = 16.dp)
                 .fillMaxHeight()
         ) {
-            DAScanCard(navController = navController)
+            DAScanCard(navController = navController, vpnButton)
             if (isLoading) {
                 Row(
                     modifier = Modifier.fillMaxWidth().fillMaxHeight().padding(vertical = 16.dp),

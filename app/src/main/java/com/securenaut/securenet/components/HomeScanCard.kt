@@ -1,5 +1,6 @@
 package com.securenaut.securenet.components
 
+import android.content.Intent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -19,16 +20,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.securenaut.securenet.R
+import com.securenaut.securenet.VpnActivity
 import com.securenaut.securenet.ui.theme.CardBorder
 import com.securenaut.securenet.ui.theme.Typography
 import com.securenaut.securenet.ui.theme.White
 
 @Composable
 fun HomeScanCard(navController: NavHostController){
+    val context = LocalContext.current
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -69,7 +73,8 @@ fun HomeScanCard(navController: NavHostController){
                     horizontalArrangement = Arrangement.End
                 ) {
                     Button(onClick = {
-                        navController.navigate("staticAnalysisAppList")
+                        val intent = Intent(context, VpnActivity::class.java)
+                        context.startActivity(intent)
                     }) {
                         Text(
                             text = "Scan",
