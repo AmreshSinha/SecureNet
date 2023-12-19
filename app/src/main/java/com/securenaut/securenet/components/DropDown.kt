@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Warning
@@ -95,7 +96,7 @@ fun Dropdown(type: String, title: String, subtitle: String, description: String)
                     Icon(Icons.Filled.KeyboardArrowUp, "")
                 }
                 else{
-                    Icon(Icons.Filled.ArrowDropDown, "")
+                    Icon(Icons.Filled.KeyboardArrowDown, "")
                 }
 
             }
