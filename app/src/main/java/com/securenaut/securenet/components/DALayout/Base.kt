@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.google.android.gms.maps.model.LatLng
 import com.securenaut.securenet.R
 import com.securenaut.securenet.components.DropDownBar
+import com.securenaut.securenet.components.GenAI
 import com.securenaut.securenet.components.MapBox
 import com.securenaut.securenet.ui.theme.Typography
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
@@ -38,7 +41,14 @@ fun Base() {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
                 DropDownBar()
             }
+
+
             Spacer(modifier = Modifier.height(16.dp))
+            Row (modifier = Modifier.fillMaxWidth()) {
+                GenAI(summary = "Summarize sdjdvs svjs sjvnsv sjnvsjnv sfjvnsfj ssjvnsnjv kjsnvfksj sj kskjd skjd", actions = "Supporting line text lorem ipsum dolor sit amet, consectetur. Supporting line text lorem ipsum dolor sit amet, consectetur. Supporting line text lorem ipsum dolor sit amet, consectetur.")
+
+            }
+
             Row(
                 modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -123,5 +133,5 @@ fun Base() {
                 }
             }
         }
+        }
     }
-}
