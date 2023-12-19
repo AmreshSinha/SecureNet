@@ -78,7 +78,7 @@ fun DAScanCard(navController: NavHostController) {
                         navController.navigate("staticAnalysisAppList")
                     }) {
                         Text(
-                            text = "Scan",
+                            text = "Turn on VPN",
                             style = Typography.bodyMedium,
                             color = White
                         )
