@@ -75,7 +75,7 @@ fun DAListScreen(navController: NavHostController) {
             DAScanCard(navController = navController)
             if (isLoading) {
                 Row(
-                    modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+                    modifier = Modifier.fillMaxWidth().fillMaxHeight().padding(vertical = 16.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
