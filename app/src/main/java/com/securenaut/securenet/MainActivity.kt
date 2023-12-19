@@ -36,8 +36,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import androidx.navigation.navArgument
-import com.google.ai.client.generativeai.GenerativeModel
 import com.securenaut.securenet.components.HorizontalScrollScreen
+import com.securenaut.securenet.pages.DAListScreen
+import com.securenaut.securenet.pages.DAReportScreen
 import com.securenaut.securenet.pages.HomeActivity
 import com.securenaut.securenet.pages.PrelimnaryCheck
 import com.securenaut.securenet.pages.SettingsScreen
@@ -144,7 +145,13 @@ class MainActivity() : ComponentActivity() {
                         SplashScreen(navController = navController)
                     }
                     composable("home"){
+
                         HomeActivity(navController)
+//                        DAReportScreen(navController)
+
+                    }
+                    composable("dynamic"){
+
                     }
                     composable("staticAnalysisAppList"){
                         StaticAnalysisAppList(navController)
@@ -157,6 +164,9 @@ class MainActivity() : ComponentActivity() {
                     }
                     composable("prelimnaryCheck") {
                         PrelimnaryCheck(navController)
+                    }
+                    composable("DAReport") {
+                        DAReportScreen(navController)
                     }
                 }
             }

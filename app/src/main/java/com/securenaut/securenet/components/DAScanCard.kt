@@ -1,7 +1,6 @@
 package com.securenaut.securenet.components
 
 import android.content.Intent
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -30,16 +29,10 @@ import com.securenaut.securenet.VpnActivity
 import com.securenaut.securenet.ui.theme.CardBorder
 import com.securenaut.securenet.ui.theme.Typography
 import com.securenaut.securenet.ui.theme.White
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.io.IOException
-
-
-
+import com.securenaut.securenet.ui.theme.textGray
 
 @Composable
-fun HomeScanCard(navController: NavHostController){
+fun DAScanCard(navController: NavHostController, vpnButton: @Composable () -> Unit) {
     val context = LocalContext.current
     Surface(
         modifier = Modifier
@@ -59,15 +52,20 @@ fun HomeScanCard(navController: NavHostController){
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(16.dp),
-            ){
-                Row(modifier = Modifier
-                    .fillMaxWidth(),
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(0.dp),
                     verticalAlignment = Alignment.CenterVertically
-                ){
-                    Column(modifier = Modifier.weight(1f)){
-                        Text(text = "Your device has", style = Typography.bodyMedium)
-                        Text(text = "17 Threats", style = Typography.headlineMedium)
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(text = "Trust Score", style = Typography.bodyMedium)
+                        Row (verticalAlignment = Alignment.CenterVertically){
+                            Text(text = "17 Threats", style = Typography.headlineSmall)
+                            Text(text = "/100", style = Typography.bodyMedium, color = textGray)
+                        }
+                        Text(text = "performed 3 hours ago", style = Typography.bodyMedium)
                     }
                     Image(
                         painter = painterResource(id = R.drawable.threat_low),
@@ -75,21 +73,12 @@ fun HomeScanCard(navController: NavHostController){
                         modifier = Modifier.fillMaxHeight()
                     )
                 }
-                Text(text = "Last scan performed 3 hours ago.", style = Typography.bodyMedium)
-                Row (modifier = Modifier
-                    .fillMaxWidth(),
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
                 ) {
-                    Button(onClick = {
-                        val intent = Intent(context, VpnActivity::class.java)
-                        context.startActivity(intent)
-                    }) {
-                        Text(
-                            text = "Scan",
-                            style = Typography.bodyMedium,
-                            color = White
-                        )
-                    }
+                    vpnButton()
                 }
             }
         }
