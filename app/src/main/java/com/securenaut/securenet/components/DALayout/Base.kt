@@ -44,10 +44,10 @@ fun Base() {
 
 
             Spacer(modifier = Modifier.height(16.dp))
-            Row (modifier = Modifier.fillMaxWidth()) {
-                GenAI(summary = "Summarize sdjdvs svjs sjvnsv sjnvsjnv sfjvnsfj ssjvnsnjv kjsnvfksj sj kskjd skjd", actions = "Supporting line text lorem ipsum dolor sit amet, consectetur. Supporting line text lorem ipsum dolor sit amet, consectetur. Supporting line text lorem ipsum dolor sit amet, consectetur.")
-
-            }
+//            Row (modifier = Modifier.fillMaxWidth()) {
+//                GenAI(summary = "Summarize sdjdvs svjs sjvnsv sjnvsjnv sfjvnsfj ssjvnsnjv kjsnvfksj sj kskjd skjd", actions = "Supporting line text lorem ipsum dolor sit amet, consectetur. Supporting line text lorem ipsum dolor sit amet, consectetur. Supporting line text lorem ipsum dolor sit amet, consectetur.")
+//
+//            }
 
             Row(
                 modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween
