@@ -110,7 +110,7 @@ class MainActivity() : ComponentActivity() {
                     }
                     composable("home"){
 //                        HomeActivity(navController)
-                        DAListScreen(navController)
+                        DAReportScreen(navController)
                     }
                     composable("staticAnalysisAppList"){
                         StaticAnalysisAppList(navController)

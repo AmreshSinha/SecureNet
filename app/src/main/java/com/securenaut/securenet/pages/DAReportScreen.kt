@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
@@ -19,6 +20,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.securenaut.securenet.R
+import com.securenaut.securenet.components.DALayout.Base
+import com.securenaut.securenet.components.DropDownBar
 import com.securenaut.securenet.ui.theme.Typography
 
 @Composable
@@ -41,14 +44,25 @@ fun DAReportScreen(navController: NavController) {
                 horizontalArrangement = Arrangement.Center,
             ) {
                 Column {
-                    Image(
-                        painter = painterResource(id = R.drawable.icon),
-                        contentDescription = "Icon Image"
-                    )
-                    Text(
-                        text = "Instagram",
-                        style = Typography.headlineMedium
-                    )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 40.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Image(
+                                painter = painterResource(id = R.drawable.icon),
+                                contentDescription = "Icon Image"
+                            )
+                            Text(
+                                text = "Instagram",
+                                style = Typography.headlineMedium
+                            )
+                        }
+                    }
+                    Base()
                 }
             }
         }
