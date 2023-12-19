@@ -9,3 +9,6 @@ val White = Color.White
 val IconColor = Color(0xFF737375)
 val textGray = Color(0xFF8B8B8E)
 val lightOnSurface = Color(0xFF49454F)
+val darkPurple = Color(0xFF3800ED)
+val pinkRed = Color(0xFFD81B60)
+val orange = Color(0xFFFF9800)

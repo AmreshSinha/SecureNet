@@ -36,6 +36,9 @@ import com.securenaut.securenet.components.HomeSplashCard
 import com.securenaut.securenet.components.HomeStaticAnalysisCard
 import com.securenaut.securenet.components.PrivacyDashboard
 import com.securenaut.securenet.ui.theme.SecureNetTheme
+import com.securenaut.securenet.ui.theme.darkPurple
+import com.securenaut.securenet.ui.theme.orange
+import com.securenaut.securenet.ui.theme.pinkRed
 import java.io.File
 import java.util.Calendar
 
@@ -159,17 +162,17 @@ fun HomeActivity(navController: NavHostController) {
             HomeStaticAnalysisCard(navController = navController)
             PrivacyDashboard(privacyDashboardData = listOf(
                 mapOf(
-                    "color" to Color.Blue,
+                    "color" to darkPurple,
                     "label" to "Camera",
                     "count" to cameraApps
                 ),
                 mapOf(
-                    "color" to Color.Yellow,
+                    "color" to orange,
                     "label" to "Location",
                     "count" to locationApps
                 ),
                 mapOf(
-                    "color" to Color.Red,
+                    "color" to pinkRed,
                     "label" to "Microphone",
                     "count" to microphoneApps
                 )
