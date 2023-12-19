@@ -110,8 +110,10 @@ class MainActivity() : ComponentActivity() {
                         SplashScreen(navController = navController)
                     }
                     composable("home"){
+
                         HomeActivity(navController)
-//                        DAListScreen(navController)
+//                        DAReportScreen(navController)
+
                     }
                     composable("dynamic"){
 
