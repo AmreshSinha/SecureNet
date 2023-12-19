@@ -72,26 +72,39 @@ fun Base() {
                 MapBox(markerPosition = dynamicPosition)
             }
             Spacer(modifier = Modifier.height(16.dp))
-            Row {
-                    ElevatedCard(modifier = Modifier
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                // First Card
+                ElevatedCard(
+                    modifier = Modifier
                         .weight(1f)
                         .fillMaxWidth()
-                        ) {
-                        Column(modifier = Modifier.padding(13.dp, 6.dp)) {
-                            Text(text = "India", style = Typography.bodyMedium)
-                            Text(text = "Country", style = Typography.bodySmall)
-                        }
+                ) {
+                    Column(modifier = Modifier.padding(13.dp, 6.dp).height(40.dp)) {
+                        Text(text = "India", style = Typography.bodyMedium)
+                        Text(text = "Country", style = Typography.bodySmall)
                     }
+                }
+
+                // Spacer
                 Spacer(modifier = Modifier.width(8.dp))
-                    ElevatedCard(modifier = Modifier
+
+                // Second Card
+                ElevatedCard(
+                    modifier = Modifier
                         .weight(1f)
-                        .fillMaxWidth()) {
-                        Column(modifier = Modifier.padding(13.dp, 6.dp)) {
-                            Text(text = "47 - Moderate Risk", style = Typography.bodyMedium)
-                            Text(text = "Trust Score", style = Typography.bodySmall)
-                        }
+                        .fillMaxWidth()
+                ) {
+                    Column(modifier = Modifier.padding(13.dp, 6.dp).height(40.dp)) {
+                        Text(text = "47 - Moderate Risk", style = Typography.bodyMedium)
+                        Text(text = "Trust Score", style = Typography.bodySmall)
                     }
+                }
             }
+
             Spacer(modifier = Modifier.height(16.dp))
             Row {
                 ElevatedCard(modifier = Modifier
