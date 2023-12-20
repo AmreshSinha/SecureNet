@@ -56,7 +56,7 @@ fun PrelimnaryCheck (navController: NavController){
             AppBar(navController, name = "Prelimnary App Check", onBackScreen = "staticAnalysisAppList")
         },
         bottomBar = {
-            PrelimnaryBottomAppBar(navController = navController)
+            PrelimnaryBottomAppBar(navController = navController, lastScan = GlobalStaticClass.lastScan)
         }
     ){ contentPadding -> Column(modifier = Modifier
         .verticalScroll(rememberScrollState())

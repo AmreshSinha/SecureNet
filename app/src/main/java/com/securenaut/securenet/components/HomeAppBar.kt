@@ -25,14 +25,6 @@ import com.securenaut.securenet.ui.theme.Typography
 @Composable
 fun HomeAppBar(navController: NavHostController){
     TopAppBar(
-        navigationIcon = {
-            IconButton(onClick = { /* do something */ }) {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = "Back Button"
-                )
-            }
-        },
         title = {
             Surface(modifier = Modifier.fillMaxWidth()) {
                 Row(horizontalArrangement = Arrangement.Center,modifier = Modifier.background(color = Color.White)) {
