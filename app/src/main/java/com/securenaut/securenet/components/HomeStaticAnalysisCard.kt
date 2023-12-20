@@ -38,13 +38,12 @@ fun HomeStaticAnalysisCard(navController: NavController) {
             )
         ) {
             Column(modifier = Modifier.padding(16.dp).fillMaxWidth()) {
-                Text(text = "Static Analysis", style = Typography.labelSmall)
-                Text(text = "No Threats Found", style = Typography.titleLarge)
                 Text(
-                    text = "Last App Installed 3 hours ago",
+                    text = "Static Analysis",
                     style = Typography.bodyMedium,
                     overflow = TextOverflow.Ellipsis
                 )
+                Text(text = "No Vulnerable Apps Found", style = Typography.titleLarge)
                 Row(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.End) {
                     ElevatedButton(
                         onClick = {
@@ -52,7 +51,7 @@ fun HomeStaticAnalysisCard(navController: NavController) {
                         },
                         border = BorderStroke(width = 1.dp, color = Purple)
                     ) {
-                        Text(text = "Scan", style = Typography.bodyMedium, color = Purple)
+                        Text(text = "Proceed", style = Typography.bodyMedium, color = Purple)
                     }
                 }
             }
