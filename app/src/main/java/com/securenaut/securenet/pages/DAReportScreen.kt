@@ -39,6 +39,7 @@ import com.securenaut.securenet.components.DALayout.Organisation
 import com.securenaut.securenet.components.DALayout.Threat
 import com.securenaut.securenet.components.DropDownBar
 import com.securenaut.securenet.data.IPData
+import com.securenaut.securenet.components.GenAI
 import com.securenaut.securenet.ui.theme.Typography
 import com.securenaut.securenet.ui.theme.darkBlue
 

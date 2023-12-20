@@ -26,6 +26,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import java.io.File
 import java.io.IOException
+import java.util.concurrent.TimeUnit
 
 interface HttpCallback {
     fun onSuccess(response: String?)
@@ -33,7 +34,11 @@ interface HttpCallback {
 }
 
 class HttpWorker {
-    private val client = OkHttpClient.Builder().build()
+    private val client = OkHttpClient.Builder()
+        .connectTimeout(600, TimeUnit.SECONDS) // 30 seconds connect timeout
+        .readTimeout(600, TimeUnit.SECONDS)    // 30 seconds read timeout
+        .writeTimeout(600, TimeUnit.SECONDS)   // 30 seconds write timeout
+        .callTimeout(600, TimeUnit.MINUTES) .build()
     private var globalContext: Context? = null
     fun setContext(context: Context){
         globalContext = context
@@ -273,20 +278,53 @@ class HttpWorker {
     }
 
     suspend fun setFCMToken(token: String){
-        val client = OkHttpClient()
+        withContext(Dispatchers.IO){
 
-        // Build the request body with the hash parameter
-        val requestBody = "{\"token\": \"$token\"}".toRequestBody("application/json".toMediaTypeOrNull())
+            // Build the request body with the hash parameter
+            val requestBody = "{\"token\": \"$token\"}".toRequestBody("application/json".toMediaTypeOrNull())
 
-        // Build the request
-        val request = Request.Builder()
-            .url("https://securenet.photoai.pro/fcm")
-            .post(requestBody)
-            .build()
+            // Build the request
+            val request = Request.Builder()
+                .url("https://securenet.photoai.pro/fcm")
+                .post(requestBody)
+                .build()
 
-        // Make the API call
-        val resp = client.newCall(request).execute()
-        resp.body?.let { Log.i("set_fcm", it.string()) }
+            // Make the API call
+            val resp = client.newCall(request).execute()
+            resp.body?.let { Log.i("set_fcm", it.string()) }
+        }
+    }
+
+    suspend fun summarizeReport(hash: String): String{
+        return withContext(Dispatchers.IO){
+
+            // Build the request
+            val request = Request.Builder()
+                .url("https://securenet.photoai.pro/gemini/summary?hash=${hash}")
+                .get()
+                .build()
+
+            // Make the API call
+            val resp = client.newCall(request).execute()
+
+            resp.body?.string()!!
+        }
+    }
+
+    suspend fun actionReport(hash: String): String{
+        return withContext(Dispatchers.IO){
+
+            // Build the request
+            val request = Request.Builder()
+                .url("https://securenet.photoai.pro/gemini/action?hash=${hash}")
+                .get()
+                .build()
+
+            // Make the API call
+            val resp = client.newCall(request).execute()
+
+            resp.body?.string()!!
+        }
     }
 
 }
