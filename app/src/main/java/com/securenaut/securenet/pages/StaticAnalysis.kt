@@ -220,7 +220,7 @@ fun StaticAnalysisScreen(navController: NavController) {
 
             val element = appsec.getJSONArray("info").getJSONObject(i)
 
-            Dropdown(type = "info", title = element.getString("section").toUpperCase(), subtitle = element.getString("title"), description = element.getString("description"))
+            Dropdown(type = "low", title = element.getString("section").toUpperCase(), subtitle = element.getString("title"), description = element.getString("description"))
         }
 
         for(i in 0 until appsec.getJSONArray("secure").length()){

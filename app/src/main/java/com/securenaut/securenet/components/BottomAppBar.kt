@@ -1,6 +1,9 @@
 package com.securenaut.securenet.components
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Environment
+import android.util.Log
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -16,8 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.securenaut.securenet.HttpWorker
-import com.securenaut.securenet.data.GlobalStaticClass
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,6 +27,8 @@ import okio.buffer
 import okio.sink
 import java.io.File
 import java.io.IOException
+import androidx.browser.customtabs.CustomTabsIntent
+import com.securenaut.securenet.data.GlobalStaticClass
 
 @Composable
 fun BottomAppBar(context: Context) {
@@ -34,40 +37,17 @@ fun BottomAppBar(context: Context) {
                 floatingActionButton = {
                 },
                         actions = {
-                            Button(
-                                onClick = {
-                                    val destination = File(context.filesDir, "base.pdf")
-                                },
-                                modifier = Modifier.padding(horizontal = 16.dp),
-
-                                ) {Text(
-                                text = "Scan",
-                                color = Color.White,
-
-                                )}
                             OutlinedButton(
                                 onClick = {
                                     CoroutineScope(Dispatchers.IO).launch {
-                                        try {
 
-                                            val response = HttpWorker().downloadReportPdf(hash = GlobalStaticClass.apkHash)
-                                            // Handle the PDF download response here (e.g., save the file)
+                                        val builder = CustomTabsIntent.Builder()
+                                        val customTabsIntent = builder.build()
 
-                                            if (response.isSuccessful) {
-                                                // Save the PDF file to the device's external storage
-                                                savePdfToFile(response.body?.bytes())
-                                            } else {
-                                                // Handle unsuccessful response (e.g., show an error message)
-                                                withContext(Dispatchers.Main) {
-                                                    // Show an error message to the user
-                                                    // You can use a state variable to display a message in your UI
-                                                }
-                                            }
-
-                                        } catch (e: IOException) {
-                                            // Handle IO exceptions
-                                            e.printStackTrace()
-                                        }
+                                        // Modify the appearance of the Chrome Custom Tab if needed
+                                        // builder.setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
+                                        Log.i("report_pdf","http://129.154.45.152:8000/static/report_pdf?hash=${GlobalStaticClass.apkHash}")
+                                        customTabsIntent.launchUrl(context, Uri.parse("http://129.154.45.152:8000/static/report_pdf?hash=${GlobalStaticClass.apkHash}"))
                                     }
                                 },
                                 ) {

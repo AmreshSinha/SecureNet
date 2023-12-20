@@ -40,11 +40,11 @@ fun HomeStaticAnalysisCard(navController: NavController) {
             Column(modifier = Modifier.padding(16.dp).fillMaxWidth()) {
                 Text(text = "Static Analysis", style = Typography.labelSmall)
                 Text(text = "No Threats Found", style = Typography.titleLarge)
-                Text(
-                    text = "Last App Installed 3 hours ago",
-                    style = Typography.bodyMedium,
-                    overflow = TextOverflow.Ellipsis
-                )
+//                Text(
+//                    text = "Last App Installed 3 hours ago",
+//                    style = Typography.bodyMedium,
+//                    overflow = TextOverflow.Ellipsis
+//                )
                 Row(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.End) {
                     ElevatedButton(
                         onClick = {

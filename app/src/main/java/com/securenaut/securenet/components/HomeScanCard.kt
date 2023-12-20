@@ -75,7 +75,6 @@ fun HomeScanCard(navController: NavHostController){
                         modifier = Modifier.fillMaxHeight()
                     )
                 }
-                Text(text = "Last scan performed 3 hours ago.", style = Typography.bodyMedium)
                 Row (modifier = Modifier
                     .fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
