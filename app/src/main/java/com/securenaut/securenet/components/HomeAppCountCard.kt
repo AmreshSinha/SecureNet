@@ -3,14 +3,18 @@ package com.securenaut.securenet.components
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.Surface
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +26,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.securenaut.securenet.R
+import com.securenaut.securenet.ui.theme.CardBorder
 import com.securenaut.securenet.ui.theme.IconColor
 import com.securenaut.securenet.ui.theme.Typography
 
@@ -35,8 +40,17 @@ fun HomeAppCountCard() {
     val installedApps = installedApplications.filter { appInfo ->
         appInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0
     }
+Surface(modifier = Modifier.padding()) {
 
-    Card(modifier = Modifier.padding(16.dp)){
+}
+    OutlinedCard(modifier = Modifier
+        .padding(horizontal = 16.dp, vertical = 16.dp)
+        .border(
+            width = 1.dp,
+            color = CardBorder,
+            shape = RoundedCornerShape(size = 12.dp)
+        )
+    ){
         Row(modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth(),verticalAlignment = Alignment.CenterVertically) {

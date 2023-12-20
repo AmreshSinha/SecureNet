@@ -7,8 +7,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -147,18 +149,20 @@ fun PrelimnaryCheck (navController: NavController){
 //
 //        ManifestDropdown(manifestAnalysis = GlobalStaticClass.staticAnalysisReport.getJSONObject("manifest_analysis"))
 //        CertificateDropdown(certificateAnalysis = GlobalStaticClass.staticAnalysisReport.getJSONObject("certificate_analysis"))
-
+        Spacer(modifier = Modifier.height(26.dp))
         Text(
-            text = "Dangerous Permissions",
+            text = "Suspicious Permissions",
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleLarge
         )
-
+        Spacer(modifier = Modifier.height(16.dp))
         for(element in dangerousPermissions){
 
             GlobalStaticClass.permissionsMap[element]?.get("permission_name")
                 ?.let { GlobalStaticClass.permissionsMap[element]?.get("permission_descp")
-                    ?.let { it1 -> Dropdown(type = "Normal Permissions", title = it, subtitle = element, description = it1) } }
+                    ?.let { it1 -> Dropdown(type = "Normal Permissions", title = it, subtitle = element, description = it1)
+                        Spacer(modifier = Modifier.height(16.dp))
+                    } }
         }
 
         Text(
@@ -172,7 +176,9 @@ fun PrelimnaryCheck (navController: NavController){
 
             GlobalStaticClass.permissionsMap[element]?.get("permission_name")
                 ?.let { GlobalStaticClass.permissionsMap[element]?.get("permission_descp")
-                    ?.let { it1 -> Dropdown(type = "Normal Permissions", title = it, subtitle = it1, description = element) } }
+                    ?.let { it1 -> Dropdown(type = "Normal Permissions", title = it, subtitle = it1, description = element)
+                        Spacer(modifier = Modifier.height(16.dp))
+                    } }
         }
         
     }

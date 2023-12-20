@@ -57,7 +57,7 @@ fun HomeScanCard(navController: NavHostController){
             .padding(horizontal = 16.dp, vertical = 16.dp)
     ) {
         OutlinedCard(
-            border = BorderStroke(0.5.dp, Color.Black),
+            border = BorderStroke(0.5.dp, CardBorder),
             modifier = Modifier
                 .border(
                     width = 1.dp,

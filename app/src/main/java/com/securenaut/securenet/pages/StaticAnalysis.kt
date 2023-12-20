@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -201,17 +202,20 @@ fun StaticAnalysisScreen(navController: NavController) {
 
         Row {
             SmallElevatedCard(iconImage = R.drawable.mobile, heading = "Privacy Risk", value = appsec["trackers"].toString(), width = 0.5f)
+            Spacer(modifier = Modifier.width(16.dp))
             SmallElevatedCard(iconImage = R.drawable.dollar ,heading = "Risk Rating", value = riskRating, width = 1.0f)
         }
         
         ManifestDropdown(manifestAnalysis = GlobalStaticClass.staticAnalysisReport.getJSONObject("manifest_analysis"))
+        Spacer(modifier = Modifier.height(16.dp))
         CertificateDropdown(certificateAnalysis = GlobalStaticClass.staticAnalysisReport.getJSONObject("certificate_analysis"))
-
+        Spacer(modifier = Modifier.height(16.dp))
         for(i in 0 until appsec.getJSONArray("high").length()){
 
             val element = appsec.getJSONArray("high").getJSONObject(i)
 
             Dropdown(type = "high", title = element.getString("section").toUpperCase(), subtitle = element.getString("title"), description = element.getString("description"))
+            Spacer(modifier = Modifier.height(16.dp))
         }
 
         for(i in 0 until appsec.getJSONArray("warning").length()){
@@ -219,6 +223,7 @@ fun StaticAnalysisScreen(navController: NavController) {
             val element = appsec.getJSONArray("warning").getJSONObject(i)
 
             Dropdown(type = "warning", title = element.getString("section").toUpperCase(), subtitle = element.getString("title"), description = element.getString("description"))
+            Spacer(modifier = Modifier.height(16.dp))
         }
 
         for(i in 0 until appsec.getJSONArray("info").length()){
@@ -226,6 +231,7 @@ fun StaticAnalysisScreen(navController: NavController) {
             val element = appsec.getJSONArray("info").getJSONObject(i)
 
             Dropdown(type = "info", title = element.getString("section").toUpperCase(), subtitle = element.getString("title"), description = element.getString("description"))
+            Spacer(modifier = Modifier.height(16.dp))
         }
 
         for(i in 0 until appsec.getJSONArray("secure").length()){
@@ -233,6 +239,7 @@ fun StaticAnalysisScreen(navController: NavController) {
             val element = appsec.getJSONArray("secure").getJSONObject(i)
 
             Dropdown(type = "secure", title = element.getString("section").toUpperCase(), subtitle = element.getString("title"), description = element.getString("description"))
+            Spacer(modifier = Modifier.height(16.dp))
         }
 
     }
