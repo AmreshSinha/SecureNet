@@ -16,19 +16,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
+import com.securenaut.securenet.data.IPData
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DropDownBar() {
-    val ipList = listOf(
-        "192.168.0.1",
-        "10.0.0.1",
-        "172.16.0.1",
-        "192.168.1.1",
-        "10.1.1.1",
-        "192.168.2.1"
-    )
+fun DropDownBar(ipData: IPData) {
+    var ip: Boolean = false
+    var ipList:List<String> = listOf()
+    if(ipData.ip != null){
+        ip=true
+        ipList = listOf(ipData.ip)
+    }else{
+        ipList = listOf(ipData.domain!!)
+    }
+
 
     var expanded by remember { mutableStateOf(false) }
     var selectedIP by remember { mutableStateOf(ipList[0]) }

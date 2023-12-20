@@ -39,6 +39,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.securenaut.securenet.HttpWorker
 import com.securenaut.securenet.data.GlobalStaticClass
+import com.securenaut.securenet.viewmodel.BlackListViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -55,45 +56,13 @@ import org.json.JSONObject
 import java.io.File
 import java.io.IOException
 
-
-fun makeNetworkRequest(client: OkHttpClient, url: String, data: String, onSuccess: (String) -> Unit) {
-    val request = Request.Builder().url(url).post(data.toRequestBody()).build()
-
-    client.newCall(request).enqueue(object : Callback {
-        override fun onFailure(call: Call, e: IOException) {
-            // Handle failure
-        }
-
-        override fun onResponse(call: Call, response: Response) {
-            if (response.isSuccessful) {
-                onSuccess(response.body?.string() ?: "")
-            }
-        }
-    })
-}
-
-fun getNetworkRequest(client: OkHttpClient, url: String, onSuccess: (String) -> Unit) {
-    val request = Request.Builder().url(url).build()
-
-    client.newCall(request).enqueue(object : Callback {
-        override fun onFailure(call: Call, e: IOException) {
-            // Handle failure
-        }
-
-        override fun onResponse(call: Call, response: Response) {
-            if (response.isSuccessful) {
-                onSuccess(response.body?.string() ?: "")
-            }
-        }
-    })
-}
 @Composable
-fun BottomDABar() {
+fun BottomDABar(viewModel: BlackListViewModel) {
     val snackbarHostState = remember { SnackbarHostState() }
 
         val openAlertDialog = remember { mutableStateOf(false) }
         val coroutineScope = rememberCoroutineScope()
-        val client = OkHttpClient()
+
         val scope = rememberCoroutineScope()
         Box {
             BottomAppBar(
@@ -109,29 +78,7 @@ fun BottomDABar() {
                     ) {
                         Button(onClick = {
                             coroutineScope.launch(Dispatchers.IO) {
-                                getNetworkRequest(
-                                    client,
-                                    "https://securenet.photoai.pro/dynamic/blacklist"
-                                ) { result ->
-
-                                    // Handle the result
-                                    // Remember to switch back to the main thread if updating UI
-                                    val jsonObj = JSONObject(result)
-                                    GlobalStaticClass.blackList.clear()
-                                    val ips = jsonObj.getJSONArray("ips")
-                                    for (i in 0 until ips.length()) {
-                                        val ip = ips.getString(i)
-                                        GlobalStaticClass.blackList.add(Pair(ip, "IP"))
-                                    }
-                                    val domains = jsonObj.getJSONArray("domains")
-                                    for (i in 0 until domains.length()) {
-                                        val domain = domains.getString(i)
-                                        GlobalStaticClass.blackList.add(Pair(domain, "Domain"))
-                                    }
-                                    scope.launch {
-                                        snackbarHostState.showSnackbar("Blacklist Synced!")
-                                    }
-                                }
+                                viewModel.sync()
                             }
                         }) {
 
@@ -179,22 +126,8 @@ fun BottomDABar() {
                     onDismissRequest = { openAlertDialog.value = false },
                     onConfirmation = {
                         openAlertDialog.value = false
-                        GlobalStaticClass.blackList.add(it)
-                        val jsonObject = JSONObject()
-                        if (it.second == "IP") {
-                            jsonObject.put("ip", it.first)
-                        } else {
-                            jsonObject.put("domain", it.first)
-                        }
                         coroutineScope.launch(Dispatchers.IO) {
-                            makeNetworkRequest(
-                                client,
-                                "https://securenet.photoai.pro/dynamic/blacklist",
-                                jsonObject.toString()
-                            ) { result ->
-                                // Handle the result
-                                // Remember to switch back to the main thread if updating UI
-                            }
+                            viewModel.updateList(it)
                         }
 
                     },

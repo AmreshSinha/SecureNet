@@ -163,7 +163,6 @@ class MainActivity() : ComponentActivity() {
                 }
             }
 
-
             SecureNetTheme {
                 val navController = rememberNavController()
                 // Observe the data from the view model
@@ -178,9 +177,9 @@ class MainActivity() : ComponentActivity() {
 //                        DAReportScreen(navController)
 
                     }
-//                    composable("dynamicAnalysis"){
+                    composable("dynamicAnalysis"){
 //                            DAListScreen(navController)
-//                    }
+                    }
                     composable("staticAnalysisAppList"){
                         StaticAnalysisAppList(navController)
                     }
@@ -193,11 +192,9 @@ class MainActivity() : ComponentActivity() {
                     composable("prelimnaryCheck") {
                         PrelimnaryCheck(navController)
                     }
-                    composable("dynamicAnalysis/{app}") { backStackEntry ->
-                        val app = backStackEntry.arguments?.getString("app")
-                        Log.e("idhar","Yaha pr aara hai $app")
-                        app?.let { DAReportScreen(navController, it) }
-                    }
+//                    composable("dynamicAnalysisReport") {
+//                        DAReportScreen(navController)
+//                    }
 
                     composable("splashScreen") {
                         HorizontalScrollScreen(navController = navController)
