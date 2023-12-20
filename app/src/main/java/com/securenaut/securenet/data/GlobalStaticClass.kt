@@ -9,6 +9,7 @@ object GlobalStaticClass {
 
     lateinit var apkHash : String
     lateinit var staticAnalysisReport : JSONObject
+    lateinit var staticAnalysisReportString: String
     lateinit var appIconDrawable: Drawable
     lateinit var appName: String
     lateinit var apkFile: File
@@ -16,8 +17,9 @@ object GlobalStaticClass {
     lateinit var appPermissions: List<String>
     lateinit var sharedPrefInstance: SharedPreferences
     lateinit var packageName: String
-    lateinit var signaturHashMap: MutableMap<String,String>
     var blackList: MutableList<Pair<String, String>> = mutableListOf()
+    lateinit var installedAppsData: MutableList<MutableMap<String,Any>>
+    lateinit var lastScan: String
 
     val normalPermissions = listOf(
         // Normal Permissions
