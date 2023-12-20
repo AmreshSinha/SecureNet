@@ -55,6 +55,9 @@ fun PrelimnaryBottomAppBar(navController: NavController) {
                         Log.i("found_report","not report found")
                         val staticAnalysisDataString = HttpWorker().postApk(GlobalStaticClass.apkFile)
 
+                        GlobalStaticClass.summary = HttpWorker().summarizeReport(hash = GlobalStaticClass.apkHash)
+                        GlobalStaticClass.action = HttpWorker().actionReport(hash = GlobalStaticClass.apkHash)
+
                         Log.i("btn_press_resp",staticAnalysisDataString)
 
                         GlobalStaticClass.staticAnalysisReport = JSONObject(staticAnalysisDataString)

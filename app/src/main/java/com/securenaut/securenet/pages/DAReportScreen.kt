@@ -38,6 +38,7 @@ import com.securenaut.securenet.components.DALayout.GeoLocation
 import com.securenaut.securenet.components.DALayout.Organisation
 import com.securenaut.securenet.components.DALayout.Threat
 import com.securenaut.securenet.components.DropDownBar
+import com.securenaut.securenet.components.GenAI
 import com.securenaut.securenet.ui.theme.Typography
 import com.securenaut.securenet.ui.theme.darkBlue
 
@@ -103,6 +104,7 @@ fun DAReportScreen(navController: NavController, packageName: String) {
                             horizontalArrangement = Arrangement.Center
                         ) {
                             DropDownBar()
+                            Spacer(modifier = Modifier.height(16.dp))
                         }
                         Spacer(modifier = Modifier.height(16.dp))
                         Row(
