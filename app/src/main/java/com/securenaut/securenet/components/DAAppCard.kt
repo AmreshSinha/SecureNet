@@ -32,7 +32,7 @@ import org.json.JSONObject
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun DAAppCard(appName:String,lastScan:String) {
+fun DAAppCard(appName: String, lastScan: String) {
 
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
@@ -52,40 +52,40 @@ fun DAAppCard(appName:String,lastScan:String) {
                 .fillMaxWidth()
                 .padding(10.dp), verticalAlignment = Alignment.CenterVertically
         ) {
-                Image(
-                    painter = painterResource(id = R.drawable.icon),
-                    contentDescription = "App Icon",
-                    modifier = Modifier.size(48.dp)
-                )
-                Column {
-                    appName?.let {
-                        Text(
-                            text = appName,
-                            modifier = Modifier
-                                .padding(start = 16.dp),
-                            textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                    }
-                    lastScan?.let {
-                        Text(
-                            text = "Last scanned on $lastScan",
-                            modifier = Modifier
-                                .padding(start = 14.dp),
-                            textAlign = TextAlign.Center,
-                            color = Color.DarkGray,
-                            style = MaterialTheme.typography.titleSmall
-                        )
-                    }
+            Image(
+                painter = painterResource(id = R.drawable.icon),
+                contentDescription = "App Icon",
+                modifier = Modifier.size(48.dp)
+            )
+            Column {
+                appName?.let {
+                    Text(
+                        text = appName,
+                        modifier = Modifier
+                            .padding(start = 16.dp),
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.titleMedium
+                    )
                 }
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                    AsyncImage(
-                        model = "",
-                        placeholder = painterResource(id = R.drawable.icon),
-                        error = painterResource(id = R.drawable.arrow),
-                        contentDescription = "The delasign logo",
+                lastScan?.let {
+                    Text(
+                        text = "Last scanned on $lastScan",
+                        modifier = Modifier
+                            .padding(start = 14.dp),
+                        textAlign = TextAlign.Center,
+                        color = Color.DarkGray,
+                        style = MaterialTheme.typography.titleSmall
                     )
                 }
             }
+//            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+//                AsyncImage(
+//                    model = "",
+//                    placeholder = painterResource(id = R.drawable.icon),
+//                    error = painterResource(id = R.drawable.arrow),
+//                    contentDescription = "The delasign logo",
+//                )
+//            }
         }
     }
+}
