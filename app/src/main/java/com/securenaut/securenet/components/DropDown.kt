@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedCard
@@ -68,10 +69,7 @@ fun Dropdown(type: String, title: String, subtitle: String, description: String)
         "high" to {Component(color = Color(0xFFDC3545), image = Icons.Filled.Lock, text = "High", content = Color.White )}
     )
 
-    ElevatedCard(
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
-        ),
+    Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 2.dp)

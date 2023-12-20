@@ -25,6 +25,7 @@ import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
@@ -137,10 +138,7 @@ fun StaticAnalysisScreen(navController: NavController) {
             )
         }
 
-        ElevatedCard(
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 6.dp
-            ),
+        Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 32.dp)
@@ -164,10 +162,7 @@ fun StaticAnalysisScreen(navController: NavController) {
             }
         }
 
-        ElevatedCard(
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 6.dp
-            ),
+        Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp)
@@ -238,10 +233,7 @@ fun StaticAnalysisScreen(navController: NavController) {
 fun ManifestDropdown(manifestAnalysis : JSONObject){
     var isClicked by remember { mutableStateOf(false) }
 
-    ElevatedCard(
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
-        ),
+    Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 2.dp)
@@ -296,10 +288,7 @@ fun ManifestDropdown(manifestAnalysis : JSONObject){
 fun CertificateDropdown(certificateAnalysis : JSONObject){
     var isClicked by remember { mutableStateOf(false) }
 
-    ElevatedCard(
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
-        ),
+    Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 2.dp)
