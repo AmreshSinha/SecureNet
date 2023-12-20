@@ -17,16 +17,22 @@ import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.securenaut.securenet.R
 import com.securenaut.securenet.VpnActivity
+import com.securenaut.securenet.data.IPDataViewModel
+import com.securenaut.securenet.pages.DAReportScreen
 import com.securenaut.securenet.ui.theme.CardBorder
 import com.securenaut.securenet.ui.theme.Typography
 import com.securenaut.securenet.ui.theme.White
@@ -35,6 +41,11 @@ import com.securenaut.securenet.ui.theme.textGray
 @Composable
 fun DAScanCard(navController: NavController, vpnButton: @Composable () -> Unit) {
     val context = LocalContext.current
+    val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
+        "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+    }
+    val ipDataViewModel = ViewModelProvider(owner = viewModelStoreOwner)[IPDataViewModel::class.java]
+    val allIPDatas by ipDataViewModel.allIPData.observeAsState(listOf())
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -63,8 +74,8 @@ fun DAScanCard(navController: NavController, vpnButton: @Composable () -> Unit) 
                     Column(modifier = Modifier.weight(1f)) {
                         Text(text = "Trust Score", style = Typography.bodyMedium)
                         Row (verticalAlignment = Alignment.CenterVertically){
-                            Text(text = "17 Threats", style = Typography.headlineSmall)
-                            Text(text = "/100", style = Typography.bodyMedium, color = textGray)
+                            Text(text = "${allIPDatas.size} Threats", style = Typography.headlineSmall)
+                            Text(text = "", style = Typography.bodyMedium, color = textGray)
                         }
                         Text(text = "performed 3 hours ago", style = Typography.bodyMedium)
                     }
@@ -84,4 +95,5 @@ fun DAScanCard(navController: NavController, vpnButton: @Composable () -> Unit) 
             }
         }
     }
+
 }

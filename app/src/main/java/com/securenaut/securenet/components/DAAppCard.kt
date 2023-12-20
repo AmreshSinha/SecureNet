@@ -16,7 +16,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
@@ -33,6 +36,8 @@ import coil.compose.rememberImagePainter
 import com.securenaut.securenet.HttpWorker
 import com.securenaut.securenet.R
 import com.securenaut.securenet.data.GlobalStaticClass
+import com.securenaut.securenet.data.IPData
+import com.securenaut.securenet.pages.DAReportScreen
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -55,7 +60,9 @@ class DrawablePainter(private val drawable: Drawable) : Painter() {
 }
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun DAAppCard(appName:String,lastScan:String,packageName: String, appIcon: Drawable, navController: NavController) {
+fun DAAppCard(appName:String,lastScan:String,ipData: IPData, appIcon: Drawable, navController: NavController) {
+    var isClicked by remember { mutableStateOf(false) }
+
     val appIconDrawable = remember { appIcon }
 
     ElevatedCard(
@@ -63,7 +70,7 @@ fun DAAppCard(appName:String,lastScan:String,packageName: String, appIcon: Drawa
             defaultElevation = 6.dp
         ),
         onClick = {
-            navController.navigate("dynamicAnalysis/$packageName")
+            isClicked = !isClicked
         },
 
         modifier = Modifier
@@ -112,5 +119,9 @@ fun DAAppCard(appName:String,lastScan:String,packageName: String, appIcon: Drawa
                     )
                 }
             }
+        if(isClicked) {
+            DAReportScreen(navController = navController, ipData)
         }
+
+    }
     }

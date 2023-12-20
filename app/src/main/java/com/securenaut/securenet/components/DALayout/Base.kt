@@ -1,5 +1,6 @@
 package com.securenaut.securenet.components.DALayout
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,12 +28,13 @@ import com.securenaut.securenet.R
 import com.securenaut.securenet.components.DropDownBar
 import com.securenaut.securenet.components.GenAI
 import com.securenaut.securenet.components.MapBox
+import com.securenaut.securenet.data.IPData
 import com.securenaut.securenet.ui.theme.Typography
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @Composable
-fun Base(tabIndex:Int) {
-    val dynamicPosition = LatLng(40.7128, -74.0060)
+fun Base(tabIndex:Int, ipData: IPData) {
+
     Surface {
         Column(
             modifier = Modifier
@@ -40,9 +42,9 @@ fun Base(tabIndex:Int) {
                 .fillMaxHeight()
         ) {
 
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                DropDownBar()
-            }
+//            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+//                DropDownBar()
+//            }
 
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -51,12 +53,12 @@ fun Base(tabIndex:Int) {
 //
 //            }
 
-            Row(
-                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(text = "Summary for the IP/Domain", style = Typography.bodyMedium)
-                Text(text = "See More", style = Typography.bodyMedium)
-            }
+//            Row(
+//                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween
+//            ) {
+//                Text(text = "Summary for the IP/Domain", style = Typography.bodyMedium)
+//                Text(text = "See More", style = Typography.bodyMedium)
+//            }
             Spacer(modifier = Modifier.height(16.dp))
             ElevatedCard() {
                 Row(
@@ -77,53 +79,58 @@ fun Base(tabIndex:Int) {
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
-            Row (modifier = Modifier
-                .fillMaxWidth()
-                .height(180.dp)){
-                MapBox(markerPosition = dynamicPosition)
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-            Row {
-                ElevatedCard(modifier = Modifier
-                    .weight(1f)
+            if(ipData.ip != null){
+                val dynamicPosition = LatLng(ipData.latitude!!, ipData.longitude!!)
+                Log.d("ipData", "${ipData.latitude}::${ipData.longitude}")
+                Row (modifier = Modifier
                     .fillMaxWidth()
-                ) {
-                    Column(modifier = Modifier.padding(13.dp, 6.dp)) {
-                        Text(text = "India", style = Typography.bodyMedium)
-                        Text(text = "Country", style = Typography.bodySmall)
-                    }
-                }
-                Spacer(modifier = Modifier.width(8.dp))
-                ElevatedCard(modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()) {
-                    Column(modifier = Modifier.padding(13.dp, 6.dp)) {
-                        Text(text = "47 - Moderate Risk", style = Typography.bodyMedium)
-                        Text(text = "Trust Score", style = Typography.bodySmall)
-                    }
+                    .height(180.dp)){
+                    MapBox(markerPosition = dynamicPosition)
                 }
             }
+
             Spacer(modifier = Modifier.height(16.dp))
-            Row {
-                ElevatedCard(modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-                ) {
-                    Column(modifier = Modifier.padding(13.dp, 6.dp)) {
-                        Text(text = "India", style = Typography.bodyMedium)
-                        Text(text = "Country", style = Typography.bodySmall)
-                    }
-                }
-                Spacer(modifier = Modifier.width(8.dp))
-                ElevatedCard(modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()) {
-                    Column(modifier = Modifier.padding(13.dp, 6.dp)) {
-                        Text(text = "47 - Moderate Risk", style = Typography.bodyMedium)
-                        Text(text = "Trust Score", style = Typography.bodySmall)
-                    }
-                }
-            }
+//            Row {
+//                ElevatedCard(modifier = Modifier
+//                    .weight(1f)
+//                    .fillMaxWidth()
+//                ) {
+//                    Column(modifier = Modifier.padding(13.dp, 6.dp)) {
+//                        Text(text = "India", style = Typography.bodyMedium)
+//                        Text(text = "Country", style = Typography.bodySmall)
+//                    }
+//                }
+//                Spacer(modifier = Modifier.width(8.dp))
+//                ElevatedCard(modifier = Modifier
+//                    .weight(1f)
+//                    .fillMaxWidth()) {
+//                    Column(modifier = Modifier.padding(13.dp, 6.dp)) {
+//                        Text(text = "47 - Moderate Risk", style = Typography.bodyMedium)
+//                        Text(text = "Trust Score", style = Typography.bodySmall)
+//                    }
+//                }
+//            }
+//            Spacer(modifier = Modifier.height(16.dp))
+//            Row {
+//                ElevatedCard(modifier = Modifier
+//                    .weight(1f)
+//                    .fillMaxWidth()
+//                ) {
+//                    Column(modifier = Modifier.padding(13.dp, 6.dp)) {
+//                        Text(text = "India", style = Typography.bodyMedium)
+//                        Text(text = "Country", style = Typography.bodySmall)
+//                    }
+//                }
+//                Spacer(modifier = Modifier.width(8.dp))
+//                ElevatedCard(modifier = Modifier
+//                    .weight(1f)
+//                    .fillMaxWidth()) {
+//                    Column(modifier = Modifier.padding(13.dp, 6.dp)) {
+//                        Text(text = "47 - Moderate Risk", style = Typography.bodyMedium)
+//                        Text(text = "Trust Score", style = Typography.bodySmall)
+//                    }
+//                }
+//            }
             Spacer(modifier = Modifier.height(16.dp))
             Row {
                 ElevatedCard(modifier = Modifier.fillMaxWidth()) {

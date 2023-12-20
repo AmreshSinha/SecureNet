@@ -38,26 +38,19 @@ import com.securenaut.securenet.components.DALayout.GeoLocation
 import com.securenaut.securenet.components.DALayout.Organisation
 import com.securenaut.securenet.components.DALayout.Threat
 import com.securenaut.securenet.components.DropDownBar
+import com.securenaut.securenet.data.IPData
 import com.securenaut.securenet.ui.theme.Typography
 import com.securenaut.securenet.ui.theme.darkBlue
 
 @Composable
-fun DAReportScreen(navController: NavController, packageName: String) {
+fun DAReportScreen(navController: NavController, ipData: IPData) {
     var tabIndex by remember { mutableStateOf(3) }
     val tabs = listOf("Threat", "Organisation", "GeoLocation")
 
-    Scaffold(topBar = {
-        AppBar(navController = navController, name = "Dynamic Analysis", onBackScreen = "home")
-    },
-        bottomBar = {
-            BottomDABar()
-        }
-    ) { contentPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(contentPadding)
+//                .verticalScroll(rememberScrollState())
                 .padding(horizontal = 16.dp)
         ) {
             Row(
@@ -70,19 +63,11 @@ fun DAReportScreen(navController: NavController, packageName: String) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 60.dp),
+                            .padding(vertical = 2.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Image(
-                                painter = painterResource(id = R.drawable.icon),
-                                contentDescription = "Icon Image"
-                            )
-                            Text(
-                                text = "Instagram",
-                                style = Typography.headlineMedium
-                            )
                             if (tabIndex != 3) {
                                 Row(modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) {
                                     TabRow(selectedTabIndex = tabIndex) {
@@ -102,7 +87,7 @@ fun DAReportScreen(navController: NavController, packageName: String) {
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.Center
                         ) {
-                            DropDownBar()
+                            DropDownBar(ipData)
                         }
                         Spacer(modifier = Modifier.height(16.dp))
                         Row(
@@ -123,11 +108,10 @@ fun DAReportScreen(navController: NavController, packageName: String) {
                         0 -> Threat()
                         1 -> Organisation()
                         2 -> GeoLocation()
-                        3 -> Base(tabIndex)
+                        3 -> Base(tabIndex, ipData)
                     }
 
                 }
             }
-        }
     }
 }

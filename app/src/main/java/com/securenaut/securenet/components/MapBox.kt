@@ -12,7 +12,7 @@ import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
 fun MapBox(markerPosition: LatLng) {
-val singapore = LatLng(1.35, 103.87)
+val singapore = markerPosition
 val cameraPositionState = rememberCameraPositionState {
     position = CameraPosition.fromLatLngZoom(singapore, 10f)
 }

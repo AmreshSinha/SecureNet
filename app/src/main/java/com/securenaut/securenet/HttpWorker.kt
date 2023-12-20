@@ -55,30 +55,48 @@ class HttpWorker {
                         val dao = db.ipDataDao()
                         Log.d("Response", "Got Dao")
                         var jsonObj: JSONObject
+                        var latitude: Double? = null
+                        var longitude: Double? = null
+                        var asnId: String? = null
+                        var asnName: String? = null
+                        var domainScore: Double? = null
                         try {
                             jsonObj = JSONObject(respStr)
                             Log.d("Response", "Parsed to JSON")
                             var isMal: Boolean = false
                             Log.d("Response", "Before Checking")
-                            if (jsonObj["type"] == "ip") {
+                            if (jsonObj["type"] == "ip" && jsonObj.optJSONObject("threat") != null) {
                                 Log.d("Response", "Inside IP")
-                                if (jsonObj["is_known_attacker"] == true || jsonObj["is_known_abuser"] == true || jsonObj["is_threat"] == true) {
+                                val threat = jsonObj["threat"] as JSONObject
+                                if (threat["is_known_attacker"] == true || threat["is_known_abuser"] == true || threat["is_threat"] == true) {
                                     isMal = true
+                                }
+                                if(!jsonObj.optDouble("latitude").isNaN()){
+                                    latitude = jsonObj["latitude"] as Double
+                                }
+                                if(!jsonObj.optDouble("longitude").isNaN()){
+                                    longitude = jsonObj["longitude"] as Double
+                                }
+                                if(jsonObj.optJSONObject("asn") != null){
+                                    val asn = jsonObj["asn"] as JSONObject
+                                    asnId = asn.optString("asn")
+                                    asnName = asn.optString("name")
                                 }
                                 Log.d("Response", "IP Finishing")
                             } else if (jsonObj["type"] == "domain") {
                                 Log.d("Response", "Inside Domain")
                                 val score = jsonObj["score"]
-
                                 when (score) {
                                     is Int -> {
                                         if (score < 0) {
                                             isMal = true
+                                            domainScore = score.toDouble()
                                         }
                                     }
                                     is Double -> {
                                         if (score < 0.0){
                                             isMal = true
+                                            domainScore = score
                                         }
                                     }
                                 }
@@ -88,15 +106,25 @@ class HttpWorker {
                             if (isMal) {
                                 Log.d("Response", "Threat detected :: ${respStr}!!")
                                 val obj = jsonObj["request"] as org.json.JSONObject
+                                val pkgName = obj.optString("package")
+                                if(pkgName == "" || pkgName == "null"){
+                                    return
+                                }
                                 val ipData = IPData(
                                     id = 0,
-                                    packageName = obj.optString("package", null),
+                                    packageName = pkgName,
                                     ip = obj.optString("ip", null),
                                     domain = obj.optString("domain", null),
                                     port = obj.optInt("port", -1),
                                     proto = obj.optInt("protocol", -1),
-                                    timestamp = System.currentTimeMillis()
+                                    timestamp = System.currentTimeMillis(),
+                                    latitude = latitude,
+                                    longitude = longitude,
+                                    score = domainScore,
+                                    asnId = asnId,
+                                    asnName = asnName
                                 )
+                                Log.d("pkgadd", pkgName)
                                 GlobalScope.launch {
                                     dao.addIPData(ipData)
                                 }
@@ -114,46 +142,6 @@ class HttpWorker {
             Log.e("HttpWorkerStackTrace",e.stackTraceToString())
 //            callback.onFailure(e)
             }
-    }
-    fun post(url: String, body: String, ) {
-//              callback: HttpCallback) {
-        try {
-            val request: Request = Request.Builder().url(url).post(body.toRequestBody()).build()
-            client.newCall(request).enqueue(object : Callback {
-                override fun onFailure(call: Call, e: IOException) {
-//                    callback.onFailure(e)
-                }
-
-                override fun onResponse(call: Call, response: Response) {
-                    Log.i("Response", response.body?.string()!!)
-                    val application = globalContext?.applicationContext
-                    val db = IPDataDatabase.getInstance(application!!)
-                    val dao = db.ipDataDao()
-                    val jsonObj = JSONObject(response.body?.string())
-                    var isMal: Boolean = false
-                    if(jsonObj["type"] == "ip"){
-                        if (jsonObj["is_known_attacker"] == true || jsonObj["is_known_abuser"] == true || jsonObj["is_threat"] == true){
-                            isMal = true
-                        }
-                    }else if(jsonObj["type"] == "ip"){
-                        if ((jsonObj["score"] as Int) < 0){
-                            isMal = true
-                        }
-                    }
-                    if(isMal){
-                        var obj = jsonObj["request"] as Map<String, Any>
-                        val ipData = IPData(id=0, packageName=obj["package"] as String, ip=obj["ip"] as String, domain = obj["domain"] as String, port = obj["port"] as Int, proto = obj["protocol"] as Int, timestamp = System.currentTimeMillis())
-                        GlobalScope.launch {
-                            dao.addIPData(ipData)
-                        }
-                    }
-                    Log.i("Response", "End:" + jsonObj.toString())
-//                    callback.onSuccess(response.body?.string())
-                }
-            })
-        } catch (e: Exception) {
-//            callback.onFailure(e)
-        }
     }
 
     suspend fun postApk(apkFile: File): String {

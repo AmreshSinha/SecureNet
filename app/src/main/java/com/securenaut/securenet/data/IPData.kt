@@ -12,5 +12,10 @@ data class IPData(
     val domain: String?,
     val port: Int?,
     val proto: Int?,
-    val timestamp: Long
+    val timestamp: Long,
+    val score: Double?,
+    val latitude: Double?,
+    val longitude: Double?,
+    val asnId: String?,
+    val asnName: String?
 )

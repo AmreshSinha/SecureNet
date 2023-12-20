@@ -20,6 +20,7 @@ object GlobalStaticClass {
     var blackList: MutableList<Pair<String, String>> = mutableListOf()
     lateinit var installedAppsData: MutableList<MutableMap<String,Any>>
     lateinit var lastScan: String
+    lateinit var daPackageName: String
 
     val normalPermissions = listOf(
         // Normal Permissions

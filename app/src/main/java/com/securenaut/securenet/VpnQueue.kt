@@ -6,11 +6,13 @@ import android.net.VpnService
 import android.os.Build
 import android.util.Base64
 import android.util.Log
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.securenaut.securenet.data.GlobalStaticClass
 import com.securenaut.securenet.protocol.IpUtil
 import com.securenaut.securenet.protocol.Packet
 import com.securenaut.securenet.protocol.Packet.TCPHeader
 import com.securenaut.securenet.protocol.TCBStatus
+import com.securenaut.securenet.viewmodel.BlackListViewModel
 import java.io.FileDescriptor
 import java.io.FileInputStream
 import java.io.FileOutputStream
