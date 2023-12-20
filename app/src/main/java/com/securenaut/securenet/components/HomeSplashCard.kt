@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,10 +26,7 @@ import com.securenaut.securenet.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeSplashCard(navController: NavController){
-    ElevatedCard(
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 2.dp
-        ),
+    Card(
         onClick = {navController.navigate("splashScreen")},
         modifier = Modifier
             .fillMaxWidth().padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
