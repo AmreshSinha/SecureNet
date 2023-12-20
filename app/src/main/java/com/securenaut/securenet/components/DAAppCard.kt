@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.compose.rememberImagePainter
 import com.securenaut.securenet.HttpWorker
@@ -54,7 +55,7 @@ class DrawablePainter(private val drawable: Drawable) : Painter() {
 }
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun DAAppCard(appName:String,lastScan:String,appIcon: Drawable) {
+fun DAAppCard(appName:String,lastScan:String,packageName: String, appIcon: Drawable, navController: NavController) {
     val appIconDrawable = remember { appIcon }
 
     ElevatedCard(
@@ -62,8 +63,9 @@ fun DAAppCard(appName:String,lastScan:String,appIcon: Drawable) {
             defaultElevation = 6.dp
         ),
         onClick = {
-
+            navController.navigate("dynamicAnalysis/$packageName")
         },
+
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 0.dp, vertical = 4.dp)

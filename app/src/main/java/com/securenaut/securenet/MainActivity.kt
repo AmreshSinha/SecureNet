@@ -151,9 +151,9 @@ class MainActivity() : ComponentActivity() {
 //                        DAReportScreen(navController)
 
                     }
-                    composable("dynamic"){
-
-                    }
+//                    composable("dynamicAnalysis"){
+//                            DAListScreen(navController)
+//                    }
                     composable("staticAnalysisAppList"){
                         StaticAnalysisAppList(navController)
                     }
@@ -166,8 +166,10 @@ class MainActivity() : ComponentActivity() {
                     composable("prelimnaryCheck") {
                         PrelimnaryCheck(navController)
                     }
-                    composable("DAReport") {
-                        DAReportScreen(navController)
+                    composable("dynamicAnalysis/{app}") { backStackEntry ->
+                        val app = backStackEntry.arguments?.getString("app")
+                        Log.e("idhar","Yaha pr aara hai $app")
+                        app?.let { DAReportScreen(navController, it) }
                     }
 
                     composable("splashScreen") {

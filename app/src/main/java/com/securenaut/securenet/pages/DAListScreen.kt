@@ -45,13 +45,16 @@ import com.securenaut.securenet.ui.theme.textGray
 import kotlinx.coroutines.delay
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavController
+import com.securenaut.securenet.components.BottomDABar
+import com.securenaut.securenet.data.GlobalStaticClass
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 
 @Composable
-fun DAListScreen(navController: NavHostController, vpnButton: @Composable () -> Unit) {
+fun DAListScreen(navController: NavController, vpnButton: @Composable () -> Unit) {
     val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
         "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
     }
@@ -61,7 +64,8 @@ fun DAListScreen(navController: NavHostController, vpnButton: @Composable () -> 
     Scaffold(
         topBar = {
             AppBar(navController = navController, name = "Dynamic Analysis", onBackScreen = "home")
-        }
+        },
+        bottomBar = {BottomDABar()}
     ) { contentPadding ->
         Column(
             modifier = Modifier
@@ -89,10 +93,31 @@ fun DAListScreen(navController: NavHostController, vpnButton: @Composable () -> 
                             val appName = packageManager.getApplicationLabel(appInfo).toString()
                             val appIcon = packageManager.getApplicationIcon(appInfo)
                             val formatter = SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault())
-                        DAAppCard(appName = appName, lastScan = formatter.format(Date(ipData.timestamp)), appIcon = appIcon)
+                        DAAppCard(appName = appName, lastScan = formatter.format(Date(ipData.timestamp)), packageName = ipData.packageName ,appIcon = appIcon, navController)
                     }
+                }
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(text = "Blocklist", style = Typography.bodyMedium)
+                Image(
+                    painter = painterResource(id = R.drawable.arrowdown),
+                    contentDescription = "Down Arrow"
+                )
+            }
+            Column {
+                val bl = GlobalStaticClass.blackList
+                bl.forEachIndexed { index, it ->
+//                    key() {
+//                        val packageManager: PackageManager = LocalContext.current.packageManager
+//                        val appInfo = packageManager.getApplicationInfo(ipData.packageName, 0)
+//                        val appName = packageManager.getApplicationLabel(appInfo).toString()
+//                        val appIcon = packageManager.getApplicationIcon(appInfo)
+//                        val formatter = SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault())
+//                        DAAppCard(appName = appName, lastScan = formatter.format(Date(ipData.timestamp)), packageName = ipData.packageName ,appIcon = appIcon, navController)
+//                    }
                 }
             }
         }
     }
 }
+

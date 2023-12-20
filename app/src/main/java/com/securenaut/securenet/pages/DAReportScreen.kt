@@ -42,7 +42,7 @@ import com.securenaut.securenet.ui.theme.Typography
 import com.securenaut.securenet.ui.theme.darkBlue
 
 @Composable
-fun DAReportScreen(navController: NavController) {
+fun DAReportScreen(navController: NavController, packageName: String) {
     var tabIndex by remember { mutableStateOf(3) }
     val tabs = listOf("Threat", "Organisation", "GeoLocation")
 

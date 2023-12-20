@@ -17,7 +17,7 @@ object GlobalStaticClass {
     lateinit var sharedPrefInstance: SharedPreferences
     lateinit var packageName: String
     lateinit var signaturHashMap: MutableMap<String,String>
-    var blackList: List<Pair<String, String>> = listOf()
+    var blackList: MutableList<Pair<String, String>> = mutableListOf()
 
     val normalPermissions = listOf(
         // Normal Permissions

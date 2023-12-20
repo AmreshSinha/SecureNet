@@ -6,6 +6,7 @@ import android.net.ConnectivityManager
 import android.net.VpnService
 import android.util.Log
 import androidx.collection.LruCache
+import com.securenaut.securenet.data.GlobalStaticClass
 import com.securenaut.securenet.protocol.Packet
 import java.net.InetSocketAddress
 import java.nio.ByteBuffer
@@ -38,10 +39,10 @@ class PacketSender {
         }
     }
 
-    fun sendPacket(packet: Packet?){
+    fun sendPacket(packet: Packet?): Boolean {
         if(packet != null){
             if(packet.ip4Header == null){
-                return
+                return false
             }
             val connectivityManager = this.vpnService?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             var sourcePort: Int? = null
@@ -60,13 +61,13 @@ class PacketSender {
                 protocol = 6
             }else{
                 Log.d("Unknown Protocol", "PacketSender")
-                return;
+                return true;
             }
             val sourceSocketAddress = InetSocketAddress(packet.ip4Header?.sourceAddress, sourcePort!!)
             val destinationSocketAddress = InetSocketAddress(packet.ip4Header?.destinationAddress, destinationPort!!)
             val uid = connectivityManager.getConnectionOwnerUid(protocol, sourceSocketAddress, destinationSocketAddress )
             if(uid == -1 || uid == 0){
-                return;
+                return false;
             }
             val packageManager = globalContext?.packageManager
             val packageName = packageManager?.getPackagesForUid(uid)?.firstOrNull()
@@ -74,8 +75,13 @@ class PacketSender {
             if(packageName != this.vpnService?.packageName && packageName != "com.google.android.gsm"){
                 var body = "ip=${packet.ip4Header?.destinationAddress?.hostAddress}&port=${destinationPort}&package=$packageName&protocol=${protocol}"
                 if(vd != "-"){
+                    Log.d("Domain", vd)
                     if (vd.endsWith('.')) {
                         vd = vd.dropLast(1)
+                        val x = GlobalStaticClass.blackList.find { it.first == vd }
+                        if(x != null){
+                            return false
+                        }
                     }
                     body = "domain=$vd&package=$packageName"
                 }
@@ -85,6 +91,7 @@ class PacketSender {
                 }
             }
         }
+        return true
     }
 }
 fun ByteBuffer.toHex(): String {
