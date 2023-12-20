@@ -149,7 +149,7 @@ fun PrelimnaryCheck (navController: NavController){
 //
 //        ManifestDropdown(manifestAnalysis = GlobalStaticClass.staticAnalysisReport.getJSONObject("manifest_analysis"))
 //        CertificateDropdown(certificateAnalysis = GlobalStaticClass.staticAnalysisReport.getJSONObject("certificate_analysis"))
-
+        Spacer(modifier = Modifier.height(26.dp))
         Text(
             text = "Suspicious Permissions",
             textAlign = TextAlign.Center,
