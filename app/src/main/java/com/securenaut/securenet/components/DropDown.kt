@@ -37,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import com.securenaut.securenet.ui.theme.Typography
 
 @Composable
 fun Component(color : Color, content: Color, image: ImageVector, text: String ) {
@@ -100,7 +101,7 @@ fun Dropdown(type: String, title: String, subtitle: String, description: String)
                 }
 
             }
-            Text(text = subtitle, color = MaterialTheme.colorScheme.onSurfaceVariant);
+            Text(text = subtitle,style= Typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant);
         }
         if(isClicked) {
             Column(modifier = Modifier.padding(horizontal = 8.dp)) {
