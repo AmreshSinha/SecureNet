@@ -56,7 +56,7 @@ fun PrelimnaryCheck (navController: NavController){
             AppBar(navController, name = "Prelimnary App Check", onBackScreen = "staticAnalysisAppList")
         },
         bottomBar = {
-            PrelimnaryBottomAppBar(navController = navController, lastScan = GlobalStaticClass.lastScan)
+            PrelimnaryBottomAppBar(navController = navController)
         }
     ){ contentPadding -> Column(modifier = Modifier
         .verticalScroll(rememberScrollState())
@@ -158,7 +158,7 @@ fun PrelimnaryCheck (navController: NavController){
 
             GlobalStaticClass.permissionsMap[element]?.get("permission_name")
                 ?.let { GlobalStaticClass.permissionsMap[element]?.get("permission_descp")
-                    ?.let { it1 -> Dropdown(type = "Normal Permissions", title = it, subtitle = it1, description = element) } }
+                    ?.let { it1 -> Dropdown(type = "Normal Permissions", title = it, subtitle = element, description = it1) } }
         }
 
         Text(

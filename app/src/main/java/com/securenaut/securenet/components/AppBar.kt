@@ -26,7 +26,7 @@ import com.securenaut.securenet.ui.theme.Typography
 fun AppBar(navController: NavController, name: String,onBackScreen:String) {
     CenterAlignedTopAppBar(
         navigationIcon = {
-            IconButton(onClick = {navController.popBackStack()}){Icon(Icons.Filled.ArrowBack, "Floating action button.", tint = MaterialTheme.colorScheme.primary)}
+            IconButton(onClick = {navController.navigate(onBackScreen)}){Icon(Icons.Filled.ArrowBack, "Floating action button.", tint = MaterialTheme.colorScheme.primary)}
         },
         title = {
                 Row(modifier = Modifier.background(color = Color.White),

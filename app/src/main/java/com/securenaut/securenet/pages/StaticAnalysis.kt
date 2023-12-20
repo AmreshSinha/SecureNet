@@ -10,8 +10,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -56,6 +58,7 @@ import coil.compose.AsyncImage
 import coil.compose.rememberImagePainter
 import com.securenaut.securenet.R
 import com.securenaut.securenet.components.BottomAppBar
+import com.securenaut.securenet.components.GenAI
 import com.securenaut.securenet.components.HomeAppBar
 import com.securenaut.securenet.components.PieChart
 import com.securenaut.securenet.components.PieChartEntry
@@ -138,7 +141,14 @@ fun StaticAnalysisScreen(navController: NavController) {
             )
         }
 
-        Card(
+        Spacer(modifier = Modifier.height(16.dp))
+
+        GenAI()
+
+        ElevatedCard(
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 6.dp
+            ),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 32.dp)
@@ -215,7 +225,7 @@ fun StaticAnalysisScreen(navController: NavController) {
 
             val element = appsec.getJSONArray("info").getJSONObject(i)
 
-            Dropdown(type = "low", title = element.getString("section").toUpperCase(), subtitle = element.getString("title"), description = element.getString("description"))
+            Dropdown(type = "info", title = element.getString("section").toUpperCase(), subtitle = element.getString("title"), description = element.getString("description"))
         }
 
         for(i in 0 until appsec.getJSONArray("secure").length()){
@@ -337,6 +347,3 @@ fun CertificateDropdown(certificateAnalysis : JSONObject){
 
     }
 }
-
-
-

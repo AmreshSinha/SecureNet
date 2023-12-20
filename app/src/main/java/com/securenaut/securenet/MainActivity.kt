@@ -49,44 +49,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import android.content.Context
-import android.content.pm.ApplicationInfo
 import com.securenaut.securenet.data.GlobalStaticClass
-import com.securenaut.securenet.pages.getGrantedPermissions
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
-import java.io.File
-import java.io.FileInputStream
-import java.security.DigestInputStream
-import java.security.MessageDigest
 
-fun getApkHash(apkFile: File): String{
-    val md5Digest = MessageDigest.getInstance("MD5")
-    FileInputStream(apkFile).use { fileInputStream ->
-        DigestInputStream(fileInputStream, md5Digest).use { digestInputStream ->
-            // Read the file content and update the digest
-            val buffer = ByteArray(8192)
-            while (digestInputStream.read(buffer) != -1) {
-                // Read file content
-            }
-        }
-    }
 
-    // Get the MD5 hash as a byte array
-    val hashBytes = md5Digest.digest()
-
-    // Convert the byte array to a hexadecimal string
-    val hexString = StringBuilder()
-    for (byte in hashBytes) {
-        hexString.append(String.format("%02x", byte))
-    }
-
-    return hexString.toString()
-}
 
 class MainActivity() : ComponentActivity() {
 
     private lateinit var firebaseMessaging: FirebaseMessaging
-
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
@@ -126,6 +97,7 @@ class MainActivity() : ComponentActivity() {
                 this, Manifest.permission.POST_NOTIFICATIONS) -> {
                 // In an educational UI, explain to the user why your app requires this
                 // permission for a specific feature to behave as expected, and what
+                // permission for a specific feature to behave as expected, and what
                 // features are disabled if it's declined. In this UI, include a
                 // "cancel" or "no thanks" button that lets the user continue
                 // using your app without granting the permission.
@@ -142,7 +114,7 @@ class MainActivity() : ComponentActivity() {
 
         setContent{
 
-            GlobalStaticClass.sharedPrefInstance = getSharedPreferences("securenet_pref", Context.MODE_PRIVATE)
+//            GlobalStaticClass.sharedPrefInstance = getSharedPreferences("securenet_pref", Context.MODE_PRIVATE)
 
             Log.wtf("rand", "Inside main activity")
             FirebaseApp.initializeApp(this)
@@ -164,68 +136,24 @@ class MainActivity() : ComponentActivity() {
                 }
             }
 
-            val packageManager: PackageManager = LocalContext.current.packageManager
-            val installedApplications =
-                packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
-            var appDataList: MutableList<MutableMap<String, Any>> = mutableListOf()
-            val installedApps = installedApplications.filter { appInfo ->
-                appInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0
-            }
-
-            Log.i("count_apps", installedApps.size.toString())
-
-            for (appInfo in installedApps) {
-                try {
-                    val appName = appInfo.loadLabel(packageManager).toString()
-                    val packageName = appInfo.packageName
-                    Log.i("src_dir", "Source dir : " + appInfo.sourceDir);
-                    Log.i("package_name", "$packageName")
-                    val packageInfo = packageManager.getPackageInfo(packageName, 0)
-                    val sourceDir = packageInfo.applicationInfo.sourceDir
-                    GlobalStaticClass.srcDir=sourceDir
-                    val apkFile = File(sourceDir)
-                    val grantedPermissions = getGrantedPermissions(packageName, packageManager)
-                    GlobalStaticClass.appPermissions=grantedPermissions
-                    val appIconDrawable = appInfo.loadIcon(packageManager)
-                    Log.i("app_name", "$appName")
-                    Log.i(
-                        "file_found",
-                        apkFile.name + " " + apkFile.absolutePath + " " + appIconDrawable.toString()
-                    )
-                    appDataList.add(
-                        mapOf(
-                            "appName" to appName,
-                            "appIconDrawable" to appIconDrawable,
-                            "apkFile" to apkFile,
-                            "packageName" to packageName,
-                            "apkHash" to getApkHash(apkFile)
-                        ) as MutableMap<String, Any>
-                    )
-                } catch (e: PackageManager.NameNotFoundException) {
-                    Log.i("app_err", e.message.toString())
-                    // Handle the exception if the package is not found
-                }
-            }
-
-            GlobalStaticClass.installedAppsData=appDataList
-
 
             SecureNetTheme {
                 val navController = rememberNavController()
                 // Observe the data from the view model
 
-                NavHost(navController = navController, startDestination = "home"){
+                NavHost(navController = navController, startDestination = "splash_screen"){
                     composable("splash_screen") {
                         SplashScreen(navController = navController)
                     }
                     composable("home"){
+
                         HomeActivity(navController)
 //                        DAReportScreen(navController)
 
                     }
-                    composable("dynamic"){
-
-                    }
+//                    composable("dynamicAnalysis"){
+//                            DAListScreen(navController)
+//                    }
                     composable("staticAnalysisAppList"){
                         StaticAnalysisAppList(navController)
                     }
@@ -238,8 +166,10 @@ class MainActivity() : ComponentActivity() {
                     composable("prelimnaryCheck") {
                         PrelimnaryCheck(navController)
                     }
-                    composable("DAReport") {
-                        DAReportScreen(navController)
+                    composable("dynamicAnalysis/{app}") { backStackEntry ->
+                        val app = backStackEntry.arguments?.getString("app")
+                        Log.e("idhar","Yaha pr aara hai $app")
+                        app?.let { DAReportScreen(navController, it) }
                     }
 
                     composable("splashScreen") {

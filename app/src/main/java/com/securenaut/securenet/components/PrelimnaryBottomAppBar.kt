@@ -18,8 +18,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.json.JSONObject
-import java.io.FileInputStream
-import java.security.DigestInputStream
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -39,7 +37,9 @@ fun generateSignatureHash(signature: android.content.pm.Signature?): String {
 
 @SuppressLint("CommitPrefEdits")
 @Composable
-fun PrelimnaryBottomAppBar(navController: NavController,lastScan: String) {
+fun PrelimnaryBottomAppBar(navController: NavController) {
+
+    val packageInfo = LocalContext.current.packageManager.getPackageInfo(GlobalStaticClass.packageName, PackageManager.GET_SIGNATURES)
 
     BottomAppBar(
         floatingActionButton = {
@@ -52,22 +52,15 @@ fun PrelimnaryBottomAppBar(navController: NavController,lastScan: String) {
 
                         Log.i("card_button_clicked: ","${GlobalStaticClass.appName}")
 
-                        val editor = GlobalStaticClass.sharedPrefInstance.edit()
-                        editor.putString(GlobalStaticClass.apkHash,lastScan)
-                        editor.apply()
-
-                        Log.i("saving_to_pref","${lastScan}")
-
-                        HttpWorker().postApk(apkFile = GlobalStaticClass.apkFile,hash=GlobalStaticClass.apkHash)
-
-
-
                         Log.i("found_report","not report found")
-//                        val staticAnalysisDataString = HttpWorker().postApk(GlobalStaticClass.apkFile)
-//
-//                        Log.i("btn_press_resp",staticAnalysisDataString)
-//
-//                        GlobalStaticClass.staticAnalysisReport = JSONObject(staticAnalysisDataString)
+                        val staticAnalysisDataString = HttpWorker().postApk(GlobalStaticClass.apkFile)
+
+                        GlobalStaticClass.summary = HttpWorker().summarizeReport(hash = GlobalStaticClass.apkHash)
+                        GlobalStaticClass.action = HttpWorker().actionReport(hash = GlobalStaticClass.apkHash)
+
+                        Log.i("btn_press_resp",staticAnalysisDataString)
+
+                        GlobalStaticClass.staticAnalysisReport = JSONObject(staticAnalysisDataString)
 
                         navController.navigate("staticAnalysis")
 

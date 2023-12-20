@@ -6,6 +6,7 @@ import android.net.VpnService
 import android.os.Build
 import android.util.Base64
 import android.util.Log
+import com.securenaut.securenet.data.GlobalStaticClass
 import com.securenaut.securenet.protocol.IpUtil
 import com.securenaut.securenet.protocol.Packet
 import com.securenaut.securenet.protocol.Packet.TCPHeader
@@ -176,8 +177,15 @@ object UdpSendWorker : Runnable {
     override fun run() {
         while (!thread.isInterrupted) {
             val packet = deviceToNetworkUDPQueue.take()
-            packetSender?.sendPacket(packet)
+            val res = packetSender?.sendPacket(packet)
+            if(res == false){
+                continue
+            }
             val destinationAddress = packet.ip4Header?.destinationAddress
+            val el = GlobalStaticClass.blackList.find { it.first == destinationAddress?.hostAddress }
+            if(el != null){
+                continue
+            }
             val udpHeader = packet.udpHeader
             val destinationPort = udpHeader?.destinationPort
             val sourcePort = udpHeader?.sourcePort
@@ -445,6 +453,10 @@ object TcpWorker : Runnable {
             val packet = deviceToNetworkTCPQueue.poll() ?: return
             packetSender?.sendPacket(packet)
             val destinationAddress = packet.ip4Header?.destinationAddress
+            val el = GlobalStaticClass.blackList.find { it.first == destinationAddress?.hostAddress }
+            if(el != null){
+                continue
+            }
             val tcpHeader = packet.tcpHeader
             val destinationPort = tcpHeader?.destinationPort
             val sourcePort = tcpHeader?.sourcePort

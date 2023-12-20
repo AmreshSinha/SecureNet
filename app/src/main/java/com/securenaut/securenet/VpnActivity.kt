@@ -26,6 +26,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.compose.rememberNavController
+import androidx.room.Room
+import com.securenaut.securenet.data.IPDataDatabase
 import com.securenaut.securenet.pages.DAListScreen
 import kotlinx.coroutines.*
 import com.securenaut.securenet.protocol.Packet
@@ -34,7 +36,6 @@ import kotlin.coroutines.CoroutineContext
 
 
 class VpnActivity : ComponentActivity(), CoroutineScope {
-
     private val job = Job()
     override val coroutineContext: CoroutineContext = Dispatchers.Main + job + CoroutineName("VpnActivity")
 
@@ -98,7 +99,6 @@ class VpnActivity : ComponentActivity(), CoroutineScope {
                 }
             }
         }
-
     }
 
     private fun prepareVpn() {

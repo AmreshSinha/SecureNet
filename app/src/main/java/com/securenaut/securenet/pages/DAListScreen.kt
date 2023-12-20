@@ -1,6 +1,8 @@
 package com.securenaut.securenet.pages
 
 import AppBar
+import android.content.pm.PackageManager
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,6 +13,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
@@ -18,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -26,43 +31,41 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavHostController
 import com.google.android.gms.maps.model.LatLng
 import com.securenaut.securenet.R
 import com.securenaut.securenet.components.DAAppCard
 import com.securenaut.securenet.components.DAScanCard
 import com.securenaut.securenet.components.HomeScanCard
+import com.securenaut.securenet.data.IPDataViewModel
 import com.securenaut.securenet.ui.theme.Typography
 import com.securenaut.securenet.ui.theme.textGray
 import kotlinx.coroutines.delay
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavController
+import com.securenaut.securenet.components.BottomDABar
+import com.securenaut.securenet.data.GlobalStaticClass
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 @Composable
-fun DAListScreen(navController: NavHostController, vpnButton: @Composable () -> Unit) {
-    val dynamicPosition = LatLng(40.7128, -74.0060)
-
-    // Dummy array of app names
-    val appNames = listOf("Instagram", "Facebook", "Twitter", "WhatsApp", "Snapchat")
-
-    var isLoading by remember { mutableStateOf(true) }
-    var scannedApp by remember { mutableStateOf<String?>(null) }
-    val coroutineScope = rememberCoroutineScope()
-
-    // Coroutine to simulate scanning effect
-    LaunchedEffect(isLoading) {
-        if (isLoading) {
-            for (appName in appNames) {
-                delay(1000) // Simulating the delay during scanning
-                scannedApp = appName
-            }
-            isLoading = false
-        }
+fun DAListScreen(navController: NavController, vpnButton: @Composable () -> Unit) {
+    val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
+        "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
     }
+    val viewModel = ViewModelProvider(owner = viewModelStoreOwner)[IPDataViewModel::class.java]
+    val allIPDatas by viewModel.allIPData.observeAsState(listOf())
 
     Scaffold(
         topBar = {
             AppBar(navController = navController, name = "Dynamic Analysis", onBackScreen = "home")
-        }
+        },
+        bottomBar = {BottomDABar()}
     ) { contentPadding ->
         Column(
             modifier = Modifier
@@ -72,40 +75,49 @@ fun DAListScreen(navController: NavHostController, vpnButton: @Composable () -> 
                 .padding(horizontal = 16.dp)
                 .fillMaxHeight()
         ) {
+            Log.i("allIPData",allIPDatas.toString())
             DAScanCard(navController = navController, vpnButton)
-            if (isLoading) {
-                Row(
-                    modifier = Modifier.fillMaxWidth().fillMaxHeight().padding(vertical = 16.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Text(text = scannedApp ?: "", style = Typography.bodySmall, color= textGray)
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(text = "Threats detected in", style = Typography.bodyMedium)
+                Image(
+                    painter = painterResource(id = R.drawable.arrowdown),
+                    contentDescription = "Down Arrow"
+                )
+            }
+            Column {
+                Log.i("kuch",allIPDatas.size.toString())
+                allIPDatas.forEachIndexed { index, ipData ->
+                    key(ipData.id) {
+                            val packageManager: PackageManager = LocalContext.current.packageManager
+                            val appInfo = packageManager.getApplicationInfo(ipData.packageName, 0)
+                            val appName = packageManager.getApplicationLabel(appInfo).toString()
+                            val appIcon = packageManager.getApplicationIcon(appInfo)
+                            val formatter = SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault())
+                        DAAppCard(appName = appName, lastScan = formatter.format(Date(ipData.timestamp)), packageName = ipData.packageName ,appIcon = appIcon, navController)
+                    }
                 }
-            } else {
-                Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(text = "Threats detected in", style = Typography.bodyMedium)
-                        Image(
-                            painter = painterResource(id = R.drawable.arrowdown),
-                            contentDescription = "Down Arrow"
-                        )
-                    }
-                    DAAppCard(appName = "Instagram", lastScan = "18th Dec 2023")
-                    DAAppCard(appName = "Instagram", lastScan = "18th Dec 2023")
-                    DAAppCard(appName = "Instagram", lastScan = "18th Dec 2023")
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(text = "Safe Apps", style = Typography.bodyMedium)
-                        Image(
-                            painter = painterResource(id = R.drawable.arrowdown),
-                            contentDescription = "Down Arrow"
-                        )
-                    }
-                    DAAppCard(appName = "Instagram", lastScan = "18th Dec 2023")
-                    DAAppCard(appName = "Instagram", lastScan = "18th Dec 2023")
-                    DAAppCard(appName = "Instagram", lastScan = "18th Dec 2023")
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(text = "Blocklist", style = Typography.bodyMedium)
+                Image(
+                    painter = painterResource(id = R.drawable.arrowdown),
+                    contentDescription = "Down Arrow"
+                )
+            }
+            Column {
+                val bl = GlobalStaticClass.blackList
+                bl.forEachIndexed { index, it ->
+//                    key() {
+//                        val packageManager: PackageManager = LocalContext.current.packageManager
+//                        val appInfo = packageManager.getApplicationInfo(ipData.packageName, 0)
+//                        val appName = packageManager.getApplicationLabel(appInfo).toString()
+//                        val appIcon = packageManager.getApplicationIcon(appInfo)
+//                        val formatter = SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault())
+//                        DAAppCard(appName = appName, lastScan = formatter.format(Date(ipData.timestamp)), packageName = ipData.packageName ,appIcon = appIcon, navController)
+//                    }
                 }
             }
         }
     }
 }
+

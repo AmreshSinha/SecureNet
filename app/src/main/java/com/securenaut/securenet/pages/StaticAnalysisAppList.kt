@@ -41,8 +41,6 @@ import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 
 @Composable
@@ -56,47 +54,47 @@ fun StaticAnalysisAppList(navController: NavController) {
             .verticalScroll(rememberScrollState())
     ) {
 
-//        val packageManager: PackageManager = LocalContext.current.packageManager
-//        val installedApplications =
-//            packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
-        var appDataList: MutableList<MutableMap<String, Any>> = GlobalStaticClass.installedAppsData
-//        val installedApps = installedApplications.filter { appInfo ->
-//            appInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0
-//        }
-//
-//        Log.i("count_apps", installedApps.size.toString())
-//
-//        for (appInfo in installedApps) {
-//            try {
-//                val appName = appInfo.loadLabel(packageManager).toString()
-//                val packageName = appInfo.packageName
-//                Log.i("src_dir", "Source dir : " + appInfo.sourceDir);
-//                Log.i("package_name", "$packageName")
-//                val packageInfo = packageManager.getPackageInfo(packageName, 0)
-//                val sourceDir = packageInfo.applicationInfo.sourceDir
-//                GlobalStaticClass.srcDir=sourceDir
-//                val apkFile = File(sourceDir)
-//                val grantedPermissions = getGrantedPermissions(packageName, packageManager)
-//                GlobalStaticClass.appPermissions=grantedPermissions
-//                val appIconDrawable = appInfo.loadIcon(packageManager)
-//                Log.i("app_name", "$appName")
-//                Log.i(
-//                    "file_found",
-//                    apkFile.name + " " + apkFile.absolutePath + " " + appIconDrawable.toString()
-//                )
-//                appDataList.add(
-//                    mapOf(
-//                        "appName" to appName,
-//                        "appIconDrawable" to appIconDrawable,
-//                        "apkFile" to apkFile,
-//                        "packageName" to packageName
-//                    ) as MutableMap<String, Any>
-//                )
-//            } catch (e: PackageManager.NameNotFoundException) {
-//                Log.i("app_err", e.message.toString())
-//                // Handle the exception if the package is not found
-//            }
-//        }
+        val packageManager: PackageManager = LocalContext.current.packageManager
+        val installedApplications =
+            packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
+        var appDataList: MutableList<MutableMap<String, Any>> = mutableListOf()
+        val installedApps = installedApplications.filter { appInfo ->
+            appInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0
+        }
+
+        Log.i("count_apps", installedApps.size.toString())
+
+        for (appInfo in installedApps) {
+            try {
+                val appName = appInfo.loadLabel(packageManager).toString()
+                val packageName = appInfo.packageName
+                Log.i("src_dir", "Source dir : " + appInfo.sourceDir);
+                Log.i("package_name", "$packageName")
+                val packageInfo = packageManager.getPackageInfo(packageName, 0)
+                val sourceDir = packageInfo.applicationInfo.sourceDir
+                GlobalStaticClass.srcDir=sourceDir
+                val apkFile = File(sourceDir)
+                val grantedPermissions = getGrantedPermissions(packageName, packageManager)
+                GlobalStaticClass.appPermissions=grantedPermissions
+                val appIconDrawable = appInfo.loadIcon(packageManager)
+                Log.i("app_name", "$appName")
+                Log.i(
+                    "file_found",
+                    apkFile.name + " " + apkFile.absolutePath + " " + appIconDrawable.toString()
+                )
+                appDataList.add(
+                    mapOf(
+                        "appName" to appName,
+                        "appIconDrawable" to appIconDrawable,
+                        "apkFile" to apkFile,
+                        "packageName" to packageName
+                    ) as MutableMap<String, Any>
+                )
+            } catch (e: PackageManager.NameNotFoundException) {
+                Log.i("app_err", e.message.toString())
+                // Handle the exception if the package is not found
+            }
+        }
 
 //        Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom= 6.dp)) {
 //            Text(
@@ -116,10 +114,9 @@ fun StaticAnalysisAppList(navController: NavController) {
                 navController = navController,
                 appName = appData["appName"] as String,
                 packageName = appData["packageName"] as String,
-                lastScan = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
+                lastScan = "7th May 2023",
                 appIconDrawable = appData["appIconDrawable"] as Drawable,
-                apkFile = appData["apkFile"] as File,
-                apkHash = appData["apkHash"] as String
+                apkFile = appData["apkFile"] as File
             )
         }
 
