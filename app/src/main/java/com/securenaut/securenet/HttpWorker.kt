@@ -2,11 +2,15 @@ package com.securenaut.securenet
 
 import android.content.Intent
 import android.net.Uri
+import android.content.Context
 import android.util.Log
 import androidx.core.content.ContextCompat.startActivity
 import com.securenaut.securenet.data.GlobalStaticClass
+import com.securenaut.securenet.data.IPData
+import com.securenaut.securenet.data.IPDataDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient;
@@ -33,10 +37,88 @@ interface HttpCallback {
 }
 
 class HttpWorker {
-    private val client = OkHttpClient.Builder()
-        .readTimeout(600, TimeUnit.SECONDS) // Set read timeout to 10 seconds
-        .writeTimeout(600, TimeUnit.SECONDS) // Set write timeout to 10 seconds
-        .connectTimeout(600, TimeUnit.SECONDS).build()
+    private val client = OkHttpClient.Builder().build()
+    private var globalContext: Context? = null
+    fun setContext(context: Context){
+        globalContext = context
+    }
+    fun get(url: String, query: String){
+        try{
+            val request: Request = Request.Builder().url(url + query).get().build()
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+//                    callback.onFailure(e)
+                }
+                override fun onResponse(call: Call, response: Response) {
+                    if (response.isSuccessful) {
+                        val respStr = response.body?.string()!!
+                        Log.d("Response", respStr)
+                        val application = globalContext?.applicationContext
+                        val db = IPDataDatabase.getInstance(application!!)
+                        Log.d("Response", "Got DB")
+                        val dao = db.ipDataDao()
+                        Log.d("Response", "Got Dao")
+                        var jsonObj: JSONObject
+                        try {
+                            jsonObj = JSONObject(respStr)
+                            Log.d("Response", "Parsed to JSON")
+                            var isMal: Boolean = false
+                            Log.d("Response", "Before Checking")
+                            if (jsonObj["type"] == "ip") {
+                                Log.d("Response", "Inside IP")
+                                if (jsonObj["is_known_attacker"] == true || jsonObj["is_known_abuser"] == true || jsonObj["is_threat"] == true) {
+                                    isMal = true
+                                }
+                                Log.d("Response", "IP Finishing")
+                            } else if (jsonObj["type"] == "domain") {
+                                Log.d("Response", "Inside Domain")
+                                val score = jsonObj["score"]
+
+                                when (score) {
+                                    is Int -> {
+                                        if (score < 0) {
+                                            isMal = true
+                                        }
+                                    }
+                                    is Double -> {
+                                        if (score < 0.0){
+                                            isMal = true
+                                        }
+                                    }
+                                }
+                                Log.d("Response", "Domain Finishing")
+                            }
+                            Log.d("Response", "Here...")
+                            if (isMal) {
+                                Log.d("Response", "Threat detected :: ${respStr}!!")
+                                val obj = jsonObj["request"] as org.json.JSONObject
+                                val ipData = IPData(
+                                    id = 0,
+                                    packageName = obj.optString("package", null),
+                                    ip = obj.optString("ip", null),
+                                    domain = obj.optString("domain", null),
+                                    port = obj.optInt("port", -1),
+                                    proto = obj.optInt("protocol", -1),
+                                    timestamp = System.currentTimeMillis()
+                                )
+                                GlobalScope.launch {
+                                    dao.addIPData(ipData)
+                                }
+                            }
+                            Log.d("Response", "End:" + jsonObj.toString())
+                        } catch (ex: Exception) {
+                            Log.i("Response", ex.toString())
+                            Log.i("Response", ex.stackTraceToString())
+                        }
+                    }
+                }
+            })
+        }catch (e: Exception) {
+            Log.e("HttpWorkerError",e.toString())
+            Log.e("HttpWorkerStackTrace",e.stackTraceToString())
+//            callback.onFailure(e)
+            }
+    }
     fun post(url: String, body: String, ) {
 //              callback: HttpCallback) {
         try {
@@ -47,6 +129,29 @@ class HttpWorker {
                 }
 
                 override fun onResponse(call: Call, response: Response) {
+                    Log.i("Response", response.body?.string()!!)
+                    val application = globalContext?.applicationContext
+                    val db = IPDataDatabase.getInstance(application!!)
+                    val dao = db.ipDataDao()
+                    val jsonObj = JSONObject(response.body?.string())
+                    var isMal: Boolean = false
+                    if(jsonObj["type"] == "ip"){
+                        if (jsonObj["is_known_attacker"] == true || jsonObj["is_known_abuser"] == true || jsonObj["is_threat"] == true){
+                            isMal = true
+                        }
+                    }else if(jsonObj["type"] == "ip"){
+                        if ((jsonObj["score"] as Int) < 0){
+                            isMal = true
+                        }
+                    }
+                    if(isMal){
+                        var obj = jsonObj["request"] as Map<String, Any>
+                        val ipData = IPData(id=0, packageName=obj["package"] as String, ip=obj["ip"] as String, domain = obj["domain"] as String, port = obj["port"] as Int, proto = obj["protocol"] as Int, timestamp = System.currentTimeMillis())
+                        GlobalScope.launch {
+                            dao.addIPData(ipData)
+                        }
+                    }
+                    Log.i("Response", "End:" + jsonObj.toString())
 //                    callback.onSuccess(response.body?.string())
                 }
             })

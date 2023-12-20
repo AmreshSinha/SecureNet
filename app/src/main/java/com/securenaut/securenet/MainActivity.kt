@@ -83,10 +83,10 @@ fun getApkHash(apkFile: File): String{
     return hexString.toString()
 }
 
+
 class MainActivity() : ComponentActivity() {
 
     private lateinit var firebaseMessaging: FirebaseMessaging
-
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
@@ -125,6 +125,7 @@ class MainActivity() : ComponentActivity() {
             ActivityCompat.shouldShowRequestPermissionRationale(
                 this, Manifest.permission.POST_NOTIFICATIONS) -> {
                 // In an educational UI, explain to the user why your app requires this
+                // permission for a specific feature to behave as expected, and what
                 // permission for a specific feature to behave as expected, and what
                 // features are disabled if it's declined. In this UI, include a
                 // "cancel" or "no thanks" button that lets the user continue
@@ -214,7 +215,7 @@ class MainActivity() : ComponentActivity() {
                 val navController = rememberNavController()
                 // Observe the data from the view model
 
-                NavHost(navController = navController, startDestination = "home"){
+                NavHost(navController = navController, startDestination = "splash_screen"){
                     composable("splash_screen") {
                         SplashScreen(navController = navController)
                     }

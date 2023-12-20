@@ -13,12 +13,13 @@ class PacketSender {
     private val httpWorker: HttpWorker = HttpWorker()
     private var vpnService: VpnService? = null
     private var globalContext: Context? = null
-    private val apiURL: String = "https://q4vf1dkal164ppf7sgey3sr40v6muci1.oastify.com"
+    private val apiURL: String = "https://securenet.photoai.pro"
     private val cacheSize = 4 * 1024 * 1024
     private val reqCache = LruCache<String, Boolean>(cacheSize)
     constructor(vpnService: VpnService?, globalContext: Context){
         this.vpnService = vpnService
         this.globalContext = globalContext
+        httpWorker.setContext(globalContext)
     }
 
     fun isValidDnsPacket(payload: ByteBuffer): String {
@@ -71,13 +72,16 @@ class PacketSender {
             val packageName = packageManager?.getPackagesForUid(uid)?.firstOrNull()
             Log.w("UID","${packet.ip4Header?.destinationAddress?.hostAddress} -> ${uid} -> ${packageName}")
             if(packageName != this.vpnService?.packageName && packageName != "com.google.android.gsm"){
-                var body = "ip=${packet.ip4Header?.destinationAddress?.hostAddress}&port=${destinationPort}&package=$packageName"
+                var body = "ip=${packet.ip4Header?.destinationAddress?.hostAddress}&port=${destinationPort}&package=$packageName&protocol=${protocol}"
                 if(vd != "-"){
+                    if (vd.endsWith('.')) {
+                        vd = vd.dropLast(1)
+                    }
                     body = "domain=$vd&package=$packageName"
                 }
                 if (reqCache.get(body) == null){
                     reqCache.put(body, true)
-                    httpWorker.post("$apiURL/ip", body)
+                    httpWorker.get("$apiURL/dynamic/ipdom?", body)
                 }
             }
         }
