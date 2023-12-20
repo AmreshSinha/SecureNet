@@ -52,8 +52,35 @@ import android.content.Context
 import com.securenaut.securenet.data.GlobalStaticClass
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
+import java.io.File
+import java.io.FileInputStream
+import java.security.DigestInputStream
+import java.security.MessageDigest
 
 
+fun getApkHash(apkFile: File): String{
+    val md5Digest = MessageDigest.getInstance("MD5")
+    FileInputStream(apkFile).use { fileInputStream ->
+        DigestInputStream(fileInputStream, md5Digest).use { digestInputStream ->
+            // Read the file content and update the digest
+            val buffer = ByteArray(8192)
+            while (digestInputStream.read(buffer) != -1) {
+                // Read file content
+            }
+        }
+    }
+
+    // Get the MD5 hash as a byte array
+    val hashBytes = md5Digest.digest()
+
+    // Convert the byte array to a hexadecimal string
+    val hexString = StringBuilder()
+    for (byte in hashBytes) {
+        hexString.append(String.format("%02x", byte))
+    }
+
+    return hexString.toString()
+}
 
 class MainActivity() : ComponentActivity() {
 
