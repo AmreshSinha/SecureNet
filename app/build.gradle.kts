@@ -119,4 +119,7 @@ dependencies {
 
     implementation("com.google.maps.android:maps-compose:2.7.2")
     implementation("com.google.android.gms:play-services-maps:18.2.0")
+
+    implementation("com.google.accompanist:accompanist-flowlayout:0.17.0")
+
 }

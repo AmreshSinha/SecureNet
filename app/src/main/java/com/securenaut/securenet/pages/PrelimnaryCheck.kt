@@ -158,11 +158,11 @@ fun PrelimnaryCheck (navController: NavController){
 
             GlobalStaticClass.permissionsMap[element]?.get("permission_name")
                 ?.let { GlobalStaticClass.permissionsMap[element]?.get("permission_descp")
-                    ?.let { it1 -> Dropdown(type = "Normal Permissions", title = it, subtitle = it1, description = element) } }
+                    ?.let { it1 -> Dropdown(type = "Normal Permissions", title = it, subtitle = element, description = it1) } }
         }
 
         Text(
-            text = "Dangerous Permissions",
+            text = "Signature Permissions",
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleLarge
         )

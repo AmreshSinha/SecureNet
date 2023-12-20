@@ -97,6 +97,7 @@ class MainActivity() : ComponentActivity() {
                 this, Manifest.permission.POST_NOTIFICATIONS) -> {
                 // In an educational UI, explain to the user why your app requires this
                 // permission for a specific feature to behave as expected, and what
+                // permission for a specific feature to behave as expected, and what
                 // features are disabled if it's declined. In this UI, include a
                 // "cancel" or "no thanks" button that lets the user continue
                 // using your app without granting the permission.
@@ -140,7 +141,7 @@ class MainActivity() : ComponentActivity() {
                 val navController = rememberNavController()
                 // Observe the data from the view model
 
-                NavHost(navController = navController, startDestination = "home"){
+                NavHost(navController = navController, startDestination = "splash_screen"){
                     composable("splash_screen") {
                         SplashScreen(navController = navController)
                     }
