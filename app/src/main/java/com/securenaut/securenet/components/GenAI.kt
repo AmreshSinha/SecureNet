@@ -1,5 +1,6 @@
 package com.securenaut.securenet.components
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -29,77 +30,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.securenaut.securenet.HttpWorker
 import com.securenaut.securenet.R
+import com.securenaut.securenet.data.GlobalStaticClass
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun GenAI(summary: String, actions: String){
+fun GenAI() {
 
-    var isClicked by remember { mutableStateOf(false) }
-    var isLoaded by remember { mutableStateOf(false) }
-    var action by remember {
-        mutableStateOf("")
-    }
-
-Column (modifier = Modifier.fillMaxWidth()) {
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
-            FilledTonalButton(onClick = { isClicked = true; action = summary }) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Row(modifier = Modifier.padding(end = 4.dp)) {
-                        Image(
-                            painter = painterResource(id = R.drawable.img_10),
-                            contentDescription = "",
-                        )
-                    }
-
-                    Text(text = "Summarize")
-                }
-            }
-            FilledTonalButton(onClick = { isClicked = true; action = actions }) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Row(modifier = Modifier.padding(end = 4.dp)) {
-                        Image(
-                            painter = painterResource(id = R.drawable.img_10),
-                            contentDescription = "",
-                        )
-                    }
-
-                    Text(text = "Actions")
-                }
-            }
-        }
-
-
-    if (isClicked && !isLoaded) {
-        OutlinedCard(
-            border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth()
-        ) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = "Suggesting Actions...",
-                        textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                    Row(modifier = Modifier.padding(end = 4.dp)) {
-                        Image(
-                            painter = painterResource(id = R.drawable.img_10),
-                            contentDescription = "",
-                        )
-                    }
-                }
-                Text(
-                    text = "Confused on what to do? Get help!",
-                    color = Color.Gray,
-                    style = MaterialTheme.typography.labelMedium
-                )
-            }
-
-        }
-    } else if (isLoaded && isClicked) {
+    Column(modifier = Modifier.fillMaxWidth()) {
         OutlinedCard(
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
             modifier = Modifier
@@ -114,19 +57,28 @@ Column (modifier = Modifier.fillMaxWidth()) {
                         modifier = Modifier.fillMaxWidth(fraction = 0.8f),
                         color = MaterialTheme.colorScheme.primary
                     )
-                    IconButton(onClick = { isClicked = false}) {
-                    Icon(Icons.Filled.Close, "", tint = MaterialTheme.colorScheme.primary)}
-
                 }
                 Text(
-                    text = action,
+                    text = GlobalStaticClass.action,
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            Column(modifier = Modifier.padding(16.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "Summary",
+                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.fillMaxWidth(fraction = 0.8f),
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+                Text(
+                    text = GlobalStaticClass.summary,
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }
     }
-
-
-}
 }

@@ -14,6 +14,8 @@ object GlobalStaticClass {
     lateinit var appName: String
     lateinit var apkFile: File
     lateinit var srcDir: String
+    lateinit var action: String
+    lateinit var summary: String
     lateinit var appPermissions: List<String>
     lateinit var sharedPrefInstance: SharedPreferences
     lateinit var packageName: String
