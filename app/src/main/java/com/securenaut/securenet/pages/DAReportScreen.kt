@@ -6,16 +6,21 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,6 +38,7 @@ import com.securenaut.securenet.components.DALayout.Organisation
 import com.securenaut.securenet.components.DALayout.Threat
 import com.securenaut.securenet.components.DropDownBar
 import com.securenaut.securenet.ui.theme.Typography
+import com.securenaut.securenet.ui.theme.darkBlue
 
 @Composable
 fun DAReportScreen(navController: NavController) {
@@ -60,7 +66,7 @@ fun DAReportScreen(navController: NavController) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 40.dp),
+                            .padding(vertical = 60.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center
                     ) {
@@ -73,15 +79,39 @@ fun DAReportScreen(navController: NavController) {
                                 text = "Instagram",
                                 style = Typography.headlineMedium
                             )
-                            Row(modifier = Modifier.fillMaxWidth()) {
-                                TabRow(selectedTabIndex = tabIndex) {
-                                    tabs.forEachIndexed { index, title ->
-                                        Tab(text = { Text(title) },
-                                            selected = tabIndex == index,
-                                            onClick = { tabIndex = index }
-                                        )
+                            if (tabIndex != 3) {
+                                Row(modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) {
+                                    TabRow(selectedTabIndex = tabIndex) {
+                                        tabs.forEachIndexed { index, title ->
+                                            Tab(text = { Text(title) },
+                                                selected = tabIndex == index,
+                                                onClick = { tabIndex = index }
+                                            )
+                                        }
                                     }
                                 }
+                            }
+                        }
+                    }
+                    if (tabIndex == 3) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            DropDownBar()
+                        }
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(text = "Summary for the IP/Domain", style = Typography.bodyMedium)
+                            TextButton(
+                                onClick = { tabIndex = 0 },
+                                colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.primary)
+                            ) {
+                                Text(text = "See More", style = Typography.bodyMedium, color = darkBlue)
                             }
                         }
                     }
@@ -89,8 +119,9 @@ fun DAReportScreen(navController: NavController) {
                         0 -> Threat()
                         1 -> Organisation()
                         2 -> GeoLocation()
-                        3 -> Base()
+                        3 -> Base(tabIndex)
                     }
+
                 }
             }
         }

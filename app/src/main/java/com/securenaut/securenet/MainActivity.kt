@@ -146,8 +146,8 @@ class MainActivity() : ComponentActivity() {
                     }
                     composable("home"){
 
-//                        HomeActivity(navController)
-                        DAReportScreen(navController)
+                        HomeActivity(navController)
+//                        DAReportScreen(navController)
 
                     }
                     composable("dynamic"){

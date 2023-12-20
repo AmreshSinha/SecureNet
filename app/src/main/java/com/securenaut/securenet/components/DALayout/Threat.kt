@@ -38,7 +38,6 @@ fun Threat() {
             content = {
                 Box(
                     modifier = Modifier
-                        .padding(8.dp)
                         .weight(1f)
                 ) {
 //                    Image(
@@ -113,11 +112,5 @@ fun Threat() {
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(text = "Summary for the IP/Domain", style = Typography.bodyMedium)
-            Text(text = "See More", style = Typography.bodyMedium)
-        }
     }
 }
