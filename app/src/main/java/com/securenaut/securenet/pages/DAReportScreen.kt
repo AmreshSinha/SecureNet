@@ -32,6 +32,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.securenaut.securenet.R
+import com.securenaut.securenet.components.BottomDABar
 import com.securenaut.securenet.components.DALayout.Base
 import com.securenaut.securenet.components.DALayout.GeoLocation
 import com.securenaut.securenet.components.DALayout.Organisation
@@ -47,7 +48,10 @@ fun DAReportScreen(navController: NavController) {
 
     Scaffold(topBar = {
         AppBar(navController = navController, name = "Dynamic Analysis", onBackScreen = "home")
-    }
+    },
+        bottomBar = {
+            BottomDABar()
+        }
     ) { contentPadding ->
         Column(
             modifier = Modifier
