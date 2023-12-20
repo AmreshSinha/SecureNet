@@ -1,5 +1,7 @@
 package com.securenaut.securenet.components
 
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.Icon
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -14,9 +16,14 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -31,8 +38,24 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 @Composable
+fun rememberDrawablePainter(drawable: Drawable): Painter {
+    return remember(drawable) {
+        DrawablePainter(drawable)
+    }
+}
+class DrawablePainter(private val drawable: Drawable) : Painter() {
+    override val intrinsicSize: Size
+        get() = Size(drawable.intrinsicWidth.toFloat(), drawable.intrinsicHeight.toFloat())
+
+    override fun DrawScope.onDraw() {
+        drawable.setBounds(0, 0, size.width.toInt(), size.height.toInt())
+        drawable.draw(drawContext.canvas.nativeCanvas)
+    }
+}
+@Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun DAAppCard(appName:String,lastScan:String) {
+fun DAAppCard(appName:String,lastScan:String,appIcon: Drawable) {
+    val appIconDrawable = remember { appIcon }
 
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
@@ -53,7 +76,7 @@ fun DAAppCard(appName:String,lastScan:String) {
                 .padding(10.dp), verticalAlignment = Alignment.CenterVertically
         ) {
                 Image(
-                    painter = painterResource(id = R.drawable.icon),
+                    painter = rememberDrawablePainter(appIconDrawable),
                     contentDescription = "App Icon",
                     modifier = Modifier.size(48.dp)
                 )

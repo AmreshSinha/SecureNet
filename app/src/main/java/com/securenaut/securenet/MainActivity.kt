@@ -54,10 +54,10 @@ import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
 
+
 class MainActivity() : ComponentActivity() {
 
     private lateinit var firebaseMessaging: FirebaseMessaging
-
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
